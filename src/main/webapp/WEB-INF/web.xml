@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+	http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	version="4.0">
+	
+	<display-name>c92b</display-name>
+
+	<servlet>
+		<servlet-name>someServlet</servlet-name>
+		<servlet-class>fun.kolo.s97.controller.SomeServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>someServlet</servlet-name>
+		<url-pattern>/some</url-pattern>
+	</servlet-mapping>
+
+
+</web-app>
