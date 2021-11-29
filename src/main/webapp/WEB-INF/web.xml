@@ -5,18 +5,31 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
 	http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0">
-	
+
 	<display-name>c92b</display-name>
 
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
 	<servlet>
-		<servlet-name>someServlet</servlet-name>
-		<servlet-class>fun.kolo.s97.controller.SomeServlet</servlet-class>
+		<servlet-name>entryServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.Entry</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>someServlet</servlet-name>
-		<url-pattern>/some</url-pattern>
+		<servlet-name>entryServ</servlet-name>
+		<url-pattern>/entry</url-pattern>
 	</servlet-mapping>
-
-
+	
+	<servlet>
+		<servlet-name>loginServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.Login</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginServ</servlet-name>
+		<url-pattern>/loginServ</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
