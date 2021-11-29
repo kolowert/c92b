@@ -6,13 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Entry Page</title>
+<title>Login Page</title>
 </head>
 
 <body>
-	<div style="background: #E0E0E0; height: 55px; padding: 5px;">
-		<h1>Cash Register c92b</h1>
-	</div>
+	<jsp:include page="_header.jsp"></jsp:include>
+	
 	<div style="padding: 10px;">
 		<h3>Choose your id:login and type password to enter</h3>
 	</div>
@@ -31,8 +30,10 @@
 		
 		<br> <br> 
 		Password: <input type="password"
-		name="password" /> <br> <br> <input type="submit"
-		value="Log in" />
+		name="password" /> 
+		
+		<br> <br> 
+		<input type="submit" value="Log in" />
 	</form>
 
 	<jsp:include page="_footer.jsp"></jsp:include>

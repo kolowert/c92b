@@ -1,7 +1,6 @@
 package fun.kolowert.c92b.servlet;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fun.kolowert.c92b.bean.Operator;
+import fun.kolowert.c92b.dao.DaoOperator;
 
 public class Entry extends HttpServlet {
 
@@ -24,9 +24,9 @@ public class Entry extends HttpServlet {
 
 		if (dutyUser == null) {
 			// get registered users from database
-			// TODO instead of stub
-			Operator[] preOperators = {new Operator(123, "Arny"), new Operator(234, "Bruce"), new Operator(69, "Chack")};
-			List<Operator> operators =  Arrays.asList(preOperators);
+			DaoOperator daoOperator = DaoOperator.getInstance();
+			List<Operator> operators = daoOperator.getOperators();
+			
 			request.setAttribute("operators", operators);
 			request.setAttribute("password", "undefined");
 			// redirect to loginPage

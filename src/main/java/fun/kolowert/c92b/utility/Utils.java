@@ -5,7 +5,7 @@ import java.util.List;
 import fun.kolowert.c92b.bean.Operator;
 
 public class Utils {
-	
+
 	/**
 	 * used on login.jsp
 	 */
@@ -20,5 +20,23 @@ public class Utils {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * used on Login Servlet
+	 */
+	public static int parseOperatorToId(String input) {
+		int result = -1;
+		String[] parts = input.split("\s");
+		for (String part : parts) {
+			System.out.println(part);
+		}
+		try {
+			result = Integer.parseInt(parts[1]);
+		} catch(NumberFormatException e) {
+			// TODO log here
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
