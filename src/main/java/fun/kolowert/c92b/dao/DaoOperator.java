@@ -31,12 +31,19 @@ public class DaoOperator {
 	
 	public Operator getOperatorById(int id) {
 		Operator result = null;
+		// TODO rewrite the stub
 		for (Operator operator : operators) {
 			if (operator.getId() == id) {
 				return operator;
 			}
 		}
 		return result;
+	}
+	
+	public boolean putOperator(Operator operator) {
+		// TODO rewrite the stub
+		operators.add(operator);
+		return true;
 	}
 	
 	public List<Operator> getOperators() {
