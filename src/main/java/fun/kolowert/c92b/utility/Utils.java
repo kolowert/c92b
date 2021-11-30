@@ -27,9 +27,9 @@ public class Utils {
 	public static int parseOperatorToId(String input) {
 		int result = -1;
 		String[] parts = input.split("\s");
-		for (String part : parts) {
-			System.out.println(part);
-		}
+//		for (String part : parts) {
+//			System.out.println(part);
+//		}
 		try {
 			result = Integer.parseInt(parts[1]);
 		} catch(NumberFormatException e) {

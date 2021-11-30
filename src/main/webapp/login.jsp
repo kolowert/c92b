@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="_header.jsp"></jsp:include>
 	
-	<div style="padding: 10px;">
+	<div style="color: DimGray">
 		<h3>Choose your id:login and type password to enter</h3>
 	</div>
 

@@ -8,7 +8,7 @@ public class Operator {
 	private String passHash;
 	private String role;
 	private String salt = "abcdefgh";
-	
+
 	public Operator() {
 		super();
 		id = -1;
@@ -16,7 +16,7 @@ public class Operator {
 		role = "cashier";
 		eMail = "undefined";
 	}
-	
+
 	public Operator(int id, String login) {
 		super();
 		this.id = id;
@@ -24,15 +24,26 @@ public class Operator {
 		role = "cashier";
 		eMail = "undefined";
 	}
-	
+
 	// TODO debugging part of code
-	public Operator(int id, String login, String passHash) {
+	public Operator(int id, String login, String role, String passHash) {
 		super();
 		this.id = id;
 		this.login = login;
+		this.role = role;
 		this.passHash = passHash;
 		role = "cashier";
 		eMail = "undefined";
+	}
+
+	@Override
+	public String toString() {
+		return "Operator [id:" + id + ", login:" + login + ", eMail:" + eMail + ", passHash:" + passHash + ", role:"
+				+ role + ", salt:" + salt + "]";
+	}
+
+	public String briefInfo() {
+		return "id:" + id + ", " + login + ", eMail:" + eMail + ", role:" + role;
 	}
 
 	public String geteMail() {

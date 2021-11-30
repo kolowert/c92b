@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="fun.kolowert.c92b.bean.Operator"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +10,31 @@
 
 <body>
 	<jsp:include page="_header.jsp"></jsp:include>
+
+	<h2 style="color: Brown">base page</h2>
+
+	<%
+	Operator dutyOperator = null;
+	int dutyOperatorId = -1;
+	String dutyOperatorName = "undefined";
+	String dutyOperatorRole = "undefined";
 	
-	<div style="padding: 10px;">
-		<p>base page</p>
-	</div>
+	Object preDutyOperator = request.getSession().getAttribute("dutyOperator");
+	if (preDutyOperator instanceof Operator) {
+		dutyOperator = (Operator) preDutyOperator;
+		dutyOperatorId = dutyOperator.getId();
+		dutyOperatorName = dutyOperator.getLogin();
+		dutyOperatorRole = dutyOperator.getRole();
+	}
+	%>
+	
+	<p>base page >>> operator id: <%= dutyOperatorId %></p>
+	<p>base page >>> operator Login: <%= dutyOperatorName %></p>
+	<p>base page >>> operator Role: <%= dutyOperatorRole %></p>
+	<p>base page >>> operator Full Info: <%= dutyOperator.toString() %></p>
+	<p>base page >>> operator Brief Info: <%= dutyOperator.briefInfo() %></p>
 	
 	<jsp:include page="_footer.jsp"></jsp:include>
-	
+
 </body>
 </html>

@@ -3,6 +3,6 @@
 
 <br/><br/>
 <div
-	style="background: Thistle; text-align: left; padding: 5px; margin-top: 5px;">
-	just footer
+	style="background: Thistle; text-align: left; padding: 0px; margin-top: 5px;">
+	<p style="color: MediumPurple"> just footer</p>
 </div>
