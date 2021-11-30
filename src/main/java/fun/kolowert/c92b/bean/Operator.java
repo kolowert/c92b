@@ -24,6 +24,16 @@ public class Operator {
 		role = "cashier";
 		eMail = "undefined";
 	}
+	
+	// TODO debugging part of code
+	public Operator(int id, String login, String passHash) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.passHash = passHash;
+		role = "cashier";
+		eMail = "undefined";
+	}
 
 	public String geteMail() {
 		return eMail;

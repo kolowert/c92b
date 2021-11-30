@@ -14,11 +14,12 @@ public class DaoOperator {
 	
 	private DaoOperator() {
 		// This is stub
-		Operator[] preOperators = { new Operator(123, "Arnold"), 
-				new Operator(234, "Bruce"),
-				new Operator(787, "Silvester"),
-				new Operator(777, "James"),
-				new Operator(699, "Chack") };
+		Operator[] preOperators = { 
+				new Operator(123, "Arnold", "rcjjfw=="), 
+				new Operator(234, "Bruce", "kaj+Rw=="),
+				new Operator(787, "Silvester", "TY28Lg=="),
+				new Operator(777, "James", "fnORkw=="),
+				new Operator(699, "Chack", "4p3twQ==") };
 		operators =  Arrays.asList(preOperators);
 	}
 	

@@ -18,6 +18,8 @@ public class Entry extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		System.out.println("Entry#doGet"); //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 		HttpSession session = request.getSession();
 		String dutyUser = (String) session.getAttribute("dutyUser");
