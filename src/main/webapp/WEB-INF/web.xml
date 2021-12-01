@@ -32,4 +32,14 @@
 		<url-pattern>/loginServ</url-pattern>
 	</servlet-mapping>
 	
+		<error-page>
+		<error-code>404</error-code>
+		<location>/_404.jsp</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/_error.jsp</location>
+	</error-page>
+	
 </web-app>

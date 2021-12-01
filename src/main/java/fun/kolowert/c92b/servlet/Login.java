@@ -30,6 +30,7 @@ public class Login extends HttpServlet {
 		} finally {
 			writer.close();
 		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -59,15 +60,35 @@ public class Login extends HttpServlet {
 			// TODO fill session attribute -> (dutyOperator)
 			HttpSession session = request.getSession();
 			session.setAttribute("dutyOperator", operator);
+			session.setAttribute("briefInfo", operator.briefInfo());
 			// TODO launch base page
-			getServletContext().getRequestDispatcher("/base.jsp").forward(request, response);
+			if (operator.getRole().equals("cashier")) {
+				getServletContext().getRequestDispatcher("/base-base.jsp").forward(request, response);
+				return;
+			}
+			if (operator.getRole().equals("senior cashier")) {
+				getServletContext().getRequestDispatcher("/base-senior.jsp").forward(request, response);
+				return;
+			}
+			if (operator.getRole().equals("expert")) {
+				getServletContext().getRequestDispatcher("/base-expert.jsp").forward(request, response);
+				return;
+			}
+			request.setAttribute("failMessage", "Inappropriate operator registration data");
+			getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
 			return;
 		}
 
 		// next is running when incorrect password
+		System.out.println("login: " + operator.getLogin() 
+				+ "; password:" + passwordInput 
+				+ "; userHash: " + operator.getPassHash()
+				+ "; hash: " + PasswordUtils.hashTextPassword(passwordInput, "abcdefgh")); 
+		
 		request.setAttribute("failMessage", "Incorrect password");
 		getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
-		
+
+
 //		response.setContentType("text/html");
 //		PrintWriter writer = response.getWriter();
 //		try {
@@ -79,7 +100,7 @@ public class Login extends HttpServlet {
 //			writer.println("<p>role: " + operator.getRole() + "</p>");
 //			writer.println("<br>");
 //
-//			Optional<String> hashedPass = PasswordUtils.hashTextPassword(passwordInput, operator.getSalt());
+//			java.util.Optional<String> hashedPass = PasswordUtils.hashTextPassword(passwordInput, operator.getSalt());
 //			writer.println("<p>dbPassHash   : " + operator.getPassHash() + "</p>");
 //			writer.println("<p>inputPassHash: " + hashedPass.get() + "</p>");
 //			writer.println("<p>inputPassword: " + passwordInput + "</p>");

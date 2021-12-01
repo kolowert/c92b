@@ -8,9 +8,9 @@
 </head>
 
 <body>
-	<jsp:include page="_header.jsp"></jsp:include>
+	<jsp:include page="_header-light.jsp"></jsp:include>
 	
-	<div style="padding: 10px;">
+	<div style="float: left; padding: 10px; text-align: left;">
 		<a href="${pageContext.request.contextPath}/entry">Start >>></a>
 	</div>
 	

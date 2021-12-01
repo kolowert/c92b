@@ -11,7 +11,7 @@
 <body>
 	<jsp:include page="_header.jsp"></jsp:include>
 
-	<h2 style="color: Brown">base page</h2>
+	<h2 style="color: Brown">SENIOR page</h2>
 
 	<%
 	Operator dutyOperator = null;
@@ -28,11 +28,12 @@
 	}
 	%>
 	
-	<p>base page >>> operator id: <%= dutyOperatorId %></p>
-	<p>base page >>> operator Login: <%= dutyOperatorName %></p>
-	<p>base page >>> operator Role: <%= dutyOperatorRole %></p>
-	<p>base page >>> operator Full Info: <%= dutyOperator.toString() %></p>
-	<p>base page >>> operator Brief Info: <%= dutyOperator.briefInfo() %></p>
+	<h2 style="color: Brown">base-SENIOR.jsp page</h2>
+	<p>operator id: <%= dutyOperatorId %></p>
+	<p>operator Login: <%= dutyOperatorName %></p>
+	<p>operator Role: <%= dutyOperatorRole %></p>
+	<p>operator Full Info: <%= dutyOperator.toString() %></p>
+	<p>operator Brief Info: <%= dutyOperator.briefInfo() %></p>
 	
 	<jsp:include page="_footer.jsp"></jsp:include>
 

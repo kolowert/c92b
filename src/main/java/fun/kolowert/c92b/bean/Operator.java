@@ -43,7 +43,7 @@ public class Operator {
 	}
 
 	public String briefInfo() {
-		return "id:" + id + ", " + login + ", eMail:" + eMail + ", role:" + role;
+		return "id:" + id + " -- " + login + " -- " + role;
 	}
 
 	public String geteMail() {
