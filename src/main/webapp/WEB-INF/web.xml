@@ -29,7 +29,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>loginServ</servlet-name>
-		<url-pattern>/loginServ</url-pattern>
+		<url-pattern>/main</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

@@ -17,7 +17,7 @@
 		<h3>Choose your id:login and type password to enter</h3>
 	</div>
 
-	<form action="loginServ" method="POST">
+	<form action="main" method="POST">
 		<br> Operator: <select name="operator">
 			<%
 			Object preOperators = request.getAttribute("operators");

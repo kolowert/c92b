@@ -10,9 +10,7 @@
 <body>
 	<jsp:include page="_header-light.jsp"></jsp:include>
 	
-	<div style="float: left; padding: 10px; text-align: left;">
-		<a href="${pageContext.request.contextPath}/entry">Start >>></a>
-	</div>
+		<p><a href="${pageContext.request.contextPath}/entry">Start >>></a></p>
 	
 	<jsp:include page="_footer.jsp"></jsp:include>
 	
