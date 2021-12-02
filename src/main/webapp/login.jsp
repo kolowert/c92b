@@ -6,15 +6,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Login Page</title>
+<meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
 	<jsp:include page="_header-light.jsp"></jsp:include>
 
 	<div style="color: DimGray">
-		<h3>Choose your id:login and type password to enter</h3>
+		<h5 style="text-align: left">Choose your id:login and type password to enter</h5>
 	</div>
 
 	<form action="main" method="POST">
