@@ -26,6 +26,8 @@
 	
 	<jsp:include page="_header.jsp"></jsp:include>
 	
+	<jsp:include page="_menu-expert.jsp"></jsp:include>
+	
 	<h5 style="color: Brown"><%=dutyOperator.briefInfo()%></h5>
 
 	<jsp:include page="_footer.jsp"></jsp:include>

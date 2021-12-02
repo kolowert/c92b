@@ -10,6 +10,8 @@
 
 <body>
 	<jsp:include page="_header.jsp"></jsp:include>
+	
+	<jsp:include page="_menu-senior.jsp"></jsp:include>
 
 	<h2 style="color: Brown">SENIOR page</h2>
 

@@ -17,7 +17,6 @@ if (preBriefInfo instanceof String) {
 	</div>
 	<div style="float: right; padding: 5px; text-align: right;">
 		<pre><%=briefInfo%></pre>
-		<a href="${pageContext.request.contextPath}/entry">log out >>></a>
 	</div>
 </div>
 

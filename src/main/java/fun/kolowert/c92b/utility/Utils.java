@@ -1,5 +1,6 @@
 package fun.kolowert.c92b.utility;
 
+import java.util.Calendar;
 import java.util.List;
 
 import fun.kolowert.c92b.bean.Operator;
@@ -39,4 +40,19 @@ public class Utils {
 		
 		return result;
 	}
+	
+	public static String reportDayOfWeek() {
+		Calendar c = Calendar.getInstance();
+		c.setTime(c.getTime());
+		int d = c.get(Calendar.DAY_OF_WEEK);
+		if (d == 1) return "Sunday";
+		if (d == 2) return "Monday";
+		if (d == 3) return "Tuesday";
+		if (d == 4) return "Wednesday";
+		if (d == 5) return "Thursday";
+		if (d == 6) return "Friday";
+		if (d == 7) return "Suturday";
+		return "error";
+	}
+	
 }

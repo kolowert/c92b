@@ -25,11 +25,21 @@
 	<servlet>
 		<servlet-name>loginServ</servlet-name>
 		<servlet-class>fun.kolowert.c92b.servlet.Login</servlet-class>
-		<load-on-startup>0</load-on-startup>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>loginServ</servlet-name>
 		<url-pattern>/loginServ</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>logoutServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.Logout</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>logoutServ</servlet-name>
+		<url-pattern>/logoutServ</url-pattern>
 	</servlet-mapping>
 	
 		<error-page>

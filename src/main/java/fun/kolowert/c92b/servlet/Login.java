@@ -80,10 +80,10 @@ public class Login extends HttpServlet {
 		}
 
 		// next is running when incorrect password
-		System.out.println("login: " + operator.getLogin() 
-				+ "; password:" + passwordInput 
-				+ "; userHash: " + operator.getPassHash()
-				+ "; hash: " + PasswordUtils.hashTextPassword(passwordInput, "abcdefgh")); 
+//		System.out.println("login: " + operator.getLogin() 
+//				+ "; password:" + passwordInput 
+//				+ "; userHash: " + operator.getPassHash()
+//				+ "; hash: " + PasswordUtils.hashTextPassword(passwordInput, "abcdefgh")); 
 		
 		request.setAttribute("failMessage", "Incorrect password");
 		getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
