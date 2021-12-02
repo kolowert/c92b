@@ -57,6 +57,7 @@ public class Login extends HttpServlet {
 
 		// TODO check password hash
 		if (PasswordUtils.verifyPassword(passwordInput, operator.getPassHash(), operator.getSalt())) {
+			passwordInput = "erased";
 			// TODO fill session attribute -> (dutyOperator)
 			HttpSession session = request.getSession();
 			session.setAttribute("dutyOperator", operator);
@@ -78,7 +79,8 @@ public class Login extends HttpServlet {
 			getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
 			return;
 		}
-
+		passwordInput = "erased";
+		
 		// next is running when incorrect password
 //		System.out.println("login: " + operator.getLogin() 
 //				+ "; password:" + passwordInput 

@@ -3,7 +3,7 @@
 
 <div style="float: right; padding: 5px;">
 
-	<a href="${pageContext.request.contextPath}/order">Process Order</a> 
+	<a href="${pageContext.request.contextPath}/base.jsp">Process Order</a> 
 	|
 	<a href="${pageContext.request.contextPath}/edit-order">Edit Order</a>
 	| 
@@ -11,7 +11,7 @@
 	| 
 	<a href="${pageContext.request.contextPath}/store">Store</a> 
 	| 
-	<a href="${pageContext.request.contextPath}/staff">Staff</a>
+	<a href="${pageContext.request.contextPath}/staff.jsp">Staff</a>
 	| 
 	<a href="${pageContext.request.contextPath}/entry">Log Out</a>
 

@@ -10,6 +10,7 @@ String exception = pageContext.getException().getClass().toString();
 <title>Exception</title>
 </head>
 <body>
+	<jsp:include page="_header-light.jsp"></jsp:include>
 	<h1 style="color: red">Error</h1>
 	<h2>Exception occurred while processing the request</h2>
 	<p>
@@ -19,7 +20,7 @@ String exception = pageContext.getException().getClass().toString();
 		Message:
 		<%=message%></p>
 
-	<b><a href="index.jsp">go home >>></a></b>
-
+	<b><a href="${pageContext.request.contextPath}/index.jsp">go home >>></a></b>
+	<jsp:include page="_footer.jsp"></jsp:include>
 </body>
 </html>

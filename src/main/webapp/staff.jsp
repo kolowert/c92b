@@ -11,7 +11,11 @@
 </head>
 
 <body>
-	<b>List of all operators:</b><br />
+	<jsp:include page="_header.jsp"></jsp:include>
+	
+	<jsp:include page="_menu-expert.jsp"></jsp:include>
+
+	<br /><h4>List of all operators:</h4>
 	<%
 	DaoOperator daoOperator = DaoOperator.getInstance();
 	List<Operator> operators = daoOperator.getOperators();
@@ -21,6 +25,8 @@
 		out.println(operator.briefInfo() + "\t" + "<a href=\"/editOper?id=" + id + "\">edit</a><br />");
 	}
 	%>	
+	
+	<jsp:include page="_footer.jsp"></jsp:include>
 	
 </body>
 </html>
