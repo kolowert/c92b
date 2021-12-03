@@ -23,12 +23,12 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>loginServ</servlet-name>
-		<servlet-class>fun.kolowert.c92b.servlet.Login</servlet-class>
+		<servlet-name>mainServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.Main</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>loginServ</servlet-name>
+		<servlet-name>mainServ</servlet-name>
 		<url-pattern>/main</url-pattern>
 	</servlet-mapping>
 	

@@ -18,34 +18,28 @@ public class Entry extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		System.out.println("Entry#doGet"); //||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+		System.out.println("Entry#doGet"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 		HttpSession session = request.getSession();
-		String dutyUser = (String) session.getAttribute("dutyUser");
+		Object dutyOperator = session.getAttribute("dutyOperator");
 
-		if (dutyUser == null) {
-			// get registered users from database
-			DaoOperator daoOperator = DaoOperator.getInstance();
-			List<Operator> operators = daoOperator.getOperators();
-			
-			request.setAttribute("operators", operators);
-			request.setAttribute("password", "undefined");
-			// redirect to loginPage
-			String path = "/login.jsp";
-			getServletContext().getRequestDispatcher(path).forward(request, response);
+		// zeroing operator if is
+		if (dutyOperator != null) {
+			System.out.println("Entry#doGet -- zeroing operator"); // ||||||||||||||||||||||||||||||||||||||||||||||||||
+			session.setAttribute("dutyOperator", null);
+			session.setAttribute("dutyRole", null);
+			session.setAttribute("briefInfo", null);
 		}
 
-		// if dutyUser is defined go to basePage
-		// TODO
-
-//		response.setContentType("text/html");
-//		PrintWriter writer = response.getWriter();
-//		try {
-//			writer.println("<h1 Style=\"color:Brown\">Hello from Entry Servlet</h1>");
-//		} finally {
-//			writer.close();
-//		}
+		// get registered users from database
+		DaoOperator daoOperator = DaoOperator.getInstance();
+		List<Operator> operators = daoOperator.getOperators();
+		// ..push them into attributes
+		request.setAttribute("operators", operators);
+		request.setAttribute("password", "undefined");
+		// redirect to loginPage
+		getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
 
 	}
 }

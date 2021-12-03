@@ -11,7 +11,7 @@
 <body>
 	<jsp:include page="_header.jsp"></jsp:include>
 	
-	<jsp:include page="_menu-base.jsp"></jsp:include>
+	<jsp:include page="_menu.jsp"></jsp:include>
 	
 	<h2 style="color: Brown">base page</h2>
 

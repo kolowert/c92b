@@ -11,7 +11,7 @@
 	| 
 	<a href="${pageContext.request.contextPath}/store">Store</a> 
 	| 
-	<a href="${pageContext.request.contextPath}/staff.jsp">Staff</a>
+	<a href="${pageContext.request.contextPath}/main?dir=staff">Staff</a>
 	| 
 	<a href="${pageContext.request.contextPath}/entry">Log Out</a>
 
