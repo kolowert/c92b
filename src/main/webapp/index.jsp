@@ -15,7 +15,7 @@
 <body>
 <div class="container-lg p-1">
 	<jsp:include page="_header-light.jsp"></jsp:include>
-	
+	<br />
 	<p><a href="${pageContext.request.contextPath}/entry">Start >>></a></p>
 	
 	<p><a href="${pageContext.request.contextPath}/play/play1.jsp">Play1 >>></a></p>

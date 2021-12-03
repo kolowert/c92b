@@ -26,7 +26,22 @@ public class Main extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		String role = (String) session.getAttribute("dutyRole");
-
+		
+		if (dir.equals("receipt") && (role.equals("senior cashier") || role.equals("expert"))) {
+			getServletContext().getRequestDispatcher("/receipt.jsp").forward(request, response);
+			return;
+		}
+		
+		if (dir.equals("report") && (role.equals("senior cashier") || role.equals("expert"))) {
+			getServletContext().getRequestDispatcher("/report.jsp").forward(request, response);
+			return;
+		}
+		
+		if (dir.equals("store") && role.equals("expert")) {
+			getServletContext().getRequestDispatcher("/store.jsp").forward(request, response);
+			return;
+		}
+		
 		if (dir.equals("staff") && role.equals("expert")) {
 			getServletContext().getRequestDispatcher("/staff.jsp").forward(request, response);
 			return;

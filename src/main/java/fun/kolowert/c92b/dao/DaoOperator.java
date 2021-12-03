@@ -20,7 +20,7 @@ public class DaoOperator {
 				new Operator(787, "Silvester", "cashier", "TY28Lg=="),
 				new Operator(777, "James", "cashier", "fnORkw=="), 
 				new Operator(699, "Chack", "expert", "4p3twQ=="),
-				new Operator(999, "Admin", "expert", "PbAzIw=="), };
+				new Operator(999, "Admin", "expert", "PbAzIw==") };
 		operators = Arrays.asList(preOperators);
 	}
 

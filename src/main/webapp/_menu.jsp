@@ -5,7 +5,7 @@
 
 	<a href="${pageContext.request.contextPath}/base.jsp">Process Order</a> 
 	|
-	<a href="${pageContext.request.contextPath}/main?dir=edit">Edit Order</a>
+	<a href="${pageContext.request.contextPath}/main?dir=receipt">Receipts</a>
 	| 
 	<a href="${pageContext.request.contextPath}/main?dir=report">Reports</a> 
 	| 

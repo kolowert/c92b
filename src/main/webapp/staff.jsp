@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>JSP Page</title>
+<title>Staff Page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
