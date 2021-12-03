@@ -8,8 +8,14 @@ String exception = pageContext.getException().getClass().toString();
 <head>
 <meta charset="UTF-8">
 <title>Exception</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div class="container-lg p-1">
 	<jsp:include page="_header-light.jsp"></jsp:include>
 	<h1 style="color: red">Error</h1>
 	<h2>Exception occurred while processing the request</h2>
@@ -22,5 +28,6 @@ String exception = pageContext.getException().getClass().toString();
 
 	<b><a href="${pageContext.request.contextPath}/index.jsp">go home >>></a></b>
 	<jsp:include page="_footer.jsp"></jsp:include>
+</div>
 </body>
 </html>

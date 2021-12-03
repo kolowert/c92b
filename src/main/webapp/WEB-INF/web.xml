@@ -21,7 +21,7 @@
 		<servlet-name>entryServ</servlet-name>
 		<url-pattern>/entry</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>mainServ</servlet-name>
 		<servlet-class>fun.kolowert.c92b.servlet.Main</servlet-class>
@@ -31,18 +31,8 @@
 		<servlet-name>mainServ</servlet-name>
 		<url-pattern>/main</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>logoutServ</servlet-name>
-		<servlet-class>fun.kolowert.c92b.servlet.Logout</servlet-class>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>logoutServ</servlet-name>
-		<url-pattern>/logoutServ</url-pattern>
-	</servlet-mapping>
-	
-		<error-page>
+
+	<error-page>
 		<error-code>404</error-code>
 		<location>/_404.jsp</location>
 	</error-page>
@@ -51,5 +41,5 @@
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/_error.jsp</location>
 	</error-page>
-	
+
 </web-app>

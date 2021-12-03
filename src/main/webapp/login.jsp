@@ -16,6 +16,7 @@
 </head>
 
 <body>
+<div class="container-lg p-1">
 	<jsp:include page="_header-light.jsp"></jsp:include>
 
 	<div style="color: DimGray">
@@ -28,8 +29,8 @@
 			Object preOperators = request.getAttribute("operators");
 			List<Operator> operators = Utils.convert(preOperators);
 			for (Operator operator : operators) {
-				out.println("<option>id: " + operator.getId() + " ---  " + operator.getLogin() + " ---  " + operator.getRole()
-				+ "</option>");
+				out.println("<option>id: " + operator.getId() + " ---  " + operator.getLogin() + " ---  " 
+						+ operator.getRole() + "</option>");
 			}
 			%>
 		</select> <br> <br> Password: <input type="password" name="password" />
@@ -38,6 +39,6 @@
 	</form>
 
 	<jsp:include page="_footer.jsp"></jsp:include>
-
+</div>
 </body>
 </html>

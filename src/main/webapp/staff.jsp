@@ -14,38 +14,39 @@
 </head>
 
 <body>
-	<jsp:include page="_header.jsp"></jsp:include>
-	<jsp:include page="_menu.jsp"></jsp:include>
-	<br />
+	<div class="container-lg p-1">
+		<jsp:include page="_header.jsp"></jsp:include>
+		<jsp:include page="_menu.jsp"></jsp:include>
+		<br />
 
-	<div class="container mt-4">
-		<h5 class="text-muted">List of all operators:</h5>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>id</th>
-					<th>Login</th>
-					<th>Role</th>
-					<th class="text-primary">Edit</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-				DaoOperator daoOperator = DaoOperator.getInstance();
-				List<Operator> operators = daoOperator.getOperators();
-				for (Operator operator : operators) {
-					int id = operator.getId();
-					String login = operator.getLogin();
-					String role = operator.getRole();
-					String editLink = "<a href=\"/editOper?id=" + id + "\">edit</a>";
-					out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" 
-						+ editLink + "</td></tr>");
-				}
-				%>
-			</tbody>
-		</table>
+		<div class="container mt-4">
+			<h5 class="text-muted">List of all operators:</h5>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>Login</th>
+						<th>Role</th>
+						<th class="text-primary">Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					DaoOperator daoOperator = DaoOperator.getInstance();
+					List<Operator> operators = daoOperator.getOperators();
+					for (Operator operator : operators) {
+						int id = operator.getId();
+						String login = operator.getLogin();
+						String role = operator.getRole();
+						String editLink = "<a href=\"/editOper?id=" + id + "\">edit</a>";
+						out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" 
+								+ editLink + "</td></tr>");
+					}
+					%>
+				</tbody>
+			</table>
+		</div>
+		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="_footer.jsp"></jsp:include>
-
 </body>
 </html>

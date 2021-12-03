@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<div class="container-lg p-1">
 	<jsp:include page="_header-light.jsp"></jsp:include>
 	
 	<p><a href="${pageContext.request.contextPath}/entry">Start >>></a></p>
@@ -30,6 +31,6 @@
 	<button type="button" class="btn">Basic</button>
 	
 	<jsp:include page="_footer.jsp"></jsp:include>
-	
+</div>
 </body>
 </html>
