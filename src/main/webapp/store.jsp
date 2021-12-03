@@ -18,11 +18,21 @@
 <body>
 	<div class="container-lg p-1">
 		<jsp:include page="_header.jsp"></jsp:include>
-		<jsp:include page="_menu.jsp"></jsp:include>
 		<br />
-
-		<div class="container mt-6">
-			<h5 class="text-muted">Store</h5>
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<h5 class="text-muted">Items Store:</h5>
+				</div>
+				<div class="col-sm-6">
+					<p style="text-align: right">Register new Item
+					<button id="newItemBtn" type="button" class="btn-info">new</button></p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container-lg">
 			
 			<table class="table">
 				<thead>
@@ -45,7 +55,8 @@
 						MeasureUnit unit = item.getUnit();
 						double quantity = item.getQuantity();
 						double price = item.getPrice();
-						String editLink = "<a href=\"/editItem?id=" + id + "\">edit</a>";
+						String path = request.getContextPath();
+						String editLink = "<a href=\"" + path + "/edit-item.jsp?id=" + id + "\">edit</a>";
 						out.println("<tr><td>" 
 								+ id + "</td><td>" 
 								+ name + "</td><td>" 

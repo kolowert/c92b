@@ -9,14 +9,27 @@ if (preBriefInfo instanceof String) {
 }
 %>
 
-<div style="background: Lavender; height: 35px; padding: 0px;">
-	<div style="float: left; padding: 0px;">
-		<p style="color: MediumPurple">
-			<b>Cash Register c92b</b>
-		</p>
-	</div>
-	<div style="float: right; padding: 5px; text-align: right;">
-		<pre><%=briefInfo%></pre>
+<div class="container-lg p-1 bg-light border">
+	<div class="row">
+
+		<div class="col-sm-4">
+			<pre style="color: MediumPurple; text-align: left"><%=briefInfo%></pre>
+		</div>
+
+		<div class="col-sm-6">
+			<p style="text-align: center">
+				<a href="${pageContext.request.contextPath}/base.jsp">Order</a> 
+				| <a href="${pageContext.request.contextPath}/main?dir=receipt">Receipts</a>
+				| <a href="${pageContext.request.contextPath}/main?dir=report">Reports</a>
+				| <a href="${pageContext.request.contextPath}/main?dir=store">Store</a>
+				| <a href="${pageContext.request.contextPath}/main?dir=staff">Staff</a>
+				| <a href="${pageContext.request.contextPath}/entry">Log Out</a>
+			</p>
+		</div>
+
+		<div class="col-sm-2">
+			<h5 style="color: Thistle; text-align: right">Cash Register</h5>
+		</div>
+
 	</div>
 </div>
-

@@ -16,7 +16,6 @@
 <body>
 	<div class="container-lg p-1">
 		<jsp:include page="_header.jsp"></jsp:include>
-		<jsp:include page="_menu.jsp"></jsp:include>
 		<br />
 
 		<h3 class="text-info">receipt page stub</h3>

@@ -16,11 +16,23 @@
 <body>
 	<div class="container-lg p-1">
 		<jsp:include page="_header.jsp"></jsp:include>
-		<jsp:include page="_menu.jsp"></jsp:include>
 		<br />
 
-		<div class="container mt-4">
-			<h5 class="text-muted">List of all operators:</h5>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<h5 class="text-muted">Operators:</h5>
+				</div>
+				<div class="col-sm-6">
+					<p style="text-align: right">
+						Register new Operator
+						<button id="newOperBtn" type="button" class="btn-info">new</button>
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-lg">
 			<table class="table">
 				<thead>
 					<tr>
@@ -38,7 +50,8 @@
 						int id = operator.getId();
 						String login = operator.getLogin();
 						String role = operator.getRole();
-						String editLink = "<a href=\"/editOper?id=" + id + "\">edit</a>";
+						String path = request.getContextPath();
+						String editLink = "<a href=\"" + path + "/edit-oper.jsp?id=" + id + "\">edit</a>";
 						out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" 
 								+ editLink + "</td></tr>");
 					}

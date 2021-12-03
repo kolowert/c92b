@@ -22,7 +22,7 @@ public class DaoStore {
 				new Item(30, "Vanilla Pudding", MeasureUnit.thing, 32, 16.95),			
 				new Item(23, "Pie with Cream", MeasureUnit.thing, 15, 18.50),
 				new Item(15, "Cranberry Cookies", MeasureUnit.kilogram, 28, 25.65),
-				new Item(16, "Red Currants Jelly", MeasureUnit.tonn, 0.55, 130.00),
+				new Item(16, "Red Currants Jelly", MeasureUnit.tonn, 0.55, 13000.00),
 				new Item(17, "Custard Cake", MeasureUnit.kilogram, 9, 19.99),
 				new Item(18, "Shortcrust Pastry with Cheese", MeasureUnit.thing, 30, 12.50),
 				new Item(19, "Honey Biscuits", MeasureUnit.kilogram, 15, 9.96),

@@ -17,6 +17,7 @@ String exception = pageContext.getException().getClass().toString();
 <body>
 <div class="container-lg p-1">
 	<jsp:include page="_header-light.jsp"></jsp:include>
+	<br />
 	<h1 style="color: red">Error</h1>
 	<h2>Exception occurred while processing the request</h2>
 	<p>

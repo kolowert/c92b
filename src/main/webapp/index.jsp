@@ -26,6 +26,8 @@
 	
 	<p><a href="${pageContext.request.contextPath}/play/play4.jsp">Play4 >>></a>&ensp; editing from dao</p>
 	
+	<p><a href="${pageContext.request.contextPath}/play/play5.jsp">Play5 >>></a></p>
+	
 	<p>--------------------------------------------</p>
 	
 	<button type="button" class="btn">Basic</button>

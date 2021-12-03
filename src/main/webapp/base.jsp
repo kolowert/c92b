@@ -16,10 +16,9 @@
 <body>
 	<div class="container-lg p-1">
 		<jsp:include page="_header.jsp"></jsp:include>
-		<jsp:include page="_menu.jsp"></jsp:include>
 		<br />
 
-		<h3 style="color: Brown">base page</h3>
+		<h3 class="text-info">Order page stub</h3>
 
 		<%
 		Operator dutyOperator = null;
@@ -28,15 +27,18 @@
 		String dutyOperatorRole = "undefined";
 
 		Object preDutyOperator = request.getSession().getAttribute("dutyOperator");
+
 		if (preDutyOperator instanceof Operator) {
 			dutyOperator = (Operator) preDutyOperator;
 			dutyOperatorId = dutyOperator.getId();
 			dutyOperatorName = dutyOperator.getLogin();
 			dutyOperatorRole = dutyOperator.getRole();
+		} else {
+			request.setAttribute("failMessage", "Current Login is off in some reason");
+			getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
 		}
 		%>
 
-		<h3 style="color: Brown">base-BASE.jsp page</h3>
 		<p>
 			operator id:
 			<%=dutyOperatorId%></p>
