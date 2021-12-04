@@ -27,7 +27,7 @@
 				</div>
 				<div class="col-sm-6">
 					<p style="text-align: right">Register new Item
-					<button id="newItemBtn" type="button" class="btn-info">new</button></p>
+					<input type = "button" onclick = "location.href='input-item.jsp'" value = "new" /></p>
 				</div>
 			</div>
 		</div>

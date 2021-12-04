@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 
 <%
-String briefInfo = "undefined operator";
-Object preBriefInfo = request.getSession().getAttribute("briefInfo");
-if (preBriefInfo instanceof String) {
-	briefInfo = (String) preBriefInfo;
-}
+	String briefInfo = "undefined operator";
+	Object preBriefInfo = request.getSession().getAttribute("briefInfo");
+	if (preBriefInfo instanceof String) {
+		briefInfo = (String) preBriefInfo;
+	}
 %>
 
 <div class="container-lg p-1 bg-light border">

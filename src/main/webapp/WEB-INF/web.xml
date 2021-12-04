@@ -31,7 +31,17 @@
 		<servlet-name>mainServ</servlet-name>
 		<url-pattern>/main</url-pattern>
 	</servlet-mapping>
-
+	
+		<servlet>
+		<servlet-name>operServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.Oper</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>operServ</servlet-name>
+		<url-pattern>/oper</url-pattern>
+	</servlet-mapping>
+	
 	<error-page>
 		<error-code>404</error-code>
 		<location>/_404.jsp</location>

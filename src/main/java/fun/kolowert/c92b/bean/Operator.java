@@ -4,7 +4,6 @@ public class Operator {
 	private final int id;
 	private final String login;
 
-	private String eMail;
 	private String passHash;
 	private String role;
 	private String salt = "abcdefgh";
@@ -14,7 +13,6 @@ public class Operator {
 		id = -1;
 		login = "undefined";
 		role = "cashier";
-		eMail = "undefined";
 	}
 
 	public Operator(int id, String login) {
@@ -22,7 +20,6 @@ public class Operator {
 		this.id = id;
 		this.login = login;
 		role = "cashier";
-		eMail = "undefined";
 	}
 
 	// TODO debugging part of code
@@ -32,26 +29,25 @@ public class Operator {
 		this.login = login;
 		this.role = role;
 		this.passHash = passHash;
-		role = "cashier";
-		eMail = "undefined";
+	}
+
+	// TODO debugging part of code
+	public Operator(String login, String role, String passHash, String salt) {
+		this.id = -1;
+		this.login = login;
+		this.role = role;
+		this.passHash = passHash;
+		this.salt = salt;
 	}
 
 	@Override
 	public String toString() {
-		return "Operator [id:" + id + ", login:" + login + ", eMail:" + eMail + ", passHash:" + passHash + ", role:"
-				+ role + ", salt:" + salt + "]";
+		return "Operator [id:" + id + ", login:" + login + ", passHash:" + passHash + ", role:" + role 
+				+ ", salt:" + salt + "]";
 	}
 
 	public String briefInfo() {
-		return "id:" + id + " -- " + login + " -- " + role;
-	}
-
-	public String geteMail() {
-		return eMail;
-	}
-
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
+		return login + " -- " + role + " -- " + "id:" + id;
 	}
 
 	public String getPassHash() {

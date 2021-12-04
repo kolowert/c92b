@@ -27,13 +27,14 @@
 		<br> Operator: <select name="operator">
 			<%
 			Object preOperators = request.getAttribute("operators");
-			List<Operator> operators = Utils.convert(preOperators);
+			List<Operator> operators = Utils.convertToOperator(preOperators);
 			for (Operator operator : operators) {
 				out.println("<option>id: " + operator.getId() + " ---  " + operator.getLogin() + " ---  " 
 						+ operator.getRole() + "</option>");
 			}
 			%>
-		</select> <br> <br> Password: <input type="password" name="password" />
+		</select> 
+		<br> <br> Password: <input type="password" name="password" />
 
 		<br> <br> <input type="submit" value="Log in" />
 	</form>

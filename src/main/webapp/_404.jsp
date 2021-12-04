@@ -12,7 +12,7 @@
 <body>
 	<div class="container-lg p-1">
 		<jsp:include page="_header-light.jsp"></jsp:include>
-		<h2 style="color: Brown">Resource not found!</h2>
+		<h2 style="color: Brown">Page not found!</h2>
 		<b><a href="${pageContext.request.contextPath}/index.jsp">go home >>></a></b>
 		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>

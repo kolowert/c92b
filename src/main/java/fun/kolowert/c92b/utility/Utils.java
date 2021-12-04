@@ -11,13 +11,28 @@ public class Utils {
 	 * used on login.jsp
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Operator> convert(Object input) {
+	public static List<Operator> convertToOperator(Object input) {
 		Object preresult = null;
 		if (input != null && input instanceof List<?>) {
 			preresult = (List<Object>) input;
 		}
 		if (preresult != null && ((List<Operator>) preresult).get(0) instanceof Operator) {
 			return (List<Operator>) preresult;
+		}
+		return null;
+	}
+	
+	/**
+	 * used on input-oper.jsp.jsp
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<String> convertToString(Object input) {
+		Object preresult = null;
+		if (input != null && input instanceof List<?>) {
+			preresult = (List<String>) input;
+		}
+		if (preresult != null && ((List<String>) preresult).get(0) instanceof String) {
+			return (List<String>) preresult;
 		}
 		return null;
 	}

@@ -26,7 +26,7 @@
 				<div class="col-sm-6">
 					<p style="text-align: right">
 						Register new Operator
-						<button id="newOperBtn" type="button" class="btn-info">new</button>
+						<input type = "button" onclick = "location.href='input-oper.jsp'" value = "new" /></p>
 					</p>
 				</div>
 			</div>
