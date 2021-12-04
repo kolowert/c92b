@@ -5,7 +5,7 @@ import java.util.List;
 
 public class DaoRole {
 	
-	private static DaoRole daoRole;
+	private static DaoRole INSTANCE;
 
 	// TODO rewrite this stubs
 	private List<String> roles;
@@ -17,10 +17,10 @@ public class DaoRole {
 	}
 	
 	public static DaoRole getInstance() {
-		if (daoRole != null) {
-			return daoRole;
+		if (INSTANCE == null) {
+			INSTANCE = new DaoRole();
 		}
-		return new DaoRole();
+		return INSTANCE;
 	}
 	
 	public List<String> getRoles() {

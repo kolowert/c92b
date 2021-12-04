@@ -21,12 +21,13 @@
 		<jsp:include page="_header.jsp"></jsp:include>
 
 		<div style="color: DimGray">
-			<br /><h5 style="text-align: left">Input new Operator</h5><br />
+			<br /><h5 style="text-align: left">Register new Operator</h5><br />
 		</div>
 
-		<!-- ----------------------------------------------------------------------------------------------------------- -->
+		<!-- ------------------------------------------------------------------------------------------------------- -->
 		<form action="oper" method="POST">
-			Name: <input name="login" /> &nbsp; &nbsp; 
+			<input type="hidden" name="task" value="inputNew">
+			Login: <input name="login" /> &nbsp; &nbsp; 
 			Role: <select name="role">
 			<%
 				DaoRole daoRole = DaoRole.getInstance();
@@ -40,7 +41,7 @@
 			&nbsp; &nbsp; <input type="button" onclick="location.href='staff.jsp'" value="cancel" />
 		</form>
 
-		<!-- ----------------------------------------------------------------------------------------------------------- -->
+		<!-- ------------------------------------------------------------------------------------------------------- -->
 
 		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>

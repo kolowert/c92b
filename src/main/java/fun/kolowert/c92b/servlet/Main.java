@@ -64,7 +64,7 @@ public class Main extends HttpServlet {
 		// parse operator to id
 		int operatorId = Utils.parseOperatorToId(operatorLabel);
 
-		// TODO get Operator from database by id
+		// get Operator from database by id
 		DaoOperator daoOperator = DaoOperator.getInstance();
 		Operator operator = daoOperator.getOperatorById(operatorId);
 

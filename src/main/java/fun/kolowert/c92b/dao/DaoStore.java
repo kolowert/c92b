@@ -8,7 +8,7 @@ import fun.kolowert.c92b.bean.MeasureUnit;
 
 public class DaoStore {
 
-	private static DaoStore daoStore;
+	private static DaoStore INSTANCE;
 
 	// TODO rewrite this stubs
 	private List<Item> items;
@@ -43,10 +43,10 @@ public class DaoStore {
 	}
 
 	public static DaoStore getInstance() {
-		if (daoStore != null) {
-			return daoStore;
+		if (INSTANCE == null) {
+			INSTANCE = new DaoStore();
 		}
-		return new DaoStore();
+		return INSTANCE;
 	}
 	
 	public List<Item> getItems() {

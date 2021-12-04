@@ -4,7 +4,7 @@ import java.util.List;
 
 import fun.kolowert.c92b.bean.Operator;
 
-public class DaoPlay {
+public class PlayDao {
 
 	public static void main(String[] args) {
 

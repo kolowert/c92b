@@ -16,8 +16,7 @@ public final class DaoOperator {
 
 	private DaoOperator() {
 		// This is stub
-		Operator[] preOperators = { 
-				new Operator(123, "Arnold", "cashier", "rcjjf/lKuvNapHjHisBrFQ=="),
+		Operator[] preOperators = { new Operator(123, "Arnold", "cashier", "rcjjf/lKuvNapHjHisBrFQ=="),
 				new Operator(234, "Bruce", "senior cashier", "kaj+RzVqa1L52KPqRtHouw=="),
 				new Operator(787, "Silvester", "cashier", "TY28LhZVRK8meBZKFYlbWA=="),
 				new Operator(777, "James", "cashier", "fnORkwQN/L+qSG9hcS68gQ=="),
@@ -30,9 +29,9 @@ public final class DaoOperator {
 	}
 
 	public static DaoOperator getInstance() {
-		
+
 		System.out.println("DaoOperator#getInstance >> daoOperator: " + INSTANCE); // |||||||||||||||||||||||||||
-		
+
 		if (INSTANCE == null) {
 			INSTANCE = new DaoOperator();
 			System.out.println("DaoOperator#getInstance >> ~~~ NEW ~~~"); // |||||||||||||||||||||||||||
@@ -69,12 +68,20 @@ public final class DaoOperator {
 		return true;
 	}
 
+	public void deleteOperator(int id) {
+		// TODO rewrite the stub
+		Operator vanishing = getOperatorById(id);
+		if (vanishing != null) {
+			operators.remove(vanishing);
+		}
+	}
+
 	public List<Operator> getOperators() {
 		// TODO rewrite the stub
 		operators.sort(new Comparator<Operator>() {
 			@Override
 			public int compare(Operator o1, Operator o2) {
-				return  o1.getLogin().compareTo(o2.getLogin());
+				return o1.getLogin().compareTo(o2.getLogin());
 			}
 		});
 		return operators;

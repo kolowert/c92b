@@ -33,7 +33,8 @@ public class Operator {
 
 	// TODO debugging part of code
 	public Operator(String login, String role, String passHash, String salt) {
-		this.id = -1;
+		java.util.Random rnd = new java.util.Random();
+		this.id = rnd.nextInt(899) + 100;
 		this.login = login;
 		this.role = role;
 		this.passHash = passHash;

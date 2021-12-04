@@ -56,6 +56,23 @@ public class Utils {
 		return result;
 	}
 	
+	/**
+	 * It converts SomeServlet#request.getParameter("id") to primitive integer
+	 * @param usually SomeServlet#request.getParameter("id")
+	 * @return parsed value or -1 if input can't be parsed
+	 */
+	public static int parseIntIdFromObject(Object input) {
+		int	result = -1;
+		if (input instanceof String) {
+			try {
+				result = Integer.parseInt((String) input);
+			} catch (NumberFormatException e) {
+				// TODO log mismatch
+			}
+		}
+		return result;
+	}
+	
 	public static String reportDayOfWeek() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(c.getTime());
