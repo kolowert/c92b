@@ -28,27 +28,27 @@ public class Main extends HttpServlet {
 		String role = (String) session.getAttribute("dutyRole");
 		
 		if (dir.equals("receipt") && (role.equals("senior cashier") || role.equals("expert"))) {
-			getServletContext().getRequestDispatcher("/receipt.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/play/receipt.jsp").forward(request, response);
 			return;
 		}
 		
 		if (dir.equals("report") && (role.equals("senior cashier") || role.equals("expert"))) {
-			getServletContext().getRequestDispatcher("/report.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/play/report.jsp").forward(request, response);
 			return;
 		}
 		
 		if (dir.equals("store") && role.equals("expert")) {
-			getServletContext().getRequestDispatcher("/store.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/play/store.jsp").forward(request, response);
 			return;
 		}
 		
 		if (dir.equals("staff") && role.equals("expert")) {
-			getServletContext().getRequestDispatcher("/staff.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/play/staff.jsp").forward(request, response);
 			return;
 		}
 		
 		System.out.println("Main#doGet -- not match any IF"); // |||||||||||||||||||||||||||||||||||||||||||||||||||||||
-		getServletContext().getRequestDispatcher("/base.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 
 	}
 
@@ -72,7 +72,7 @@ public class Main extends HttpServlet {
 			// TODO something with it
 			System.out.println("operator == null !!!"); // |||||||||||||||||||||||||||||||||||||||||||||||
 			request.setAttribute("failMessage", "Cash Register Operator has been not found");
-			getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
 		}
 
 		// TODO check password hash
@@ -84,11 +84,11 @@ public class Main extends HttpServlet {
 			session.setAttribute("dutyRole", operator.getRole());
 			session.setAttribute("briefInfo", operator.briefInfo());
 			// TODO launch base page
-			getServletContext().getRequestDispatcher("/base.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 			return;
 		}
 		request.setAttribute("failMessage", "Incorrect password or inappropriate operator registration data");
-		getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
 		return;
 
 	}

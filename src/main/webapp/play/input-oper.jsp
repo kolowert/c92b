@@ -24,8 +24,7 @@
 			<br /><h5 style="text-align: left">Register new Operator</h5><br />
 		</div>
 
-		<!-- ------------------------------------------------------------------------------------------------------- -->
-		<form action="oper" method="POST">
+		<form action="${pageContext.request.contextPath}/oper" method="POST">
 			<input type="hidden" name="task" value="inputNew">
 			Login: <input name="login" /> &nbsp; &nbsp; 
 			Role: <select name="role">
@@ -37,11 +36,10 @@
 				}
 			%>
 			</select> &nbsp; &nbsp; Password: <input type="password" name="password" />
+			<% String operServPath; %>
 			&nbsp; &nbsp; <input type="submit" value="input" />
-			&nbsp; &nbsp; <input type="button" onclick="location.href='staff.jsp'" value="cancel" />
+			&nbsp; &nbsp; <input type="button" onclick="location.href='play/staff.jsp'" value="cancel" />
 		</form>
-
-		<!-- ------------------------------------------------------------------------------------------------------- -->
 
 		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>

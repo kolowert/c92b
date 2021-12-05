@@ -25,8 +25,9 @@
 				</div>
 				<div class="col-sm-6">
 					<p style="text-align: right">
-						Register new Operator
-						<input type = "button" onclick = "location.href='input-oper.jsp'" value = "new" /></p>
+						Register new Operator <input type="button"
+							onclick="location.href='${pageContext.request.contextPath}/play/input-oper.jsp'"
+							value="new" />
 					</p>
 				</div>
 			</div>
@@ -51,9 +52,8 @@
 						String login = operator.getLogin();
 						String role = operator.getRole();
 						String path = request.getContextPath();
-						String editLink = "<a href=\"" + path + "/edit-oper.jsp?id=" + id + "\">edit</a>";
-						out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" 
-								+ editLink + "</td></tr>");
+						String editLink = "<a href=\"" + path + "/play/edit-oper.jsp?id=" + id + "\">edit</a>";
+						out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" + editLink + "</td></tr>");
 					}
 					%>
 				</tbody>

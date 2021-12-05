@@ -53,7 +53,7 @@ public class Oper extends HttpServlet {
 			daoOperator.deleteOperator(id);
 		}
 		
-		getServletContext().getRequestDispatcher("/staff.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/play/staff.jsp").forward(request, response);
 
 	}
 }

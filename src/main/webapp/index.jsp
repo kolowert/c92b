@@ -14,13 +14,13 @@
 
 <body>
 	<div class="container-lg p-1">
-		<jsp:include page="_header-light.jsp"></jsp:include>
+		<jsp:include page="play/_header-light.jsp"></jsp:include>
 		<br /> 
 		<input type="button"
 			onclick="location.href='${pageContext.request.contextPath}/entry'"
 			value="Launch Cash Register" />
 
-		<jsp:include page="_footer.jsp"></jsp:include>
+		<jsp:include page="play/_footer.jsp"></jsp:include>
 	</div>
 </body>
 </html>

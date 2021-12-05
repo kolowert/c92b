@@ -39,7 +39,7 @@ public class Entry extends HttpServlet {
 		request.setAttribute("operators", operators);
 		request.setAttribute("password", "undefined");
 		// redirect to loginPage
-		getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/play/login.jsp").forward(request, response);
 
 	}
 }
