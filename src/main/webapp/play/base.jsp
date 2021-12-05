@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="fun.kolowert.c92b.bean.Operator"%>
-
+	pageEncoding="UTF-8"
+	import="fun.kolowert.c92b.bean.Operator"
+	import="fun.kolowert.c92b.bean.Item"
+	import="fun.kolowert.c92b.dao.DaoStore"
+	import="fun.kolowert.c92b.utility.Utils" 
+	import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,47 +22,49 @@
 		<jsp:include page="_header.jsp"></jsp:include>
 		<br />
 
-		<h3 class="text-info">Order page stub</h3>
+		<!-- Containers___ -->
 
-		<%
-		Operator dutyOperator = null;
-		int dutyOperatorId = -1;
-		String dutyOperatorName = "undefined";
-		String dutyOperatorRole = "undefined";
-		String info = "undefined";
-		String brief = "undefined";
-
-		Object preDutyOperator = request.getSession().getAttribute("dutyOperator");
-
-		if (preDutyOperator instanceof Operator) {
-			dutyOperator = (Operator) preDutyOperator;
-			dutyOperatorId = dutyOperator.getId();
-			dutyOperatorName = dutyOperator.getLogin();
-			dutyOperatorRole = dutyOperator.getRole();
-			info = dutyOperator.toString();
-			brief = dutyOperator.briefInfo();
+		<div class="container p-3 my-3 bg-light border">
+			<form action="${pageContext.request.contextPath}/order" method="POST">
+				<input type="hidden" name="task" value="addToReceipt"> 
+				<select name="itemBrief">
+					<%
+					DaoStore daoStore = DaoStore.getInstance();
+					List<Item> items = daoStore.getItems();
+					out.println("<option>" + "> > > add item to order > > >" + "</option>");
+					for (Item item : items) {
+						out.println("<option>" + item.brief() + "</option>");
+					}
+					%>
+				</select> 
+				&nbsp; : &nbsp; <input name="quantity" />
+				&nbsp; &nbsp; 
+				<input type="submit" value="next" /> 
+				&nbsp; &nbsp; 
+				<input
+					type="button" onclick="location.href='order?task=finish'"
+					value="finish" />
+			</form>
 			
-		} else {
-			request.setAttribute("failMessage", "Current Login is off in some reason");
-			getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
-		}
-		%>
+			<br />
+			<%
+			String messageType = Utils.atributeToStringOrStub(request.getAttribute("messageType"), "fail");
+			String orderMessage = Utils.atributeToStringOrStub(request.getAttribute("orderMessage"), "");
+			if (messageType.equals("good")) {
+				out.println("<p class='text-primary'>" + orderMessage + "</p>");
+			} else {
+				out.println("<p class='text-danger'>" + orderMessage + "</p>");
+			}
+			%>
+		</div>
 
-		<p>
-			operator id:
-			<%=dutyOperatorId%></p>
-		<p>
-			operator Login:
-			<%=dutyOperatorName%></p>
-		<p>
-			operator Role:
-			<%=dutyOperatorRole%></p>
-		<p>
-			operator Full Info:
-			<%=info%></p>
-		<p>
-			operator Brief Info:
-			<%=brief%></p>
+		<div class="container p-3 my-1 bg-light border">
+			<h1>Second container</h1>
+			<p>This container has a border and some extra padding and
+				margins.</p>
+		</div>
+
+		<!-- Containers*** -->
 
 		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>

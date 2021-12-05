@@ -21,7 +21,7 @@ public class Utils {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * used on input-oper.jsp.jsp
 	 */
@@ -48,21 +48,42 @@ public class Utils {
 //		}
 		try {
 			result = Integer.parseInt(parts[1]);
-		} catch(NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			// TODO log here
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
-	
+
+	public static int parseStringToInt(String s) {
+		int result = -1;
+		if (s == null) {
+			return result;
+		}
+		try {
+			result = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			// TODO log here
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static String atributeToStringOrStub(Object input, String stub) {
+		if (input != null && input instanceof String) {
+			return input.toString();
+		}
+		return stub;
+	}
+
 	/**
 	 * It converts SomeServlet#request.getParameter("id") to primitive integer
+	 * 
 	 * @param usually SomeServlet#request.getParameter("id")
 	 * @return parsed value or -1 if input can't be parsed
 	 */
 	public static int parseIntIdFromObject(Object input) {
-		int	result = -1;
+		int result = -1;
 		if (input instanceof String) {
 			try {
 				result = Integer.parseInt((String) input);
@@ -77,14 +98,21 @@ public class Utils {
 		Calendar c = Calendar.getInstance();
 		c.setTime(c.getTime());
 		int d = c.get(Calendar.DAY_OF_WEEK);
-		if (d == 1) return "Sunday";
-		if (d == 2) return "Monday";
-		if (d == 3) return "Tuesday";
-		if (d == 4) return "Wednesday";
-		if (d == 5) return "Thursday";
-		if (d == 6) return "Friday";
-		if (d == 7) return "Suturday";
+		if (d == 1)
+			return "Sunday";
+		if (d == 2)
+			return "Monday";
+		if (d == 3)
+			return "Tuesday";
+		if (d == 4)
+			return "Wednesday";
+		if (d == 5)
+			return "Thursday";
+		if (d == 6)
+			return "Friday";
+		if (d == 7)
+			return "Suturday";
 		return "error";
 	}
-	
+
 }

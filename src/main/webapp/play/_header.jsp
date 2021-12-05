@@ -18,7 +18,7 @@
 
 		<div class="col-sm-6">
 			<p style="text-align: center">
-				<a href="${pageContext.request.contextPath}/play/base.jsp">Order</a> 
+				  <a href="${pageContext.request.contextPath}/main?dir=base">Order</a> 
 				| <a href="${pageContext.request.contextPath}/main?dir=receipt">Receipts</a>
 				| <a href="${pageContext.request.contextPath}/main?dir=report">Reports</a>
 				| <a href="${pageContext.request.contextPath}/main?dir=store">Store</a>

@@ -25,7 +25,18 @@ public class Main extends HttpServlet {
 		String dir = request.getParameter("dir");
 
 		HttpSession session = request.getSession();
-		String role = (String) session.getAttribute("dutyRole");
+		Object preRole = session.getAttribute("dutyRole");
+		if (preRole == null) {
+			request.setAttribute("failMessage", "Current session went off. Register to continue!");
+			getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
+		}
+		String role = (String) preRole;
+		
+		if (dir.equals("base")) {
+			System.out.println("Main#doGet >> dir.equals(\"base\")");
+			getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
+			return;
+		}
 		
 		if (dir.equals("receipt") && (role.equals("senior cashier") || role.equals("expert"))) {
 			getServletContext().getRequestDispatcher("/play/receipt.jsp").forward(request, response);

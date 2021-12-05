@@ -32,10 +32,20 @@
 		<url-pattern>/main</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
+		<servlet-name>orderServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.Order</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orderServ</servlet-name>
+		<url-pattern>/order</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>operServ</servlet-name>
 		<servlet-class>fun.kolowert.c92b.servlet.Oper</servlet-class>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>3</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>operServ</servlet-name>

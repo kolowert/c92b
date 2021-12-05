@@ -1,5 +1,6 @@
 package fun.kolowert.c92b.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class DaoStore {
 	private static DaoStore INSTANCE;
 
 	// TODO rewrite this stubs
-	private List<Item> items;
+	private List<Item> items = new ArrayList<>();
 
 	private DaoStore() {
 		// This is stub
@@ -47,6 +48,15 @@ public class DaoStore {
 			INSTANCE = new DaoStore();
 		}
 		return INSTANCE;
+	}
+	
+	public Item getItemById(int id) {
+		for (Item item : items) {
+			if (item.getId() == id) {
+				return item;
+			}
+		}
+		return null;
 	}
 	
 	public List<Item> getItems() {

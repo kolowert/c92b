@@ -23,6 +23,8 @@ public class Entry extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		Object dutyOperator = session.getAttribute("dutyOperator");
+		
+		session.setAttribute("currentReceipt", null);
 
 		// zeroing operator if is
 		if (dutyOperator != null) {

@@ -1,6 +1,7 @@
 package fun.kolowert.c92b.bean;
 
 public class Item {
+
 	private int id;
 	private String name;
 	private MeasureUnit unit;
@@ -63,4 +64,16 @@ public class Item {
 		this.price = price;
 	}
 	
+	public String brief() {
+		String idView = "" + id;
+		if (id < 10) idView = "00" + id;
+		if (id < 100) idView = "0" + id;
+		return idView + " | " + name + "   >> " + price + " / " + unit + " ( " + quantity + " )";
+	}
+	
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", unit=" + unit + ", quantity=" + quantity + ", price=" + price
+				+ "]";
+	}
 }
