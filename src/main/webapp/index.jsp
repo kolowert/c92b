@@ -13,26 +13,14 @@
 </head>
 
 <body>
-<div class="container-lg p-1">
-	<jsp:include page="_header-light.jsp"></jsp:include>
-	<br />
-	<p><a href="${pageContext.request.contextPath}/entry">Start >>></a></p>
-	
-	<p><a href="${pageContext.request.contextPath}/play/play1.jsp">Play1 >>></a></p>
-	
-	<p><a href="${pageContext.request.contextPath}/play/play2.jsp">Play2 >>></a></p>
-	
-	<p><a href="${pageContext.request.contextPath}/play/play3.jsp">Play3 >>></a></p>
-	
-	<p><a href="${pageContext.request.contextPath}/play/play4.jsp">Play4 >>></a>&ensp; editing from dao</p>
-	
-	<p><a href="${pageContext.request.contextPath}/play/play5.jsp">Play5 >>></a></p>
-	
-	<p>--------------------------------------------</p>
-	
-	<button type="button" class="btn">Basic</button>
-	
-	<jsp:include page="_footer.jsp"></jsp:include>
-</div>
+	<div class="container-lg p-1">
+		<jsp:include page="_header-light.jsp"></jsp:include>
+		<br /> 
+		<input type="button"
+			onclick="location.href='${pageContext.request.contextPath}/entry'"
+			value="Launch Cash Register" />
+
+		<jsp:include page="_footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>
