@@ -16,7 +16,8 @@ public final class DaoOperator {
 
 	private DaoOperator() {
 		// This is stub
-		Operator[] preOperators = { new Operator(123, "Arnold", "cashier", "rcjjf/lKuvNapHjHisBrFQ=="),
+		Operator[] preOperators = { 
+				new Operator(123, "Arnold", "cashier", "rcjjf/lKuvNapHjHisBrFQ=="),
 				new Operator(234, "Bruce", "senior cashier", "kaj+RzVqa1L52KPqRtHouw=="),
 				new Operator(787, "Silvester", "cashier", "TY28LhZVRK8meBZKFYlbWA=="),
 				new Operator(777, "James", "cashier", "fnORkwQN/L+qSG9hcS68gQ=="),
@@ -39,6 +40,18 @@ public final class DaoOperator {
 		return INSTANCE;
 	}
 
+	public void createNewInDataBase(String login, String role, String password) {
+		// TODO master the stub
+		String salt = PasswordUtils.generateSalt(16);
+		System.out.println("DaoOperator# >> salt " + salt); // ||||||||||||||||||||||||||||||||||||||
+		String passHash = PasswordUtils.hashTextPassword(password, salt).get();
+		System.out.println("DaoOperator# >> passHass " + passHash); // ||||||||||||||||||||||||||||||||||||||
+		Operator entrant = new Operator(login, role, passHash, salt);
+		System.out.println("DaoOperator# >> entrant " + entrant); // ||||||||||||||||||||||||||||||||||||||
+		operators.add(entrant);
+		System.out.println("DaoOperator# >> after adding"); // ||||||||||||||||||||||||||||||||||||||
+	}
+
 	public Operator getOperatorById(int id) {
 		Operator result = null;
 		// TODO rewrite the stub
@@ -50,22 +63,29 @@ public final class DaoOperator {
 		return result;
 	}
 
-	public void createNewInDataBase(String login, String role, String password) {
-		// TODO master the stub
-		String salt = PasswordUtils.generateSalt(16);
-		System.out.println("DaoOperator# >> salt " + salt); // ||||||||||||||||||||||||||||||||||||||
-		String passHass = PasswordUtils.hashTextPassword(password, salt).get();
-		System.out.println("DaoOperator# >> passHass " + passHass); // ||||||||||||||||||||||||||||||||||||||
-		Operator entrant = new Operator(login, role, passHass, salt);
-		System.out.println("DaoOperator# >> entrant " + entrant); // ||||||||||||||||||||||||||||||||||||||
-		operators.add(entrant);
-		System.out.println("DaoOperator# >> after adding"); // ||||||||||||||||||||||||||||||||||||||
-	}
-
 	public boolean putOperator(Operator operator) {
 		// TODO rewrite the stub
 		operators.add(operator);
 		return true;
+	}
+
+	public boolean editOperator(int id, String inputLogin, String inputRole, String inputPassword) {
+		// TODO rewrite the stub
+		Operator operator = getOperatorById(id);
+		if (operator != null) {
+			operators.remove(operator);
+			if (inputPassword != null && inputPassword.length() > 2) {
+				String salt = PasswordUtils.generateSalt(16);
+				String passHash = PasswordUtils.hashTextPassword(inputPassword, salt).get();
+				operator.setSalt(salt);
+				operator.setPassHash(passHash);
+			}
+			operator.setRole(inputRole);
+			operator.setLogin(inputLogin);
+			putOperator(operator);
+			return true;
+		}
+		return false;
 	}
 
 	public void deleteOperator(int id) {

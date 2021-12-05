@@ -35,7 +35,6 @@ import="java.util.List"%>
 		if (operator != null) {
 			editLogin = operator.getLogin();
 		}
-		
 		%>
 		
 		<form action="oper" method="POST">
@@ -51,7 +50,8 @@ import="java.util.List"%>
 					out.println("<option>" + role + "</option>");
 				}
 			%>
-			</select> &nbsp; &nbsp; Password*: <input type="password" name="password" />
+			</select> 
+			&nbsp; &nbsp; Password*: <input type="password" name="password" />
 			&nbsp; &nbsp; <input type="submit" value="edit" />
 			&nbsp; &nbsp; <input type="button" onclick="location.href='staff.jsp'" value="cancel" />
 		</form>

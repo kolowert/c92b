@@ -1,8 +1,8 @@
 package fun.kolowert.c92b.bean;
 
 public class Operator {
-	private final int id;
-	private final String login;
+	private int id;
+	private String login;
 
 	private String passHash;
 	private String role;
@@ -78,8 +78,16 @@ public class Operator {
 	public int getId() {
 		return id;
 	}
-
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getLogin() {
 		return login;
+	}
+	
+	public void setLogin(String login) {
+		this.login = login;
 	}
 }

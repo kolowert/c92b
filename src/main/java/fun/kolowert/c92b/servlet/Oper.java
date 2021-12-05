@@ -37,7 +37,13 @@ public class Oper extends HttpServlet {
 		
 		if (formTask.equals("editOper")) {
 			System.out.println("Oper#doPost >> editOper"); // ||||||||||||||||||||||||||||||||
-			
+			int	id = Utils.parseIntIdFromObject(request.getParameter("id"));
+			String inputLogin = request.getParameter("login");
+			String inputRole = request.getParameter("role");
+			String inputPassword = request.getParameter("password");
+			DaoOperator daoOperator = DaoOperator.getInstance();
+			daoOperator.editOperator(id, inputLogin, inputRole, inputPassword);
+			inputPassword = "erased";
 		}
 		
 		if (formTask.equals("deleteOper")) {

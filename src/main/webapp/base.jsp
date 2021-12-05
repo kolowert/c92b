@@ -25,6 +25,8 @@
 		int dutyOperatorId = -1;
 		String dutyOperatorName = "undefined";
 		String dutyOperatorRole = "undefined";
+		String info = "undefined";
+		String brief = "undefined";
 
 		Object preDutyOperator = request.getSession().getAttribute("dutyOperator");
 
@@ -33,6 +35,9 @@
 			dutyOperatorId = dutyOperator.getId();
 			dutyOperatorName = dutyOperator.getLogin();
 			dutyOperatorRole = dutyOperator.getRole();
+			info = dutyOperator.toString();
+			brief = dutyOperator.briefInfo();
+			
 		} else {
 			request.setAttribute("failMessage", "Current Login is off in some reason");
 			getServletContext().getRequestDispatcher("/login-fail.jsp").forward(request, response);
@@ -50,10 +55,10 @@
 			<%=dutyOperatorRole%></p>
 		<p>
 			operator Full Info:
-			<%=dutyOperator.toString()%></p>
+			<%=info%></p>
 		<p>
 			operator Brief Info:
-			<%=dutyOperator.briefInfo()%></p>
+			<%=brief%></p>
 
 		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>
