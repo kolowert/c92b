@@ -14,6 +14,10 @@ public class Receipt {
 		this.id = rnd.nextInt(8999) + 1000;
 		
 		this.opentime = opentime;
+		
+		closetime = opentime;
+		operatorId = -1;
+		sum = 0.0;
 	}
 
 	public int getId() {

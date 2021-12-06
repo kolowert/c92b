@@ -31,9 +31,30 @@ public class DaoReceipt {
 		return null;
 	}
 	
+	public boolean update(Receipt neo) {
+		// TODO this stub
+		for (Receipt old : receipts) {
+			if (old.getId() == neo.getId()) {
+				receipts.remove(old);
+				receipts.add(neo);
+			}
+		}
+		return false;
+	}
+	
+	public boolean remove(int id) {
+		// TODO this stub
+		for (Receipt receipt : receipts) {
+			if (receipt.getId() == id) {
+				return receipts.remove(receipt);
+			}
+		}
+		return false;
+	}
+	
 	public Receipt createNewReceipt() {
 		// TODO
-		long unixTimeNow = System.currentTimeMillis() / 1000L;
+		long unixTimeNow = System.currentTimeMillis();
 		Receipt receipt = new Receipt(unixTimeNow);
 		java.util.Random rnd = new java.util.Random();
 		receipt.setId(rnd.nextInt(899) + 100);

@@ -1,11 +1,11 @@
 package fun.kolowert.c92b.bean;
 
 public enum MeasureUnit {
-	thing,
-	botle,
+	bar,
+	botle,	
+	glass,
     jar,
-    glass,
+    piece,
     kilogram,
-    tonn,
-    bar
+    tonn
 }

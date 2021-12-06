@@ -122,7 +122,7 @@ public class Utils {
 	}
 	
 	public static String unixTimeToTimeStamp(long t) {
-		java.util.Date datetime = new java.util.Date(t*1000);
+		java.util.Date datetime = new java.util.Date(t);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		return dateFormat.format(datetime);
 	}

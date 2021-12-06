@@ -29,6 +29,7 @@ public class Main extends HttpServlet {
 		if (dir == null || preRole == null) {
 			request.setAttribute("failMessage", "Current session went off. Register to continue!");
 			getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
+			return;
 		}
 		String role = (String) preRole;
 		
@@ -38,7 +39,7 @@ public class Main extends HttpServlet {
 			return;
 		}
 		
-		if (dir.equals("receipt") && (role.equals("senior cashier") || role.equals("expert"))) {
+		if (dir.equals("receipt")) {
 			getServletContext().getRequestDispatcher("/play/receipt.jsp").forward(request, response);
 			return;
 		}

@@ -1,6 +1,6 @@
 package fun.kolowert.c92b.bean;
 
-public class SoldItem {
+public class SoldRecord {
 
 	private int receiptId;
 	private long receiptTime;
@@ -9,7 +9,7 @@ public class SoldItem {
 	private double soldQuantity;
 	private double soldCost;
 
-	public SoldItem(int receiptId, long receiptTime, int itemId, double soldPrice, double soldQuantity,
+	public SoldRecord(int receiptId, long receiptTime, int itemId, double soldPrice, double soldQuantity,
 			double soldCost) {
 		this.receiptId = receiptId;
 		this.receiptTime = receiptTime;

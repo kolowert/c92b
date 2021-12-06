@@ -3,7 +3,7 @@
 	import="fun.kolowert.c92b.bean.Receipt"
 	import="fun.kolowert.c92b.bean.Operator"
 	import="fun.kolowert.c92b.bean.Item"
-	import="fun.kolowert.c92b.bean.SoldItem"
+	import="fun.kolowert.c92b.bean.SoldRecord"
 	import="fun.kolowert.c92b.dao.DaoStore"
 	import="fun.kolowert.c92b.dao.DaoSold"
 	import="fun.kolowert.c92b.utility.Utils" 
@@ -34,11 +34,11 @@
 				<select name="itemBrief">
 					<%
 					DaoStore daoStore = DaoStore.getInstance();
-					List<Item> items = daoStore.getItems();
-					out.println("<option>" + "> > > add item to the order > > >" + "</option>");
-					for (Item item : items) {
-						out.println("<option>" + item.brief() + "</option>");
-					}
+								List<Item> items = daoStore.getItems();
+								out.println("<option>" + "> > > add item to the order > > >" + "</option>");
+								for (Item item : items) {
+									out.println("<option>" + item.brief() + "</option>");
+								}
 					%>
 				</select> 
 				&ensp; : &ensp; 
@@ -58,12 +58,12 @@
 			<br />
 			<%
 			String messageType = Utils.atributeToStringOrStub(request.getAttribute("messageType"), "fail");
-			String orderMessage = Utils.atributeToStringOrStub(request.getAttribute("orderMessage"), "");
-			if (messageType.equals("good")) {
-				out.println("<p class='text-primary'>" + orderMessage + "</p>");
-			} else {
-				out.println("<p class='text-danger'>" + orderMessage + "</p>");
-			}
+				String orderMessage = Utils.atributeToStringOrStub(request.getAttribute("orderMessage"), "");
+				if (messageType.equals("good")) {
+					out.println("<p class='text-primary'>" + orderMessage + "</p>");
+				} else {
+					out.println("<p class='text-danger'>" + orderMessage + "</p>");
+				}
 			%>
 		</div>
 		
@@ -71,40 +71,40 @@
 		<div class="container p-3 my-1 bg-light border">
 			<%
 			String receiptLabel = "not created yet";
-			String total = "--.--";
-			int currentReceiptId = -1;
-			long currentReceiptOpenTime = -1L;
-			String opentime = "--.--.-- --:--:--";
-			Object preCurrentReceipt = session.getAttribute("currentReceipt");
-			if (preCurrentReceipt instanceof Receipt) {
-				Receipt currentReceipt = (Receipt) preCurrentReceipt;
-				currentReceiptId = currentReceipt.getId();
-				receiptLabel = "#" + currentReceiptId; 
-				currentReceiptOpenTime = currentReceipt.getOpentime();
-				total = Utils.norm(currentReceipt.getSum());
-			}
-			if (currentReceiptOpenTime > 0) {
-				opentime = Utils.unixTimeToTimeStamp(currentReceiptOpenTime);
-			}
+				String total = "--.--";
+				int currentReceiptId = -1;
+				long currentReceiptOpenTime = -1L;
+				String opentime = "--.--.-- --:--:--";
+				Object preCurrentReceipt = session.getAttribute("currentReceipt");
+				if (preCurrentReceipt instanceof Receipt) {
+					Receipt currentReceipt = (Receipt) preCurrentReceipt;
+					currentReceiptId = currentReceipt.getId();
+					receiptLabel = "#" + currentReceiptId; 
+					currentReceiptOpenTime = currentReceipt.getOpentime();
+					total = Utils.norm(currentReceipt.getSum());
+				}
+				if (currentReceiptOpenTime > 0) {
+					opentime = Utils.unixTimeToTimeStamp(currentReceiptOpenTime);
+				}
 			%>
 			<h5 class="text-muted">Receipt <small><%=receiptLabel%>&emsp;<%=opentime%></small></h5>
 			<%
 			DaoSold daoSold = DaoSold.getInstance();
-			List<SoldItem> soldItems = daoSold.getSoldItems(currentReceiptId);
-			out.println("<h4 class='text-primary'>TOTAL: " + total + "</h4>");
-			// make table
-			out.println("<table class='table'>");
-			out.println("<thead><tr><th>Item</th><th>price</th><th>quantity</th><th>cost</th></tr></thead>");
-			out.println("<tbody>");
-			for (SoldItem soldItem : soldItems) {
-				Item item = daoStore.getItem(soldItem.getItemId());
-				String receiptLine = item.getName() + " >>> " + soldItem.brief();
-				out.println("<tr><td>" + item.getName() + "</td><td>" + item.getPrice() + "</td><td>" 
-						+ Utils.norm(soldItem.getSoldQuantity()) + " " + item.getUnit() + "</td><td>" 
-						+ Utils.norm(soldItem.getSoldCost()) + "</td></tr>");
-			}
-			out.println("</tbody>");
-			out.println("</table>");
+				List<SoldRecord> soldRecords = daoSold.getSoldRecords(currentReceiptId);
+				out.println("<h4 class='text-primary'>TOTAL: " + total + "</h4>");
+				// make table
+				out.println("<table class='table'>");
+				out.println("<thead><tr><th>Item</th><th>price</th><th>quantity</th><th>cost</th></tr></thead>");
+				out.println("<tbody>");
+				for (SoldRecord soldRecord : soldRecords) {
+					Item item = daoStore.getItem(soldRecord.getItemId());
+					String receiptLine = item.getName() + " >>> " + soldRecord.brief();
+					out.println("<tr><td>" + item.getName() + "</td><td>" + item.getPrice() + "</td><td>" 
+							+ Utils.norm(soldRecord.getSoldQuantity()) + " " + item.getUnit() + "</td><td>" 
+							+ Utils.norm(soldRecord.getSoldCost()) + "</td></tr>");
+				}
+				out.println("</tbody>");
+				out.println("</table>");
 			%>
 		</div>
 
