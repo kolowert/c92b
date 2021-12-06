@@ -32,6 +32,14 @@ public class Order extends HttpServlet {
 		
 		if (task != null && task.equals("finish")) {
 			// TODO
+			System.out.println("Order#doGet >>> must be 'finish' task=" + task); // |||||||||||||||||||||||||||||||||||||||||||||||||
+			
+		}
+		
+		if (task != null && task.equals("cancel")) {
+			// TODO
+			System.out.println("Order#doGet >>> must be 'cancel' task=" + task); // |||||||||||||||||||||||||||||||||||||||||||||||||
+			
 		}
 		
 	}
@@ -114,8 +122,8 @@ public class Order extends HttpServlet {
 				request.setAttribute("soldItems", soldItems);
 				session.setAttribute("currentReceipt", currentReceipt);
 				request.setAttribute("messageType", "good"); // are types "good" or "fail"
-				String orderMessage = "Added: " + item.getName() + " >>> " + norm(requestQuantity) + " " + item.getUnit()
-						+ " >>> cost=" + norm(cost) + " >>> TOTAL > " + norm(sum);
+				String orderMessage = "Added: " + item.getName() + " >>> " + Utils.norm(requestQuantity) + " " 
+						+ item.getUnit() + " >>> cost=" + Utils.norm(cost);
 				request.setAttribute("orderMessage", orderMessage);
 			}
 		}
@@ -132,18 +140,7 @@ public class Order extends HttpServlet {
 		}
 		return -1;
 	}
-	
-	/**
-	 * normalize double to format "[DDD...]D.PP"
-	 * @param double value
-	 */
-	private String norm(double d) {
-		int h = (int) (d * 100 + 0.5);
-		int len = ("" + h).length();
-		String r = "" + 1.0 * (h / 100.0) + "00";
-		return r.subSequence(0, len + 1).toString();
-	}
-	
+		
 	private int parseIdFromBrief(String brief) {
 		int result = -1;
 		if (brief == null) {

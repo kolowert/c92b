@@ -35,7 +35,7 @@
 					<%
 					DaoStore daoStore = DaoStore.getInstance();
 					List<Item> items = daoStore.getItems();
-					out.println("<option>" + "> > > add item to order > > >" + "</option>");
+					out.println("<option>" + "> > > add item to the order > > >" + "</option>");
 					for (Item item : items) {
 						out.println("<option>" + item.brief() + "</option>");
 					}
@@ -49,6 +49,10 @@
 				<input
 					type="button" onclick="location.href='order?task=finish'"
 					value="finish" />
+				&ensp; &ensp;
+				<input
+					type="button" onclick="location.href='order?task=cancel'"
+					value="cancel" />
 			</form>
 			
 			<br />
@@ -66,7 +70,8 @@
 		<!-- receipt --------------------------------------------------------- -->
 		<div class="container p-3 my-1 bg-light border">
 			<%
-			String receiptLabel = "not created yet"; 
+			String receiptLabel = "not created yet";
+			String total = "--.--";
 			int currentReceiptId = -1;
 			long currentReceiptOpenTime = -1L;
 			String opentime = "--.--.-- --:--:--";
@@ -76,6 +81,7 @@
 				currentReceiptId = currentReceipt.getId();
 				receiptLabel = "#" + currentReceiptId; 
 				currentReceiptOpenTime = currentReceipt.getOpentime();
+				total = Utils.norm(currentReceipt.getSum());
 			}
 			if (currentReceiptOpenTime > 0) {
 				opentime = Utils.unixTimeToTimeStamp(currentReceiptOpenTime);
@@ -85,10 +91,20 @@
 			<%
 			DaoSold daoSold = DaoSold.getInstance();
 			List<SoldItem> soldItems = daoSold.getSoldItems(currentReceiptId);
-			out.println("TOTAL: ");
+			out.println("<h4 class='text-primary'>TOTAL: " + total + "</h4>");
+			// make table
+			out.println("<table class='table'>");
+			out.println("<thead><tr><th>Item</th><th>price</th><th>quantity</th><th>cost</th></tr></thead>");
+			out.println("<tbody>");
 			for (SoldItem soldItem : soldItems) {
-				out.println("<pre>" + soldItem.brief() + "</pre>");
+				Item item = daoStore.getItem(soldItem.getItemId());
+				String receiptLine = item.getName() + " >>> " + soldItem.brief();
+				out.println("<tr><td>" + item.getName() + "</td><td>" + item.getPrice() + "</td><td>" 
+						+ Utils.norm(soldItem.getSoldQuantity()) + " " + item.getUnit() + "</td><td>" 
+						+ Utils.norm(soldItem.getSoldCost()) + "</td></tr>");
 			}
+			out.println("</tbody>");
+			out.println("</table>");
 			%>
 		</div>
 

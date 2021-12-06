@@ -50,7 +50,6 @@ public class SoldItem {
 	}
 
 	public String brief() {
-		return "receipt:" + receiptId + " ItemId:" + ItemId + ", price:" + soldPrice + ", quantity:" + soldQuantity
-				+ ", cost:" + soldCost;
+		return "price:" + soldPrice + ", quantity:" + soldQuantity + ", cost:" + soldCost;
 	}
 }

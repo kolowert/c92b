@@ -1,5 +1,7 @@
 package fun.kolowert.c92b.utility;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -108,9 +110,21 @@ public class Utils {
 		return result;
 	}
 	
+	/**
+	 * normalize double to format "[DDD...]D.PP"
+	 * @param double value
+	 */
+	public static String norm(double d) {
+		int h = (int) (d * 100 + 0.5);
+		int len = ("" + h).length();
+		String r = "" + 1.0 * (h / 100.0) + "00";
+		return r.subSequence(0, len + 1).toString();
+	}
+	
 	public static String unixTimeToTimeStamp(long t) {
-		// TODO here!
-		return "timestamp stub";
+		java.util.Date datetime = new java.util.Date(t*1000);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		return dateFormat.format(datetime);
 	}
 	
 	public static String reportDayOfWeek() {
