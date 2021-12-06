@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
+	import="fun.kolowert.c92b.bean.Receipt"
 	import="fun.kolowert.c92b.bean.Operator"
 	import="fun.kolowert.c92b.bean.Item"
+	import="fun.kolowert.c92b.bean.SoldItem"
 	import="fun.kolowert.c92b.dao.DaoStore"
+	import="fun.kolowert.c92b.dao.DaoSold"
 	import="fun.kolowert.c92b.utility.Utils" 
 	import="java.util.List"%>
 <!DOCTYPE html>
@@ -25,6 +28,7 @@
 		<!-- Containers___ -->
 
 		<div class="container p-3 my-3 bg-light border">
+		
 			<form action="${pageContext.request.contextPath}/order" method="POST">
 				<input type="hidden" name="task" value="addToReceipt"> 
 				<select name="itemBrief">
@@ -37,10 +41,11 @@
 					}
 					%>
 				</select> 
-				&nbsp; : &nbsp; <input name="quantity" />
-				&nbsp; &nbsp; 
+				&ensp; : &ensp; 
+				<input name="quantity" />
+				&ensp; &ensp; 
 				<input type="submit" value="next" /> 
-				&nbsp; &nbsp; 
+				&ensp; &ensp; 
 				<input
 					type="button" onclick="location.href='order?task=finish'"
 					value="finish" />
@@ -57,11 +62,34 @@
 			}
 			%>
 		</div>
-
+		
+		<!-- receipt --------------------------------------------------------- -->
 		<div class="container p-3 my-1 bg-light border">
-			<h1>Second container</h1>
-			<p>This container has a border and some extra padding and
-				margins.</p>
+			<%
+			String receiptLabel = "not created yet"; 
+			int currentReceiptId = -1;
+			long currentReceiptOpenTime = -1L;
+			String opentime = "--.--.-- --:--:--";
+			Object preCurrentReceipt = session.getAttribute("currentReceipt");
+			if (preCurrentReceipt instanceof Receipt) {
+				Receipt currentReceipt = (Receipt) preCurrentReceipt;
+				currentReceiptId = currentReceipt.getId();
+				receiptLabel = "#" + currentReceiptId; 
+				currentReceiptOpenTime = currentReceipt.getOpentime();
+			}
+			if (currentReceiptOpenTime > 0) {
+				opentime = Utils.unixTimeToTimeStamp(currentReceiptOpenTime);
+			}
+			%>
+			<h5 class="text-muted">Receipt <small><%=receiptLabel%>&emsp;<%=opentime%></small></h5>
+			<%
+			DaoSold daoSold = DaoSold.getInstance();
+			List<SoldItem> soldItems = daoSold.getSoldItems(currentReceiptId);
+			out.println("TOTAL: ");
+			for (SoldItem soldItem : soldItems) {
+				out.println("<pre>" + soldItem.brief() + "</pre>");
+			}
+			%>
 		</div>
 
 		<!-- Containers*** -->

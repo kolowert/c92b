@@ -26,7 +26,7 @@ public class Main extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		Object preRole = session.getAttribute("dutyRole");
-		if (preRole == null) {
+		if (dir == null || preRole == null) {
 			request.setAttribute("failMessage", "Current session went off. Register to continue!");
 			getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
 		}

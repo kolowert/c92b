@@ -50,7 +50,7 @@ public class DaoStore {
 		return INSTANCE;
 	}
 	
-	public Item getItemById(int id) {
+	public Item getItem(int id) {
 		for (Item item : items) {
 			if (item.getId() == id) {
 				return item;

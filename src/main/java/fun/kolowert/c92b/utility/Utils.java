@@ -69,6 +69,20 @@ public class Utils {
 		return result;
 	}
 
+	public static double parseStringToDouble(String s) {
+		double result = -1.0;
+		if (s == null) {
+			return result;
+		}
+		try {
+			result = Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+			// TODO log here
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public static String atributeToStringOrStub(Object input, String stub) {
 		if (input != null && input instanceof String) {
 			return input.toString();
@@ -92,6 +106,11 @@ public class Utils {
 			}
 		}
 		return result;
+	}
+	
+	public static String unixTimeToTimeStamp(long t) {
+		// TODO here!
+		return "timestamp stub";
 	}
 	
 	public static String reportDayOfWeek() {

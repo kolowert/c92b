@@ -1,6 +1,7 @@
 package fun.kolowert.c92b.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpSession;
 import fun.kolowert.c92b.bean.Item;
 import fun.kolowert.c92b.bean.Operator;
 import fun.kolowert.c92b.bean.Receipt;
+import fun.kolowert.c92b.bean.SoldItem;
 import fun.kolowert.c92b.dao.DaoReceipt;
+import fun.kolowert.c92b.dao.DaoSold;
 import fun.kolowert.c92b.dao.DaoStore;
 import fun.kolowert.c92b.utility.Utils;
 
@@ -26,6 +29,10 @@ public class Order extends HttpServlet {
 		
 		String task = request.getParameter("task");
 		System.out.println("Order#doGet >> task=" + task); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		
+		if (task != null && task.equals("finish")) {
+			// TODO
+		}
 		
 	}
 	
@@ -45,7 +52,7 @@ public class Order extends HttpServlet {
 			// receive item brief information from form
 			String inputItemBrief = request.getParameter("itemBrief");
 			String inputQuantity = request.getParameter("quantity");
-			int requestQuantity = Utils.parseStringToInt(inputQuantity);
+			double requestQuantity = Utils.parseStringToDouble(inputQuantity);
 			System.out.println("Order#doPost >> inputItem:" + inputItemBrief + " inputQuantity:" + inputQuantity); // ||||||||
 			int itemId = parseIdFromBrief(inputItemBrief);
 			System.out.println("Order#doPost >> itemId:" + itemId); // ||||||||
@@ -56,7 +63,7 @@ public class Order extends HttpServlet {
 				getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 				return;
 			}
-			if (requestQuantity < 0) {
+			if (requestQuantity < 0.0) {
 				request.setAttribute("messageType", "fail"); // are types "good" or "fail"
 				request.setAttribute("orderMessage", "Rejected! Wrong Quantity");
 				getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
@@ -65,8 +72,9 @@ public class Order extends HttpServlet {
 
 			// check if item present in database
 			DaoStore daoStore = DaoStore.getInstance();
-			Item item = daoStore.getItemById(itemId);
+			Item item = daoStore.getItem(itemId);
 			if (item != null) {
+				
 				// check quantity
 				if (item.getQuantity() < requestQuantity) {
 					request.setAttribute("messageType", "fail"); // are types "good" or "fail"
@@ -89,23 +97,25 @@ public class Order extends HttpServlet {
 					currentReceipt = daoReceipt.createNewReceipt();
 					currentReceipt.setOperatorId(getDutyOperatorId(session));
 				}
-
+				
 				// increase sum in receipt
 				double cost = requestQuantity * item.getPrice();
 				double sum = currentReceipt.getSum() + cost;
 				currentReceipt.setSum(sum);
 
-				// put line into soldRecords
-				// TODO
+				// update soldRecords
+				SoldItem soldItem = new SoldItem(currentReceipt.getId(), currentReceipt.getOpentime(), 
+						itemId, item.getPrice(), requestQuantity, cost);
+				DaoSold daoSold = DaoSold.getInstance();
+				daoSold.add(soldItem);
+				List<SoldItem> soldItems = daoSold.getSoldItems(currentReceipt.getId());
 				
-				// expose sold records
-				// TODO
-
 				// finally set attributes
+				request.setAttribute("soldItems", soldItems);
 				session.setAttribute("currentReceipt", currentReceipt);
 				request.setAttribute("messageType", "good"); // are types "good" or "fail"
-				String orderMessage = "Added: " + item.getName() + " >>> " + requestQuantity + " " + item.getUnit()
-						+ " >>> cost=" + cost + " >>> TOTAL > " + sum;
+				String orderMessage = "Added: " + item.getName() + " >>> " + norm(requestQuantity) + " " + item.getUnit()
+						+ " >>> cost=" + norm(cost) + " >>> TOTAL > " + norm(sum);
 				request.setAttribute("orderMessage", orderMessage);
 			}
 		}
@@ -122,7 +132,18 @@ public class Order extends HttpServlet {
 		}
 		return -1;
 	}
-
+	
+	/**
+	 * normalize double to format "[DDD...]D.PP"
+	 * @param double value
+	 */
+	private String norm(double d) {
+		int h = (int) (d * 100 + 0.5);
+		int len = ("" + h).length();
+		String r = "" + 1.0 * (h / 100.0) + "00";
+		return r.subSequence(0, len + 1).toString();
+	}
+	
 	private int parseIdFromBrief(String brief) {
 		int result = -1;
 		if (brief == null) {
