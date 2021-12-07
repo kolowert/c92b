@@ -39,8 +39,8 @@ public class Main extends HttpServlet {
 			return;
 		}
 		
-		if (dir.equals("receipt")) {
-			getServletContext().getRequestDispatcher("/play/receipt.jsp").forward(request, response);
+		if (dir.equals("receipts")) {
+			getServletContext().getRequestDispatcher("/play/receipts.jsp").forward(request, response);
 			return;
 		}
 		

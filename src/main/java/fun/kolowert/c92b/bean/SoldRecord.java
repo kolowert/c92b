@@ -1,7 +1,8 @@
 package fun.kolowert.c92b.bean;
 
 public class SoldRecord {
-
+	
+	private int id;
 	private int receiptId;
 	private long receiptTime;
 	private int ItemId;
@@ -11,6 +12,8 @@ public class SoldRecord {
 
 	public SoldRecord(int receiptId, long receiptTime, int itemId, double soldPrice, double soldQuantity,
 			double soldCost) {
+		java.util.Random rnd = new java.util.Random();
+		this.id = rnd.nextInt(8999) + 1000;
 		this.receiptId = receiptId;
 		this.receiptTime = receiptTime;
 		ItemId = itemId;
@@ -18,7 +21,11 @@ public class SoldRecord {
 		this.soldQuantity = soldQuantity;
 		this.soldCost = soldCost;
 	}
-
+	
+	public int getId() {
+		return id;
+	}
+	
 	public int getReceiptId() {
 		return receiptId;
 	}

@@ -115,9 +115,10 @@ public class Utils {
 	 * @param double value
 	 */
 	public static String norm(double d) {
+		if (d <= 0.0049) { return "0.00"; }
 		int h = (int) (d * 100 + 0.5);
 		int len = ("" + h).length();
-		String r = "" + 1.0 * (h / 100.0) + "00";
+		String r = "" + 1.0 * (h / 100.0) + "000";
 		return r.subSequence(0, len + 1).toString();
 	}
 	

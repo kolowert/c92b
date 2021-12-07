@@ -11,7 +11,7 @@ public class Item {
 	public Item() {
 		this.id = -1;
 		this.name = "undefined";
-		this.unit = MeasureUnit.thing;
+		this.unit = MeasureUnit.piece;
 		this.quantity = 0.0;
 		this.price = 0.0;
 	}
@@ -23,7 +23,11 @@ public class Item {
 		this.quantity = quantity;
 		this.price = price;
 	}
-
+	
+	public static Item getNullItem() {
+		return new Item(-1, "Null Item", MeasureUnit.piece, 0.0, 0.0);
+	}
+	
 	public int getId() {
 		return id;
 	}

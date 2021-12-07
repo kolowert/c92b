@@ -43,7 +43,6 @@ public class Order extends HttpServlet {
 
 		// TASK FINISH
 		if (task != null && task.equals("finish")) {
-			// TODO
 			// fill some fields in receipt
 			if (currentReceipt != null) {
 				currentReceipt.setClosetime(System.currentTimeMillis());

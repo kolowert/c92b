@@ -9,14 +9,13 @@ public class Operator {
 	private String salt = "abcdefgh";
 
 	public Operator() {
-		super();
 		id = -1;
 		login = "undefined";
 		role = "cashier";
+		passHash = "ouefhlih6854364v4r9646r464r6b46rtyjyu6kl54i68m435k4uio3l87um3gn4t68k7ui6l8ui4m687myu";
 	}
 
 	public Operator(int id, String login) {
-		super();
 		this.id = id;
 		this.login = login;
 		role = "cashier";
@@ -24,7 +23,6 @@ public class Operator {
 
 	// TODO debugging part of code
 	public Operator(int id, String login, String role, String passHash) {
-		super();
 		this.id = id;
 		this.login = login;
 		this.role = role;
@@ -40,7 +38,11 @@ public class Operator {
 		this.passHash = passHash;
 		this.salt = salt;
 	}
-
+	
+	public static Operator getNullOperator() {
+		return new Operator();
+	}
+	
 	@Override
 	public String toString() {
 		return "Operator [id:" + id + ", login:" + login + ", passHash:" + passHash + ", role:" + role 

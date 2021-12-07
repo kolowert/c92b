@@ -52,6 +52,16 @@
 		<url-pattern>/oper</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>receiptServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.ReceiptServ</servlet-class>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>receiptServ</servlet-name>
+		<url-pattern>/receipt</url-pattern>
+	</servlet-mapping>	
+	
 	<error-page>
 		<error-code>404</error-code>
 		<location>/_404.jsp</location>

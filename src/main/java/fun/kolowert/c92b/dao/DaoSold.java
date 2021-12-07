@@ -10,7 +10,7 @@ public class DaoSold {
 	private static DaoSold INSTANCE;
 
 	// TODO rewrite this stubs
-	private List<SoldRecord> soldItems = new ArrayList<>();
+	private List<SoldRecord> soldRecords = new ArrayList<>();
 
 	private DaoSold() {
 	}
@@ -24,17 +24,17 @@ public class DaoSold {
 
 	public boolean add(SoldRecord s) {
 		// TODO this stub
-		return soldItems.add(s);
+		return soldRecords.add(s);
 	}
 
 	public List<SoldRecord> getSoldRecords() {
-		return soldItems;
+		return soldRecords;
 	}
 
 	public List<SoldRecord> getSoldRecords(int receiptId) {
 		// TODO this stub
 		List<SoldRecord> result = new ArrayList<>();
-		for (SoldRecord s : soldItems) {
+		for (SoldRecord s : soldRecords) {
 			if (s.getReceiptId() == receiptId) {
 				result.add(s);
 			}
@@ -45,7 +45,7 @@ public class DaoSold {
 	public List<SoldRecord> getSoldRecords(long timeFrom, long timeUntil) {
 		// TODO this stub
 		List<SoldRecord> result = new ArrayList<>();
-		for (SoldRecord s : soldItems) {
+		for (SoldRecord s : soldRecords) {
 			long receiptTime = s.getReceiptTime();
 			if (receiptTime >= timeFrom || receiptTime < timeUntil) {
 				result.add(s);
@@ -53,13 +53,29 @@ public class DaoSold {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * @param recordId
+	 * @return particular SoldRecord or null
+	 */
+	public SoldRecord removeSoldRecord(int recordId) {
+		// TODO this stub
+		SoldRecord result = null; 
+		for (SoldRecord s : soldRecords) {
+			if (s.getId() == recordId) {
+				int index = soldRecords.indexOf(s);
+				return soldRecords.remove(index);
+			}
+		}
+		return result;
+	}
+	
 	public boolean removeSoldRecords(int receiptId) {
 		// TODO this stub
 		boolean isRemoved = false;
-		for (SoldRecord s : soldItems) {
+		for (SoldRecord s : soldRecords) {
 			if (s.getReceiptId() == receiptId) {
-				isRemoved = soldItems.remove(s);
+				isRemoved = soldRecords.remove(s);
 			}
 		}
 		return isRemoved;
