@@ -118,7 +118,7 @@ public class Order extends HttpServlet {
 			if (item != null) {
 				// check when quantity must be integer
 				MeasureUnit unit = item.getUnit();
-				if (unit != MeasureUnit.kilogram && unit != MeasureUnit.tonn) {
+				if (unit != MeasureUnit.kilogram && unit != MeasureUnit.tonne) {
 					double fractional = requestQuantity - (int) requestQuantity;
 					if (fractional != 0.0) {
 						request.setAttribute("messageType", "fail"); // are types "good" or "fail"

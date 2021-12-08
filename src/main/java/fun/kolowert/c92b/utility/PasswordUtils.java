@@ -34,7 +34,7 @@ public class PasswordUtils {
 			return Optional.empty();
 		} finally {
 			spec.clearPassword();
-			System.out.println("PasswordUtils#hashTextPassword >> finally hash: " + result);
+			System.out.println("PasswordUtils#hashTextPassword >> finally hash: " + result + " salt: " + salt); // |||||||||||||||||
 		}
 	}
 

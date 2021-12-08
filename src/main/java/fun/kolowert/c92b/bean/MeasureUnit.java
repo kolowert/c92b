@@ -2,10 +2,10 @@ package fun.kolowert.c92b.bean;
 
 public enum MeasureUnit {
 	bar,
-	botle,	
-	glass,
+	bottle,
     jar,
+    pack,
     piece,
     kilogram,
-    tonn
+    tonne
 }

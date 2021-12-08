@@ -1,27 +1,61 @@
 package fun.kolowert.c92b.dao;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import fun.kolowert.c92b.bean.Operator;
+import javax.sql.DataSource;
 
 public class PlayDao {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
-		// receive from form
-		String inputName = "someName";
-		String inputRole = "role-pole";
-		String inputPassword = "password";
+		playOperator("SELECT * FROM operator");
+		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
 
-		// create new operator in database
-		DaoOperator daoOperator = DaoOperator.getInstance();
-		
-		List<Operator> opers = daoOperator.getOperators();
-		System.out.println(opers);
-		
-		daoOperator.createNewInDataBase(inputName, inputRole, inputPassword);
-		inputPassword = "erased";
+		playStore("SELECT * FROM store");
+		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
 
+	}
+
+	private static void playOperator(String sqlInstruction) throws SQLException {
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		DataSource datasource = DataSourceMaster.get();
+		ConnectionPool connectionpool = ConnectionPool.create(datasource);
+
+		con = connectionpool.getConnection();
+		statement = con.prepareStatement(sqlInstruction);
+		resultSet = statement.executeQuery();
+		while (resultSet.next()) {
+			System.out.println(
+					resultSet.getInt("id") + "^" + resultSet.getString("login") + "^" + resultSet.getString("role"));
+		}
+		connectionpool.release(con);
+		connectionpool.shutdown();
+	}
+
+	private static void playStore(String sqlInstruction) throws SQLException {
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		DataSource datasource = DataSourceMaster.get();
+		ConnectionPool connectionpool = ConnectionPool.create(datasource);
+
+		con = connectionpool.getConnection();
+		statement = con.prepareStatement(sqlInstruction);
+		resultSet = statement.executeQuery();
+		while (resultSet.next()) {
+			System.out.println(resultSet.getInt("item_id") + "^" + resultSet.getString("name") + "^"
+					+ resultSet.getString("measure_unit") + "^" + resultSet.getString("quantity") + "^"
+					+ resultSet.getString("price"));
+		}
+		connectionpool.release(con);
+		connectionpool.shutdown();
 	}
 
 }
