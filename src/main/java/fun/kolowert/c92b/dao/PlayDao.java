@@ -7,14 +7,26 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import fun.kolowert.c92b.utility.Utils;
+
 public class PlayDao {
 
-	public static void main(String[] args) throws SQLException {
+	private static final String propertiesSourceFile = "resources/mysqldb_test.properties";
 
+	public static void main(String[] args) throws SQLException {
+		
+		System.out.println("propertiesSourceFile: " + propertiesSourceFile);
+		
+		System.out.println("SELECT * FROM operator");
 		playOperator("SELECT * FROM operator");
 		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
 
+		System.out.println("SELECT * FROM store");
 		playStore("SELECT * FROM store");
+		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
+
+		System.out.println("SELECT * FROM receipt");
+		playReceipt("SELECT * FROM receipt");
 		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
 
 	}
@@ -24,7 +36,7 @@ public class PlayDao {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 
-		DataSource datasource = DataSourceMaster.get();
+		DataSource datasource = DataSourceMaster.get(propertiesSourceFile);
 		ConnectionPool connectionpool = ConnectionPool.create(datasource);
 
 		con = connectionpool.getConnection();
@@ -43,7 +55,7 @@ public class PlayDao {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 
-		DataSource datasource = DataSourceMaster.get();
+		DataSource datasource = DataSourceMaster.get(propertiesSourceFile);
 		ConnectionPool connectionpool = ConnectionPool.create(datasource);
 
 		con = connectionpool.getConnection();
@@ -58,4 +70,25 @@ public class PlayDao {
 		connectionpool.shutdown();
 	}
 
+	private static void playReceipt(String sqlInstruction) throws SQLException {
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		DataSource datasource = DataSourceMaster.get(propertiesSourceFile);
+		ConnectionPool connectionpool = ConnectionPool.create(datasource);
+
+		con = connectionpool.getConnection();
+		statement = con.prepareStatement(sqlInstruction);
+		resultSet = statement.executeQuery();
+		while (resultSet.next()) {
+			long openTime = resultSet.getLong("opentime");
+			long closeTime = resultSet.getLong("closetime");
+			System.out.println(resultSet.getInt("id") + " ^ " + openTime + " ^ " + closeTime + " ^ "
+					+ resultSet.getInt("operator_id") + " ^ " + resultSet.getDouble("sum") + " ^^ "
+					+ Utils.unixTimeToTimeStamp(openTime) + " ^^ " + Utils.unixTimeToTimeStamp(closeTime));
+		}
+		connectionpool.release(con);
+		connectionpool.shutdown();
+	}
 }

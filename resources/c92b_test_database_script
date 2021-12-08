@@ -1,0 +1,112 @@
+	CREATE DATABASE IF NOT EXISTS `c92b_test` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+	CREATE USER 'tester'@'%' IDENTIFIED BY 'test12345';
+	GRANT ALL PRIVILEGES ON c92b_test.* TO 'tester'@'%' WITH GRANT OPTION;
+	FLUSH PRIVILEGES;
+
+
+CREATE TABLE IF NOT EXISTS `c92b_test`.`operator` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`login` VARCHAR(20) NULL DEFAULT NULL,
+	`passhash` VARCHAR(255) NULL DEFAULT NULL,
+	`role` VARCHAR(20) NULL DEFAULT NULL,
+	`salt` VARCHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+);
+
+
+use c92b_test
+
+-- ------------------------------------------
+password for Admin: 'ad123' salt: 'abcdefgh'
+-- ------------------------------------------
+
+INSERT INTO operator (login, passhash, role, salt) VALUES ('Admin', 'PbAzIz6JYQ9kWv31SrQKlA==', 'expert', 'abcdefgh');
+
+
+CREATE TABLE IF NOT EXISTS `c92b_test`.`measure_unit` (
+    id INT NOT NULL PRIMARY KEY, 
+    name VARCHAR(10)
+);
+
+INSERT INTO `measure_unit` (id, name) 
+	VALUES	
+	(1, 'bar'),
+	(2, 'bottle'),
+	(3, 'jar'),
+	(4, 'pack'),
+	(5, 'piece'),
+	(6, 'kilogram'),
+	(7, 'tonne');
+
+
+CREATE TABLE IF NOT EXISTS `c92b_test`.`store` (
+	`item_id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(45) NOT NULL UNIQUE,
+	`measure_unit` INT NULL DEFAULT NULL,
+	`quantity` DECIMAL(9, 4),
+	`price` DECIMAL(9, 4),
+	PRIMARY KEY (`item_id`),
+	UNIQUE INDEX `id` (`item_id` ASC),
+	FOREIGN KEY (`measure_unit`)
+	REFERENCES `c92b`.`measure_unit` (`id`)
+);
+
+INSERT INTO `store` (name, measure_unit, quantity, price) 
+	VALUES
+	('Eclair', 1, 45, 35.00),
+	('Marmalade', 3, 30, 105.00),
+	('Strawberry Pie', 5, 20, 25.00),
+	('Vanilla Pudding', 5, 32, 16.95),			
+	('Pie with Cream', 5, 15, 18.50),
+	('Cranberry Cookies', 6, 28, 25.65),
+	('Red Currants Jelly', 7, 0.55, 13000.00),
+	('Custard Cake', 6, 9, 19.99),
+	('Shortcrust Pastry with Cheese', 5, 30, 12.50),
+	('Honey Biscuits', 6, 15, 9.96),
+	('Pecan Pie', 6, 1.1, 145.00),
+	('Poppy Seed Cake', 6, 3.5, 169.00),
+	('Bilberry Tart', 6, 10, 45.00),
+	('Tiramisu', 4, 14, 99.99),
+	('Cheesecake with Raisins', 4, 3.9, 51.00),
+	('Rhubarb Pie', 5, 8, 41.00),
+	('Cherry Strudel', 6, 2.5, 65.00),
+	('Apple Strudel', 6, 5.6, 75.00),
+	('Christstollen', 1, 24, 45.00),
+	('Cream Cake', 5, 3, 50.00),
+	('Fashion Bagel', 4, 20, 18.75),
+	('Сhocolate', 1, 100, 10.00),
+	('Hazelnuts', 4, 10, 97.50);
+
+
+CREATE TABLE IF NOT EXISTS `c92b_test`.`receipt` (
+	id INT NOT NULL AUTO_INCREMENT,
+	opentime BIGINT NULL DEFAULT NULL,
+	closetime BIGINT NULL DEFAULT NULL,
+	operator_id INT NOT NULL,
+	sum DECIMAL(9, 4),
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`operator_id`)
+	REFERENCES `c92b`.`operator` (`id`)
+);
+
+INSERT INTO `receipt` (opentime, closetime, operator_id, sum) 
+	VALUES
+	(1638988390999, 1638988500999, 1, 935.00),
+	(1638988800999, 1638989100999, 1, 115.97),
+	(1638989920999, 1638990000999, 1, 300.00);
+
+
+CREATE TABLE IF NOT EXISTS `c92b_test`.`sold_record` (
+	id INT NOT NULL AUTO_INCREMENT,
+	receipt_id INT NOT NULL,
+	receipt_time BIGINT NULL DEFAULT NULL,
+	item_id INT NOT NULL,
+	price DECIMAL(9, 4),
+	quantity DECIMAL(9, 4),
+	cost DECIMAL(9, 4),	
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`receipt_id`)
+	REFERENCES `c92b`.`receipt` (`id`),
+	FOREIGN KEY (`item_id`)
+	REFERENCES `c92b`.`store` (`item_id`)
+);
