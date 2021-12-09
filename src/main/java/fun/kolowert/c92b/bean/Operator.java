@@ -3,7 +3,6 @@ package fun.kolowert.c92b.bean;
 public class Operator {
 	private int id;
 	private String login;
-
 	private String passHash;
 	private String role;
 	private String salt = "abcdefgh";
@@ -20,19 +19,34 @@ public class Operator {
 		this.login = login;
 		role = "cashier";
 	}
+	
+	public Operator(int id, String login, String role) {
+		this.id = id;
+		this.login = login;
+		this.role = role;
+	}
 
 	// TODO debugging part of code
-	public Operator(int id, String login, String role, String passHash) {
+	public Operator(int id, String login, String passHash, String role) {
 		this.id = id;
 		this.login = login;
 		this.role = role;
 		this.passHash = passHash;
 	}
 
-	// TODO debugging part of code
-	public Operator(String login, String role, String passHash, String salt) {
+	public Operator(String login, String passHash, String role, String salt) {
+		// TODO
 		java.util.Random rnd = new java.util.Random();
 		this.id = rnd.nextInt(899) + 100;
+		this.login = login;
+		this.role = role;
+		this.passHash = passHash;
+		this.salt = salt;
+	}
+	
+	// TODO debugging part of code
+	public Operator(int id, String login, String passHash, String role, String salt) {
+		this.id = id;
 		this.login = login;
 		this.role = role;
 		this.passHash = passHash;

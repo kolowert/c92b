@@ -11,21 +11,26 @@ import org.apache.logging.log4j.Logger;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import fun.kolowert.c92b.utility.PathFinder;
+
 public class DataSourceMaster {
-	
+
 	private static final Logger logger = LogManager.getLogger("DataSourceMaster");
-	private static final String PROPERTIES = "resources/mysqldb.properties";
 	
+	private static final String PROPERTIES_FILE_NAME = "mysqldb.properties";
+
 	public static DataSource get() {
-		return get(PROPERTIES);
+		PathFinder pathFinder = new PathFinder();
+		String absolutePath = pathFinder.getAbsolutePath(PROPERTIES_FILE_NAME);
+		return get(absolutePath);
 	}
-	
-	public static DataSource get(String propertiesSourceFile) {
+
+	public static DataSource get(String absolutePropertiesFilePath) {
 		Properties properties = new Properties();
 		FileInputStream fis = null;
 		MysqlDataSource mysqlDataSourse = null;
 		try {
-			fis = new FileInputStream(propertiesSourceFile);
+			fis = new FileInputStream(absolutePropertiesFilePath);
 			properties.load(fis);
 			mysqlDataSourse = new MysqlDataSource();
 			mysqlDataSourse.setURL(properties.getProperty("URL"));
@@ -34,6 +39,7 @@ public class DataSourceMaster {
 		} catch (IOException e) {
 			logger.fatal("~ DataSource not created ~" + e);
 		}
+		System.out.println("DataSourceMaster >> DataSource created successfully " + mysqlDataSourse.toString());
 		return mysqlDataSourse;
 	}
 }

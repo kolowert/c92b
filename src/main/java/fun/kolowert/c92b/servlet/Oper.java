@@ -29,9 +29,9 @@ public class Oper extends HttpServlet {
 			String inputRole = request.getParameter("role");
 			String inputPassword = request.getParameter("password");
 
-			// create new operator in database
+			// insert new operator in database
 			DaoOperator daoOperator = DaoOperator.getInstance();
-			daoOperator.createNewInDataBase(inputName, inputRole, inputPassword);
+			daoOperator.insert(inputName, inputRole, inputPassword);
 			inputPassword = "erased";
 		}
 		

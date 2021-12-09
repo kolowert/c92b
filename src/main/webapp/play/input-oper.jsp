@@ -41,7 +41,7 @@
 			<input type="submit" value="input" /> 
 			&nbsp; &nbsp; 
 			<input
-				type="button" onclick="location.href='play/staff.jsp'"
+				type="button" onclick="location.href='${pageContext.request.contextPath}/play/staff.jsp'"
 				value="cancel" />
 		</form>
 

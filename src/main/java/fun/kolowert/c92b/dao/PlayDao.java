@@ -1,19 +1,23 @@
 package fun.kolowert.c92b.dao;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
+import fun.kolowert.c92b.utility.PathFinder;
 import fun.kolowert.c92b.utility.Utils;
 
 public class PlayDao {
+	
+	private static final String propertiesFileName = "mysqldb.properties";
+	private static final String propertiesSourceFile = "resources/" + propertiesFileName;
 
-	private static final String propertiesSourceFile = "resources/mysqldb_test.properties";
-
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, URISyntaxException {
 		
 		System.out.println("propertiesSourceFile: " + propertiesSourceFile);
 		
@@ -28,37 +32,39 @@ public class PlayDao {
 		System.out.println("SELECT * FROM receipt");
 		playReceipt("SELECT * FROM receipt");
 		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
-
+		
+		PlayDao playDao = new PlayDao();
+		playDao.pathPlay();
+		System.out.println("~ ~ ~ ~ ~ ~ ~ ~");
+		PathFinder pathFinder = new PathFinder();
+		String absolutePath = pathFinder.getAbsolutePath(propertiesFileName);
+		System.out.println("absolutePath: @ @ @ " + absolutePath);
+		
 	}
-
+	
+	private void pathPlay() throws URISyntaxException {
+		URL res = getClass().getClassLoader().getResource("mysqldb.properties");
+		File file2 = Paths.get(res.toURI()).toFile();
+		String absolutePath = file2.getAbsolutePath();
+		System.out.println("absolutePath: # @ # " + absolutePath);
+	}
+	
 	private static void playOperator(String sqlInstruction) throws SQLException {
-		Connection con = null;
+		Connection con = Connector.getInstance().getConnection();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-
-		DataSource datasource = DataSourceMaster.get(propertiesSourceFile);
-		ConnectionPool connectionpool = ConnectionPool.create(datasource);
-
-		con = connectionpool.getConnection();
 		statement = con.prepareStatement(sqlInstruction);
 		resultSet = statement.executeQuery();
 		while (resultSet.next()) {
 			System.out.println(
 					resultSet.getInt("id") + "^" + resultSet.getString("login") + "^" + resultSet.getString("role"));
 		}
-		connectionpool.release(con);
-		connectionpool.shutdown();
 	}
 
 	private static void playStore(String sqlInstruction) throws SQLException {
-		Connection con = null;
+		Connection con = Connector.getInstance().getConnection();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-
-		DataSource datasource = DataSourceMaster.get(propertiesSourceFile);
-		ConnectionPool connectionpool = ConnectionPool.create(datasource);
-
-		con = connectionpool.getConnection();
 		statement = con.prepareStatement(sqlInstruction);
 		resultSet = statement.executeQuery();
 		while (resultSet.next()) {
@@ -66,19 +72,12 @@ public class PlayDao {
 					+ resultSet.getString("measure_unit") + "^" + resultSet.getString("quantity") + "^"
 					+ resultSet.getString("price"));
 		}
-		connectionpool.release(con);
-		connectionpool.shutdown();
 	}
 
 	private static void playReceipt(String sqlInstruction) throws SQLException {
-		Connection con = null;
+		Connection con = Connector.getInstance().getConnection();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-
-		DataSource datasource = DataSourceMaster.get(propertiesSourceFile);
-		ConnectionPool connectionpool = ConnectionPool.create(datasource);
-
-		con = connectionpool.getConnection();
 		statement = con.prepareStatement(sqlInstruction);
 		resultSet = statement.executeQuery();
 		while (resultSet.next()) {
@@ -88,7 +87,5 @@ public class PlayDao {
 					+ resultSet.getInt("operator_id") + " ^ " + resultSet.getDouble("sum") + " ^^ "
 					+ Utils.unixTimeToTimeStamp(openTime) + " ^^ " + Utils.unixTimeToTimeStamp(closeTime));
 		}
-		connectionpool.release(con);
-		connectionpool.shutdown();
 	}
 }

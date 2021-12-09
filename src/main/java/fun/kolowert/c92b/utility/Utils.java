@@ -44,16 +44,17 @@ public class Utils {
 	 */
 	public static int parseOperatorToId(String input) {
 		int result = -1;
-		String[] parts = input.split("\s");
-//		for (String part : parts) {
-//			System.out.println(part);
-//		}
+		String[] parts = input.split(" ");
+//		for (String part : parts) {    // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//			System.out.println(part);  // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+//		}                              // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 		try {
 			result = Integer.parseInt(parts[1]);
 		} catch (NumberFormatException e) {
 			// TODO log here
 			e.printStackTrace();
 		}
+		System.out.println("Utils#parseOperatorToId >> returns: " + result);
 		return result;
 	}
 

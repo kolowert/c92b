@@ -1,7 +1,10 @@
 package fun.kolowert.c92b.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import fun.kolowert.c92b.bean.Operator;
@@ -11,22 +14,7 @@ public final class DaoOperator {
 
 	private static DaoOperator INSTANCE;
 
-	// TODO rewrite this stubs
-	private List<Operator> operators = new ArrayList<Operator>();
-
 	private DaoOperator() {
-		// This is stub
-		Operator[] preOperators = { 
-				new Operator(123, "Arnold", "cashier", "rcjjf/lKuvNapHjHisBrFQ=="),
-				new Operator(234, "Bruce", "senior cashier", "kaj+RzVqa1L52KPqRtHouw=="),
-				new Operator(787, "Silvester", "cashier", "TY28LhZVRK8meBZKFYlbWA=="),
-				new Operator(777, "James", "cashier", "fnORkwQN/L+qSG9hcS68gQ=="),
-				new Operator(699, "Chack", "expert", "4p3twfMVnNVenFltKeH75A=="),
-				new Operator(999, "Admin", "expert", "PbAzIz6JYQ9kWv31SrQKlA==") };
-
-		for (Operator oper : preOperators) {
-			operators.add(oper);
-		}
 	}
 
 	public static DaoOperator getInstance() {
@@ -40,70 +28,115 @@ public final class DaoOperator {
 		return INSTANCE;
 	}
 
-	public void createNewInDataBase(String login, String role, String password) {
-		// TODO master the stub
+	public void insert(String login, String role, String password) {
 		String salt = PasswordUtils.generateSalt(16);
 		System.out.println("DaoOperator# >> salt " + salt); // ||||||||||||||||||||||||||||||||||||||
 		String passHash = PasswordUtils.hashTextPassword(password, salt).get();
 		System.out.println("DaoOperator# >> passHass " + passHash); // ||||||||||||||||||||||||||||||||||||||
-		Operator entrant = new Operator(login, role, passHash, salt);
-		System.out.println("DaoOperator# >> entrant " + entrant); // ||||||||||||||||||||||||||||||||||||||
-		operators.add(entrant);
+
+		String sqlInstruction = "INSERT INTO operator (login, passHash, role, salt) Values (?, ?, ?, ?)";
+		Connection con = Connector.getInstance().getConnection();
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			statement.setString(1, login);
+			statement.setString(2, passHash);
+			statement.setString(3, role);
+			statement.setString(4, salt);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("DaoOperator# >> after adding"); // ||||||||||||||||||||||||||||||||||||||
 	}
 
 	public Operator getOperatorById(int id) {
-		Operator result = null;
-		// TODO rewrite the stub
-		for (Operator operator : operators) {
-			if (operator.getId() == id) {
-				return operator;
+		Operator operator = null;
+		String sqlInstruction = "SELECT * FROM operator WHERE id = " + id;
+		Connection con = Connector.getInstance().getConnection();
+		PreparedStatement statement;
+		try {
+			statement = con.prepareStatement(sqlInstruction);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				operator = new Operator(resultSet.getInt("id"), resultSet.getString("login"),
+						resultSet.getString("passHash"), resultSet.getString("role"), resultSet.getString("salt"));
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return result;
-	}
-
-	public boolean putOperator(Operator operator) {
-		// TODO rewrite the stub
-		operators.add(operator);
-		return true;
+		return operator;
 	}
 
 	public boolean editOperator(int id, String inputLogin, String inputRole, String inputPassword) {
-		// TODO rewrite the stub
-		Operator operator = getOperatorById(id);
-		if (operator != null) {
-			operators.remove(operator);
-			if (inputPassword != null && inputPassword.length() > 2) {
-				String salt = PasswordUtils.generateSalt(16);
-				String passHash = PasswordUtils.hashTextPassword(inputPassword, salt).get();
-				operator.setSalt(salt);
-				operator.setPassHash(passHash);
+		Connection con = Connector.getInstance().getConnection();
+
+		if (inputPassword != null && inputPassword.length() > 2) {
+			String salt = PasswordUtils.generateSalt(16);
+			String passHash = PasswordUtils.hashTextPassword(inputPassword, salt).get();
+			String sqlInstruction = "UPDATE operator SET login = ?, passHash = ?, role = ?, salt = ? WHERE id = ?";
+			try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+				statement.setString(1, inputLogin);
+				statement.setString(2, passHash);
+				statement.setString(3, inputRole);
+				statement.setString(4, salt);
+				statement.setInt(5, id);
+				statement.executeUpdate();
+				return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
 			}
-			operator.setRole(inputRole);
-			operator.setLogin(inputLogin);
-			putOperator(operator);
+		}
+
+		String sqlInstruction = "UPDATE operator SET login = ?, role = ? WHERE id = ?";
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			statement.setString(1, inputLogin);
+			statement.setString(2, inputRole);
+			statement.setInt(3, id);
+			statement.executeUpdate();
 			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false;
 	}
 
 	public void deleteOperator(int id) {
-		// TODO rewrite the stub
-		Operator vanishing = getOperatorById(id);
-		if (vanishing != null) {
-			operators.remove(vanishing);
+		String sqlInstruction = "DELETE FROM operator WHERE id = ?";
+		Connection con = Connector.getInstance().getConnection();
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			statement.setInt(1, id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	public List<Operator> getOperators() {
-		// TODO rewrite the stub
-		operators.sort(new Comparator<Operator>() {
-			@Override
-			public int compare(Operator o1, Operator o2) {
-				return o1.getLogin().compareTo(o2.getLogin());
+		System.out.println("DaoOperator#getOperators >>"); // |||||||||||||||||||||||||||||||||||||||||||
+		List<Operator> operators = new ArrayList<>();
+		String sqlInstruction = "SELECT * FROM operator";
+		Connection con = Connector.getInstance().getConnection();
+		PreparedStatement statement;
+		try {
+			statement = con.prepareStatement(sqlInstruction);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Operator operator = new Operator(resultSet.getInt("id"), resultSet.getString("login"),
+						resultSet.getString("role"));
+				operators.add(operator);
 			}
-		});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		return operators;
 	}
 }

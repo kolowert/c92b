@@ -72,7 +72,10 @@ public class Main extends HttpServlet {
 
 		String operatorLabel = request.getParameter("operator");
 		String passwordInput = request.getParameter("password");
-
+		
+		System.out.println("Main#doPost >> request.getParameter(\"operator\"): " + operatorLabel); // ||||||||||||||||||
+		System.out.println("Main#doPost >> request.getParameter(\"password\"): " + passwordInput); // ||||||||||||||||||
+		
 		// parse operator to id
 		int operatorId = Utils.parseOperatorToId(operatorLabel);
 
@@ -82,9 +85,10 @@ public class Main extends HttpServlet {
 
 		if (operator == null) {
 			// TODO something with it
-			System.out.println("operator == null !!!"); // |||||||||||||||||||||||||||||||||||||||||||||||
+			System.out.println("Main#doPost >> operator == null !!!"); // |||||||||||||||||||||||||||||||||||||||||||||||
 			request.setAttribute("failMessage", "Cash Register Operator has been not found");
 			getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
+			return;
 		}
 
 		// TODO check password hash

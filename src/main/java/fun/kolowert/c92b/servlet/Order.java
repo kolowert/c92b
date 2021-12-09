@@ -192,7 +192,7 @@ public class Order extends HttpServlet {
 		if (brief == null) {
 			return result;
 		}
-		String[] parts = brief.split("\s");
+		String[] parts = brief.split("\\s");
 		try {
 			result = Integer.parseInt(parts[0]);
 		} catch (NumberFormatException e) {
