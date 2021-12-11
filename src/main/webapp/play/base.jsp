@@ -34,11 +34,11 @@
 				<select name="itemBrief">
 					<%
 					DaoStore daoStore = DaoStore.getInstance();
-								List<Item> items = daoStore.getItems();
-								out.println("<option>" + "> > > add item to the order > > >" + "</option>");
-								for (Item item : items) {
-									out.println("<option>" + item.brief() + "</option>");
-								}
+											List<Item> items = daoStore.getAll();
+											out.println("<option>" + "> > > add item to the order > > >" + "</option>");
+											for (Item item : items) {
+												out.println("<option>" + item.brief() + "</option>");
+											}
 					%>
 				</select> 
 				&ensp; : &ensp; 
@@ -90,21 +90,21 @@
 			<h5 class="text-muted">Receipt <small><%=receiptLabel%>&emsp;<%=opentime%></small></h5>
 			<%
 			DaoSold daoSold = DaoSold.getInstance();
-				List<SoldRecord> soldRecords = daoSold.getSoldRecords(currentReceiptId);
-				out.println("<h4 class='text-primary'>TOTAL: " + total + "</h4>");
-				// make table
-				out.println("<table class='table'>");
-				out.println("<thead><tr><th>Item</th><th>price</th><th>quantity</th><th>cost</th></tr></thead>");
-				out.println("<tbody>");
-				for (SoldRecord soldRecord : soldRecords) {
-					Item item = daoStore.getItem(soldRecord.getItemId());
-					String receiptLine = item.getName() + " >>> " + soldRecord.brief();
-					out.println("<tr><td>" + item.getName() + "</td><td>" + item.getPrice() + "</td><td>" 
-							+ Utils.norm(soldRecord.getSoldQuantity()) + " " + item.getUnit() + "</td><td>" 
-							+ Utils.norm(soldRecord.getSoldCost()) + "</td></tr>");
-				}
-				out.println("</tbody>");
-				out.println("</table>");
+							List<SoldRecord> soldRecords = daoSold.getByReceipt(currentReceiptId);
+							out.println("<h4 class='text-primary'>TOTAL: " + total + "</h4>");
+							// make table
+							out.println("<table class='table'>");
+							out.println("<thead><tr><th>Item</th><th>price</th><th>quantity</th><th>cost</th></tr></thead>");
+							out.println("<tbody>");
+							for (SoldRecord soldRecord : soldRecords) {
+								Item item = daoStore.get(soldRecord.getItemId());
+								String receiptLine = item.getName() + " >>> " + soldRecord.brief();
+								out.println("<tr><td>" + item.getName() + "</td><td>" + item.getPrice() + "</td><td>" 
+										+ Utils.norm(soldRecord.getSoldQuantity()) + " " + item.getUnit() + "</td><td>" 
+										+ Utils.norm(soldRecord.getSoldCost()) + "</td></tr>");
+							}
+							out.println("</tbody>");
+							out.println("</table>");
 			%>
 		</div>
 

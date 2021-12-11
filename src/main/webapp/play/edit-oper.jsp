@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="fun.kolowert.c92b.bean.Operator"
 	import="fun.kolowert.c92b.dao.DaoOperator"
-	import="fun.kolowert.c92b.dao.DaoRole"
-	import="fun.kolowert.c92b.utility.Utils" import="java.util.List"%>
+	import="fun.kolowert.c92b.utility.Utils"
+	import="fun.kolowert.c92b.utility.Role" 
+	import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,16 +28,16 @@
 
 		<%
 		String editLogin = "undefined";
-		String editRole = "undefined";
-		int editId = Utils.parseIntIdFromObject(request.getParameter("id"));
+				String editRole = "undefined";
+				int editId = Utils.parseIntIdFromObject(request.getParameter("id"));
 
-		DaoOperator daoOperator = DaoOperator.getInstance();
-		Operator operator = daoOperator.getOperatorById(editId);
+				DaoOperator daoOperator = DaoOperator.getInstance();
+				Operator operator = daoOperator.get(editId);
 
-		if (operator != null) {
+				if (operator != null) {
 			editLogin = operator.getLogin();
 			editRole = operator.getRole();
-		}
+				}
 		%>
 
 		<form action="${pageContext.request.contextPath}/oper" method="POST">
@@ -46,8 +47,7 @@
 			&nbsp; | &nbsp; Login: <input name="login" value=<%=editLogin%> />
 			&nbsp; &nbsp; Role: <select name="role">
 				<%
-				DaoRole daoRole = DaoRole.getInstance();
-				List<String> roles = daoRole.getRoles();
+				List<String> roles = Role.getAll();
 				out.println("<option>" + editRole + "</option>");
 				for (String role : roles) {
 					if (role.equals(editRole)) {

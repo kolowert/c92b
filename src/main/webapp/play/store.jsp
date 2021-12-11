@@ -51,7 +51,7 @@
 				<tbody>
 					<%
 					DaoStore daoOStore = DaoStore.getInstance();
-					List<Item> items = daoOStore.getItems();
+					List<Item> items = daoOStore.getAll();
 					for (Item item : items) {
 						int id = item.getId();
 						String name = item.getName();
@@ -60,8 +60,8 @@
 						double price = item.getPrice();
 						String path = request.getContextPath();
 						String editLink = "<a href=\"" + path + "/play/edit-item.jsp?id=" + id + "\">edit</a>";
-						out.println("<tr><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + quantity + "</td><td>"
-						+ price + "</td><td>" + editLink + "</td></tr>");
+								out.println("<tr><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + quantity + "</td><td>"
+								+ price + "</td><td>" + editLink + "</td></tr>");
 					}
 					%>
 				</tbody>

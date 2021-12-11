@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	String briefInfo = "undefined operator";
-	Object preBriefInfo = request.getSession().getAttribute("briefInfo");
-	if (preBriefInfo instanceof String) {
-		briefInfo = (String) preBriefInfo;
-	}
+String briefInfo = "undefined operator";
+Object preBriefInfo = request.getSession().getAttribute("briefInfo");
+if (preBriefInfo instanceof String) {
+	briefInfo = (String) preBriefInfo;
+}
 %>
 
 <div class="container-lg p-1 bg-light border">
@@ -18,7 +18,7 @@
 
 		<div class="col-sm-6">
 			<p style="text-align: center">
-				  <a href="${pageContext.request.contextPath}/main?dir=base">Order</a> 
+				<a href="${pageContext.request.contextPath}/main?dir=base">Order</a>
 				| <a href="${pageContext.request.contextPath}/main?dir=receipts">Receipts</a>
 				| <a href="${pageContext.request.contextPath}/main?dir=report">Reports</a>
 				| <a href="${pageContext.request.contextPath}/main?dir=store">Store</a>

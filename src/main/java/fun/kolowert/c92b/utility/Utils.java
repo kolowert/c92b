@@ -71,7 +71,10 @@ public class Utils {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * @return double value or -1.0 if can't parse
+	 */
 	public static double parseStringToDouble(String s) {
 		double result = -1.0;
 		if (s == null) {
@@ -119,6 +122,7 @@ public class Utils {
 		if (d <= 0.0049) { return "0.00"; }
 		int h = (int) (d * 100 + 0.5);
 		int len = ("" + h).length();
+		if (len < 3) len = 3;
 		String r = "" + 1.0 * (h / 100.0) + "000";
 		return r.subSequence(0, len + 1).toString();
 	}

@@ -30,12 +30,12 @@ public class ReceiptServ extends HttpServlet {
 		if (task != null && task.equals("deleteReceipt")) {
 			System.out.println("Receipt#doGet >> task.equals \"deleteReceipt\""); // ||||||||||||||||||||||||||||||||||||||
 			// TODO
-			Receipt receipt = daoReceipt.getReceiptById(receiptId);
+			Receipt receipt = daoReceipt.getById(receiptId);
 			
 			// adjust quantity in store
 			// TODO
 			
-			daoReceipt.remove(receiptId);
+			daoReceipt.delete(receiptId);
 			
 			getServletContext().getRequestDispatcher("/play/receipts.jsp").forward(request, response);
 		}
@@ -49,7 +49,7 @@ public class ReceiptServ extends HttpServlet {
 			SoldRecord removedRecord = daoSold.removeSoldRecord(recordId);
 			
 			// adjust sum in receipt
-			Receipt receipt = daoReceipt.getReceiptById(receiptId);
+			Receipt receipt = daoReceipt.getById(receiptId);
 			double sum = receipt.getSum();
 			sum = sum - removedRecord.getSoldCost();
 			receipt.setSum(sum);

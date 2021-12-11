@@ -8,16 +8,12 @@ public class Receipt {
 	private int operatorId;
 	private double sum;
 
-	public Receipt(long opentime) {
-		// TODO do get id from database
-		java.util.Random rnd = new java.util.Random();
-		this.id = rnd.nextInt(8999) + 1000;
-		
+	public Receipt(int id, long opentime, long closetime, int operatorId, double sum) {
+		this.id = id;
 		this.opentime = opentime;
-		
-		closetime = opentime;
-		operatorId = -1;
-		sum = 0.0;
+		this.closetime = closetime;
+		this.operatorId = operatorId;
+		this.sum = sum;
 	}
 
 	public int getId() {

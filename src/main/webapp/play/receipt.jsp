@@ -1,3 +1,4 @@
+<%@page import="fun.kolowert.c92b.bean.MeasureUnit"%>
 <%@page import="fun.kolowert.c92b.bean.Receipt"%>
 <%@page import="fun.kolowert.c92b.dao.DaoReceipt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,7 +29,7 @@
 		<%
 		int receiptId = Utils.parseStringToInt(request.getParameter("id"));
 		DaoReceipt daoReceipt = DaoReceipt.getInstance();
-		Receipt receipt = daoReceipt.getReceiptById(receiptId);
+		Receipt receipt = daoReceipt.getById(receiptId);
 		double receiptSum = 0.0;
 		if (receipt != null) {
 			receiptSum = receipt.getSum();
@@ -70,39 +71,40 @@
 				</thead>
 				<tbody>
 					<%
-					DaoStore daoStore = DaoStore.getInstance();
-					DaoSold daoSold = DaoSold.getInstance();
-					List<SoldRecord> soldRecords = daoSold.getSoldRecords();
-					for (SoldRecord soldRecord : soldRecords) {
-						if (soldRecord.getReceiptId() != receiptId) { continue; }
-						int itemId = soldRecord.getItemId();
-						Item item = daoStore.getItem(itemId);
-						if (item == null) {
-							item = Item.getNullItem();
-						}
-						String itemName = item.getName();
-						double soldPrice = soldRecord.getSoldPrice();
-						double soldQuantity = soldRecord.getSoldQuantity();
-						double soldCost = soldRecord.getSoldCost();
-						
-						String path = request.getContextPath();
-						String redirectLink = "<a href=\"" + path + "/receipt?task=cancelRecord"
-								+ "&receiptId=" + receiptId
-								+ "&recordId=" + soldRecord.getId()
-								+ "\">remove</a>";
-						out.println("<tr><td>" 
-								+ itemName + "</td><td>" 
-								+ Utils.norm(soldPrice) + "</td><td>" 
-								+ Utils.norm(soldQuantity) + "</td><td>" 
-								+ Utils.norm(soldCost) + "</td><td>" 
-								+ redirectLink + "</td></tr>");
-					}
-					out.println("<tr><td>" 
-							+ "<b>TOTAL</b> " + "</td><td>" 
-							+ "" + "</td><td>"
-							+ "" + "</td><td>" 
-							+ "<b>" + Utils.norm(receiptSum) + "</b></td><td>" 
-							+ "" + "</td></tr>");
+								DaoStore daoStore = DaoStore.getInstance();
+								DaoSold daoSold = DaoSold.getInstance();
+								List<SoldRecord> soldRecords = daoSold.getAll();
+								for (SoldRecord soldRecord : soldRecords) {
+									if (soldRecord.getReceiptId() != receiptId) { continue; }
+									int itemId = soldRecord.getItemId();
+									Item item = daoStore.get(itemId);
+									if (item == null) {
+										item = Item.getNullItem();
+									}
+									String itemName = item.getName();
+									double soldPrice = soldRecord.getSoldPrice();
+									double soldQuantity = soldRecord.getSoldQuantity();
+									MeasureUnit measureUnit = item.getUnit(); 
+									double soldCost = soldRecord.getSoldCost();
+									
+									String path = request.getContextPath();
+									String redirectLink = "<a href=\"" + path + "/receipt?task=cancelRecord"
+											+ "&receiptId=" + receiptId
+											+ "&recordId=" + soldRecord.getId()
+											+ "\">remove</a>";
+									out.println("<tr><td>" 
+											+ itemName + "</td><td>" 
+											+ Utils.norm(soldPrice) + "</td><td>" 
+											+ Utils.norm(soldQuantity) + "&nbsp; &nbsp;" + measureUnit + "</td><td>" 
+											+ Utils.norm(soldCost) + "</td><td>" 
+											+ redirectLink + "</td></tr>");
+								}
+								out.println("<tr><td>" 
+										+ "<b>TOTAL</b> " + "</td><td>" 
+										+ "" + "</td><td>"
+										+ "" + "</td><td>" 
+										+ "<b>" + Utils.norm(receiptSum) + "</b></td><td>" 
+										+ "" + "</td></tr>");
 					%>
 				</tbody>
 			</table>

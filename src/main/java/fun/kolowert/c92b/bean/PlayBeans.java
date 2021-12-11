@@ -1,15 +1,16 @@
 package fun.kolowert.c92b.bean;
 
 public class PlayBeans {
-	
+
 	public static void main(String[] args) {
-		
-		String obj = null;
-		
-		if (obj instanceof String) {
-			System.out.println("Amazing!");
+
+		for (int i = 0; i < 8; i++) {
+			MeasureUnit m = MeasureUnit.values()[i];
+			System.out.println("" + i + " : " +  m);
 		}
 		
-		System.out.println("the end");
+		System.out.println("~ ~ ~" + MeasureUnit.values().length);
+		
+		
 	}
 }

@@ -29,7 +29,7 @@ public class Order extends HttpServlet {
 		HttpSession session = request.getSession();
 		DaoReceipt daoReceipt = DaoReceipt.getInstance();
 		DaoSold daoSold = DaoSold.getInstance();
-		
+
 		String baseMessage = "no message here";
 		String task = request.getParameter("task");
 
@@ -59,10 +59,10 @@ public class Order extends HttpServlet {
 			// TODO
 
 			// remove canceled receipt
-			daoReceipt.remove(currentReceiptId);
+			daoReceipt.delete(currentReceiptId);
 
 			// remove sold by this receipt items
-			daoSold.removeSoldRecords(currentReceiptId);
+			daoSold.deleteByReceipt(currentReceiptId);
 
 			baseMessage = "Last receipt has been canceled";
 		}
@@ -100,13 +100,13 @@ public class Order extends HttpServlet {
 			System.out.println("Order#doPost >> itemId:" + itemId); // ||||||||
 			// check input
 			if (itemId < 0) {
-				request.setAttribute("messageType", "fail"); // are types "good" or "fail"
+				request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
 				request.setAttribute("orderMessage", "Rejected! Wrong Item");
 				getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 				return;
 			}
 			if (requestQuantity < 0.0) {
-				request.setAttribute("messageType", "fail"); // are types "good" or "fail"
+				request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
 				request.setAttribute("orderMessage", "Rejected! Wrong Quantity");
 				getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 				return;
@@ -114,14 +114,14 @@ public class Order extends HttpServlet {
 
 			// check if item present in database
 			DaoStore daoStore = DaoStore.getInstance();
-			Item item = daoStore.getItem(itemId);
+			Item item = daoStore.get(itemId);
 			if (item != null) {
 				// check when quantity must be integer
 				MeasureUnit unit = item.getUnit();
 				if (unit != MeasureUnit.kilogram && unit != MeasureUnit.tonne) {
 					double fractional = requestQuantity - (int) requestQuantity;
 					if (fractional != 0.0) {
-						request.setAttribute("messageType", "fail"); // are types "good" or "fail"
+						request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
 						request.setAttribute("orderMessage",
 								"Rejected! Wrong Quantity. Should be integer for " + unit);
 						getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
@@ -131,9 +131,9 @@ public class Order extends HttpServlet {
 
 				// check quantity
 				if (item.getQuantity() < requestQuantity) {
-					request.setAttribute("messageType", "fail"); // are types "good" or "fail"
+					request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
 					request.setAttribute("orderMessage", "Rejected! There are not enough " + item.getName()
-							+ "in store! Asked for " + requestQuantity + "but there are " + item.getQuantity());
+							+ " in store! Asked for " + requestQuantity + "but there are " + item.getQuantity());
 					getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 					return;
 				}
@@ -147,27 +147,32 @@ public class Order extends HttpServlet {
 				if (preCurrentReceipt instanceof Receipt) {
 					currentReceipt = (Receipt) preCurrentReceipt;
 				} else {
+					long unixTimeNow = System.currentTimeMillis();
+					Receipt risingReceipt = new Receipt(-1, unixTimeNow, unixTimeNow, getDutyOperatorId(session),
+							0.0);
 					DaoReceipt daoReceipt = DaoReceipt.getInstance();
-					currentReceipt = daoReceipt.createNewReceipt();
-					currentReceipt.setOperatorId(getDutyOperatorId(session));
+					daoReceipt.insert(risingReceipt);
+					currentReceipt = daoReceipt.getByOpenTime(unixTimeNow);
 				}
 
-				// increase sum in receipt
+				// increase sum in receipt and update in database
 				double cost = requestQuantity * item.getPrice();
 				double sum = currentReceipt.getSum() + cost;
 				currentReceipt.setSum(sum);
+				DaoReceipt daoReceipt = DaoReceipt.getInstance();
+				daoReceipt.update(currentReceipt);
 
 				// update soldRecords
-				SoldRecord soldRecord = new SoldRecord(currentReceipt.getId(), currentReceipt.getOpentime(), itemId,
-						item.getPrice(), requestQuantity, cost);
+				SoldRecord soldRecord = new SoldRecord(-1, currentReceipt.getId(), currentReceipt.getOpentime(),
+						itemId, item.getPrice(), requestQuantity, cost);
 				DaoSold daoSold = DaoSold.getInstance();
-				daoSold.add(soldRecord);
-				List<SoldRecord> soldRecords = daoSold.getSoldRecords(currentReceipt.getId());
+				daoSold.insert(soldRecord);
+				List<SoldRecord> soldRecords = daoSold.getByReceipt(currentReceipt.getId());
 
 				// finally set attributes
 				request.setAttribute("soldRecords", soldRecords);
 				session.setAttribute("currentReceipt", currentReceipt);
-				request.setAttribute("messageType", "good"); // are types "good" or "fail"
+				request.setAttribute("messageType", "good"); // should be type "good" or "fail"
 				String orderMessage = "Added: " + item.getName() + " >>> " + Utils.norm(requestQuantity) + " "
 						+ item.getUnit() + " >>> cost=" + Utils.norm(cost);
 				request.setAttribute("orderMessage", orderMessage);

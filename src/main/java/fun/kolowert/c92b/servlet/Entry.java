@@ -36,7 +36,7 @@ public class Entry extends HttpServlet {
 
 		// get registered users from database
 		DaoOperator daoOperator = DaoOperator.getInstance();
-		List<Operator> operators = daoOperator.getOperators();
+		List<Operator> operators = daoOperator.getAll();
 		// ..push them into attributes
 		request.setAttribute("operators", operators);
 		request.setAttribute("password", "undefined");

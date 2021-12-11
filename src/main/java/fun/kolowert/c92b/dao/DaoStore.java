@@ -1,7 +1,10 @@
 package fun.kolowert.c92b.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import fun.kolowert.c92b.bean.Item;
@@ -11,36 +14,7 @@ public class DaoStore {
 
 	private static DaoStore INSTANCE;
 
-	// TODO rewrite this stubs
-	private List<Item> items = new ArrayList<>();
-
 	private DaoStore() {
-		// This is stub
-		Item[] preItems = { 
-				new Item(11, "Marmalade", MeasureUnit.jar, 100, 78.00),
-				new Item(12, "Eclair", MeasureUnit.bar, 45, 35.00),
-				new Item(13, "Strawberry Pie", MeasureUnit.piece, 20, 25.00),
-				new Item(30, "Vanilla Pudding", MeasureUnit.piece, 32, 16.95),			
-				new Item(23, "Pie with Cream", MeasureUnit.piece, 15, 18.50),
-				new Item(15, "Cranberry Cookies", MeasureUnit.kilogram, 28, 25.65),
-				new Item(16, "Red Currants Jelly", MeasureUnit.tonne, 0.55, 13000.00),
-				new Item(17, "Custard Cake", MeasureUnit.kilogram, 9, 19.99),
-				new Item(18, "Shortcrust Pastry with Cheese", MeasureUnit.piece, 30, 12.50),
-				new Item(19, "Honey Biscuits", MeasureUnit.kilogram, 15, 9.96),
-				new Item(20, "Pecan Pie", MeasureUnit.kilogram, 1.1, 145.00),
-				new Item(21, "Poppy Seed Cake", MeasureUnit.kilogram, 3.5, 169.00),
-				new Item(22, "Bilberry Tart", MeasureUnit.piece, 10, 45.00),
-				new Item(14, "Tiramisu", MeasureUnit.jar, 14, 99.99),
-				new Item(24, "Cheesecake with Raisins", MeasureUnit.kilogram, 3.9, 51.00),
-				new Item(25, "Rhubarb Pie", MeasureUnit.piece, 8, 41.00),
-				new Item(26, "Cherry Strudel", MeasureUnit.kilogram, 2.5, 65.00),
-				new Item(27, "Apple Strudel", MeasureUnit.kilogram, 5.6, 75.00),
-				new Item(28, "Christstollen", MeasureUnit.bar, 24, 45.00),
-				new Item(32, "Cream Cake", MeasureUnit.bar, 3, 50.00),
-				new Item(33, "Fashion Bagel", MeasureUnit.piece, 20, 18.75),
-				new Item(29, "Сhocolate", MeasureUnit.bar, 100, 10.00) };
-		
-		items = Arrays.asList(preItems);
 	}
 
 	public static DaoStore getInstance() {
@@ -49,18 +23,61 @@ public class DaoStore {
 		}
 		return INSTANCE;
 	}
-	
-	public Item getItem(int id) {
-		for (Item item : items) {
-			if (item.getId() == id) {
-				return item;
+
+	public Item get(int id) {
+		Item item = null;
+		String sqlInstruction = "SELECT * FROM store WHERE item_id = " + id;
+		Connection con = Connector.getInstance().getConnection();
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				item = new Item(
+						resultSet.getInt("item_id"), 
+						resultSet.getString("name"), 
+						findMesureUnit(resultSet.getInt("measure_unit")),
+						resultSet.getDouble("quantity"), 
+						resultSet.getDouble("price"));
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
 		}
-		return null;
+		return item;
 	}
-	
-	public List<Item> getItems() {
+
+	public List<Item> getAll() {
+		List<Item> items = new ArrayList<>();
+		String sqlInstruction = "SELECT * FROM store";
+		Connection con = Connector.getInstance().getConnection();
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Item item = new Item(
+						resultSet.getInt("item_id"), 
+						resultSet.getString("name"), 
+						findMesureUnit(resultSet.getInt("measure_unit")),
+						resultSet.getDouble("quantity"), 
+						resultSet.getDouble("price"));
+				items.add(item);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
+		}
 		return items;
 	}
-	
+
+	private MeasureUnit findMesureUnit(int measureUnitId) {
+		MeasureUnit measureUnit = MeasureUnit.values()[0];
+		try {
+			measureUnit = MeasureUnit.values()[measureUnitId - 1];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// TODO
+		}
+		return measureUnit;
+	}
 }

@@ -10,10 +10,9 @@ public class SoldRecord {
 	private double soldQuantity;
 	private double soldCost;
 
-	public SoldRecord(int receiptId, long receiptTime, int itemId, double soldPrice, double soldQuantity,
+	public SoldRecord(int id, int receiptId, long receiptTime, int itemId, double soldPrice, double soldQuantity,
 			double soldCost) {
-		java.util.Random rnd = new java.util.Random();
-		this.id = rnd.nextInt(8999) + 1000;
+		this.id = id;
 		this.receiptId = receiptId;
 		this.receiptTime = receiptTime;
 		ItemId = itemId;

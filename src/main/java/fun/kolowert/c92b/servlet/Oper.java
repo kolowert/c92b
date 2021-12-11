@@ -42,7 +42,7 @@ public class Oper extends HttpServlet {
 			String inputRole = request.getParameter("role");
 			String inputPassword = request.getParameter("password");
 			DaoOperator daoOperator = DaoOperator.getInstance();
-			daoOperator.editOperator(id, inputLogin, inputRole, inputPassword);
+			daoOperator.update(id, inputLogin, inputRole, inputPassword);
 			inputPassword = "erased";
 		}
 		
@@ -50,7 +50,7 @@ public class Oper extends HttpServlet {
 			System.out.println("Oper#doPost >> DELETE OPER"); // ||||||||||||||||||||||||||||||||
 			int	id = Utils.parseIntIdFromObject(request.getParameter("id"));
 			DaoOperator daoOperator = DaoOperator.getInstance();
-			daoOperator.deleteOperator(id);
+			daoOperator.delete(id);
 		}
 		
 		getServletContext().getRequestDispatcher("/play/staff.jsp").forward(request, response);

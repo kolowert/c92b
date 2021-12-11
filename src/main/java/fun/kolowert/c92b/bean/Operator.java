@@ -64,7 +64,7 @@ public class Operator {
 	}
 
 	public String briefInfo() {
-		return login + " -- " + role + " -- " + "id:" + id;
+		return login + " | " + role + " | " + "id:" + id;
 	}
 
 	public String getPassHash() {

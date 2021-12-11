@@ -7,5 +7,5 @@ public enum MeasureUnit {
     pack,
     piece,
     kilogram,
-    tonne
+    tonne;
 }

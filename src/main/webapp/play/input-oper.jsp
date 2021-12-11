@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" 
-	import="fun.kolowert.c92b.dao.DaoRole"
+	import="fun.kolowert.c92b.utility.Role"
 	import="fun.kolowert.c92b.utility.Utils" 
 	import="java.util.List"%>
 <!DOCTYPE html>
@@ -29,8 +29,7 @@
 			<input type="hidden" name="task" value="inputNew" /> 
 			Login: <input name="login" /> &nbsp; &nbsp; Role: <select name="role">
 				<%
-				DaoRole daoRole = DaoRole.getInstance();
-				List<String> roles = daoRole.getRoles();
+				List<String> roles = Role.getAll();
 				for (String role : roles) {
 					out.println("<option>" + role + "</option>");
 				}

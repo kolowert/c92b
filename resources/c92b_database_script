@@ -1,6 +1,6 @@
 	CREATE DATABASE IF NOT EXISTS `c92b` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-	CREATE USER 'userx'@'%' IDENTIFIED BY 'pass1122334455';
-	GRANT ALL PRIVILEGES ON c92b.* TO 'userx'@'%' WITH GRANT OPTION;
+	CREATE USER 'userb'@'%' IDENTIFIED BY 'pass1122334455';
+	GRANT ALL PRIVILEGES ON c92b.* TO 'userb'@'%' WITH GRANT OPTION;
 	FLUSH PRIVILEGES;
 	
 	USE `c92b`;
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `c92b`.`operator` (
 	`passhash` VARCHAR(255) NULL DEFAULT NULL,
 	`role` VARCHAR(20) NULL DEFAULT NULL,
 	`salt` VARCHAR(255) NULL DEFAULT NULL,
-	PRIMARY KEY (`id`),
+	PRIMARY KEY (`id`)
 );
 
 INSERT INTO operator (login, passhash, role, salt) VALUES ('Admin', 'PbAzIz6JYQ9kWv31SrQKlA==', 'expert', 'abcdefgh');
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `c92b`.`store` (
 	`item_id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(45) NOT NULL UNIQUE,
 	`measure_unit` INT NULL DEFAULT NULL,
-	`quantity` DECIMAL(9, 4),
-	`price` DECIMAL(9, 4),
+	`quantity` DECIMAL(14, 4),
+	`price` DECIMAL(14, 4),
 	PRIMARY KEY (`item_id`),
 	UNIQUE INDEX `id` (`item_id` ASC),
 	FOREIGN KEY (`measure_unit`)
@@ -48,29 +48,29 @@ CREATE TABLE IF NOT EXISTS `c92b`.`store` (
 
 INSERT INTO `store` (name, measure_unit, quantity, price) 
 	VALUES
-	('Eclair', 1, 45, 35.00),
-	('Marmalade', 3, 30, 105.00),
-	('Strawberry Pie', 5, 20, 25.00),
-	('Vanilla Pudding', 5, 32, 16.95),			
-	('Pie with Cream', 5, 15, 18.50),
-	('Cranberry Cookies', 6, 28, 25.65),
-	('Red Currants Jelly', 7, 0.55, 13000.00),
-	('Custard Cake', 6, 9, 19.99),
-	('Shortcrust Pastry with Cheese', 5, 30, 12.50),
-	('Honey Biscuits', 6, 15, 9.96),
-	('Pecan Pie', 6, 1.1, 145.00),
-	('Poppy Seed Cake', 6, 3.5, 169.00),
-	('Bilberry Tart', 6, 10, 45.00),
-	('Tiramisu', 4, 14, 99.99),
-	('Cheesecake with Raisins', 4, 3.9, 51.00),
-	('Rhubarb Pie', 5, 8, 41.00),
-	('Cherry Strudel', 6, 2.5, 65.00),
-	('Apple Strudel', 6, 5.6, 75.00),
-	('Christstollen', 1, 24, 45.00),
-	('Cream Cake', 5, 3, 50.00),
-	('Fashion Bagel', 4, 20, 18.75),
-	('Сhocolate', 1, 100, 10.00),
-	('Hazelnuts', 4, 10, 97.50);
+	('Eclair', 1, 45, 0.35),
+	('Marmalade', 3, 30, 1.05),
+	('Strawberry Pie', 5, 20, 0.25),
+	('Vanilla Pudding', 5, 32, 0.16),			
+	('Pie with Cream', 5, 15, 0.18),
+	('Cranberry Cookies', 6, 28, 0.25),
+	('Red Currants Jelly', 7, 0.55, 130.00),
+	('Custard Cake', 6, 9, 0.20),
+	('Shortcrust Pastry with Cheese', 5, 30, 0.12),
+	('Honey Biscuits', 6, 15, 0.10),
+	('Pecan Pie', 6, 1.1, 1.45),
+	('Poppy Seed Cake', 6, 3.5, 1.69),
+	('Bilberry Tart', 6, 10, 0.45),
+	('Tiramisu', 4, 14, 1.00),
+	('Cheesecake with Raisins', 4, 3.9, 0.50),
+	('Rhubarb Pie', 5, 8, 0.43),
+	('Cherry Strudel', 6, 2.5, 0.65),
+	('Apple Strudel', 6, 5.6, 0.75),
+	('Christstollen', 1, 24, 0.45),
+	('Cream Cake', 5, 3, 0.50),
+	('Fashion Bagel', 4, 20, 0.18),
+	('Сhocolate', 1, 100, 0.10),
+	('Hazelnuts', 4, 10, 0.98);
 
 
 CREATE TABLE IF NOT EXISTS `c92b`.`receipt` (
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `c92b`.`receipt` (
 	opentime BIGINT NULL DEFAULT NULL,
 	closetime BIGINT NULL DEFAULT NULL,
 	operator_id INT NOT NULL,
-	sum DECIMAL(9, 4),
+	sum DECIMAL(14, 4),
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`operator_id`)
 	REFERENCES `c92b`.`operator` (`id`)
@@ -90,9 +90,9 @@ CREATE TABLE IF NOT EXISTS `c92b`.`sold_record` (
 	receipt_id INT NOT NULL,
 	receipt_time BIGINT NULL DEFAULT NULL,
 	item_id INT NOT NULL,
-	price DECIMAL(9, 4),
-	quantity DECIMAL(9, 4),
-	cost DECIMAL(9, 4),	
+	price DECIMAL(14, 4),
+	quantity DECIMAL(14, 4),
+	cost DECIMAL(14, 4),	
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`receipt_id`)
 	REFERENCES `c92b`.`receipt` (`id`),

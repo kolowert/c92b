@@ -56,4 +56,7 @@ public class Connector {
 		return null;
 	}
 	
+	public void release(Connection connection) {
+		connectionPool.release(connection);
+	}
 }

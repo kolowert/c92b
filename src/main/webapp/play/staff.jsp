@@ -46,15 +46,15 @@
 				<tbody>
 					<%
 					DaoOperator daoOperator = DaoOperator.getInstance();
-					List<Operator> operators = daoOperator.getOperators();
-					for (Operator operator : operators) {
-						int id = operator.getId();
-						String login = operator.getLogin();
-						String role = operator.getRole();
-						String path = request.getContextPath();
-						String editLink = "<a href=\"" + path + "/play/edit-oper.jsp?id=" + id + "\">edit</a>";
-						out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" + editLink + "</td></tr>");
-					}
+								List<Operator> operators = daoOperator.getAll();
+								for (Operator operator : operators) {
+									int id = operator.getId();
+									String login = operator.getLogin();
+									String role = operator.getRole();
+									String path = request.getContextPath();
+									String editLink = "<a href=\"" + path + "/play/edit-oper.jsp?id=" + id + "\">edit</a>";
+									out.println("<tr><td>" + id + "</td><td>" + login + "</td><td>" + role + "</td><td>" + editLink + "</td></tr>");
+								}
 					%>
 				</tbody>
 			</table>

@@ -81,7 +81,7 @@ public class Main extends HttpServlet {
 
 		// get Operator from database by id
 		DaoOperator daoOperator = DaoOperator.getInstance();
-		Operator operator = daoOperator.getOperatorById(operatorId);
+		Operator operator = daoOperator.get(operatorId);
 
 		if (operator == null) {
 			// TODO something with it

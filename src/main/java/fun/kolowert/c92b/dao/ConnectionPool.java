@@ -13,7 +13,7 @@ public class ConnectionPool {
 	private List<Connection> usedConnections = new ArrayList<>();
 	private static int INITIAL_POOL_SIZE = 8;
 	private static int MAX_POOL_SIZE = 32;
-	private static int MAX_TIMEOUT = 3660;
+	private static int MAX_TIMEOUT = 1860;
 
 	private ConnectionPool(DataSource dataSource, List<Connection> pool) {
 		this.dataSource = dataSource;
@@ -26,11 +26,11 @@ public class ConnectionPool {
 			Connection nextConnection = null;
 			try {
 				nextConnection = dataSource.getConnection();
+				pool.add(nextConnection);
 			} catch (SQLException e) {
 				// TODO
 				e.printStackTrace();
 			}
-			pool.add(nextConnection);
 		}
 		return new ConnectionPool(dataSource, pool);
 	}

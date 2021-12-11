@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import fun.kolowert.c92b.bean.Operator;
@@ -46,16 +47,15 @@ public final class DaoOperator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Connector.getInstance().release(con);
 		System.out.println("DaoOperator# >> after adding"); // ||||||||||||||||||||||||||||||||||||||
 	}
 
-	public Operator getOperatorById(int id) {
+	public Operator get(int id) {
 		Operator operator = null;
 		String sqlInstruction = "SELECT * FROM operator WHERE id = " + id;
 		Connection con = Connector.getInstance().getConnection();
-		PreparedStatement statement;
-		try {
-			statement = con.prepareStatement(sqlInstruction);
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				operator = new Operator(resultSet.getInt("id"), resultSet.getString("login"),
@@ -64,13 +64,14 @@ public final class DaoOperator {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
 		}
 		return operator;
 	}
 
-	public boolean editOperator(int id, String inputLogin, String inputRole, String inputPassword) {
+	public boolean update(int id, String inputLogin, String inputRole, String inputPassword) {
 		Connection con = Connector.getInstance().getConnection();
-
 		if (inputPassword != null && inputPassword.length() > 2) {
 			String salt = PasswordUtils.generateSalt(16);
 			String passHash = PasswordUtils.hashTextPassword(inputPassword, salt).get();
@@ -87,6 +88,8 @@ public final class DaoOperator {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return false;
+			} finally {
+				Connector.getInstance().release(con);
 			}
 		}
 
@@ -100,11 +103,13 @@ public final class DaoOperator {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
 		}
 		return false;
 	}
 
-	public void deleteOperator(int id) {
+	public void delete(int id) {
 		String sqlInstruction = "DELETE FROM operator WHERE id = ?";
 		Connection con = Connector.getInstance().getConnection();
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
@@ -113,17 +118,17 @@ public final class DaoOperator {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
 		}
 	}
 
-	public List<Operator> getOperators() {
+	public List<Operator> getAll() {
 		System.out.println("DaoOperator#getOperators >>"); // |||||||||||||||||||||||||||||||||||||||||||
 		List<Operator> operators = new ArrayList<>();
 		String sqlInstruction = "SELECT * FROM operator";
 		Connection con = Connector.getInstance().getConnection();
-		PreparedStatement statement;
-		try {
-			statement = con.prepareStatement(sqlInstruction);
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Operator operator = new Operator(resultSet.getInt("id"), resultSet.getString("login"),
@@ -133,10 +138,16 @@ public final class DaoOperator {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
 		}
-		
-		
-		
+		operators.sort(new Comparator<Operator>() {
+			@Override
+			public int compare(Operator o1, Operator o2) {
+				return o1.getLogin().compareTo(o2.getLogin());
+			}
+		});
 		return operators;
 	}
+	
 }
