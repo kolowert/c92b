@@ -2,7 +2,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"
 	import="fun.kolowert.c92b.bean.Item"
 	import="fun.kolowert.c92b.bean.MeasureUnit"
-	import="fun.kolowert.c92b.dao.DaoStore" import="java.util.List"%>
+	import="fun.kolowert.c92b.dao.DaoStore"
+	import="fun.kolowert.c92b.utility.Utils"
+	import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,9 +29,9 @@
 				</div>
 				<div class="col-sm-6">
 					<p style="text-align: right">
-						Register new Item <input type="button"
+						Add Item <input type="button"
 							onclick="location.href='${pageContext.request.contextPath}/play/input-item.jsp'"
-							value="new" />
+							value="add" />
 					</p>
 				</div>
 			</div>
@@ -50,8 +52,8 @@
 				</thead>
 				<tbody>
 					<%
-					DaoStore daoOStore = DaoStore.getInstance();
-					List<Item> items = daoOStore.getAll();
+					DaoStore daoStore = DaoStore.getInstance();
+					List<Item> items = daoStore.getAll();
 					for (Item item : items) {
 						int id = item.getId();
 						String name = item.getName();
@@ -60,8 +62,8 @@
 						double price = item.getPrice();
 						String path = request.getContextPath();
 						String editLink = "<a href=\"" + path + "/play/edit-item.jsp?id=" + id + "\">edit</a>";
-								out.println("<tr><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" + quantity + "</td><td>"
-								+ price + "</td><td>" + editLink + "</td></tr>");
+						out.println("<tr><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" 
+								+ quantity + "</td><td>" + Utils.norm(price) + "</td><td>" + editLink + "</td></tr>");
 					}
 					%>
 				</tbody>

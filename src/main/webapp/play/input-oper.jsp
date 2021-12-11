@@ -27,15 +27,17 @@
 
 		<form action="${pageContext.request.contextPath}/oper" method="POST">
 			<input type="hidden" name="task" value="inputNew" /> 
-			Login: <input name="login" /> &nbsp; &nbsp; Role: <select name="role">
+			Login: <input name="login" /> &nbsp; &nbsp; 
+			Role: <select name="role">
 				<%
 				List<String> roles = Role.getAll();
 				for (String role : roles) {
 					out.println("<option>" + role + "</option>");
 				}
 				%>
-			</select> &nbsp; &nbsp; Password: <input type="password" name="password" />
-
+			</select> 
+			&nbsp; &nbsp; 
+			Password: <input type="password" name="password" />
 			&nbsp; &nbsp; 
 			<input type="submit" value="input" /> 
 			&nbsp; &nbsp; 

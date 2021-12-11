@@ -44,8 +44,10 @@
 			<input type="hidden" name="task" value="editOper"> <input
 				type="hidden" name="id" value=<%=editId%>> id:
 			<%=editId%>
-			&nbsp; | &nbsp; Login: <input name="login" value=<%=editLogin%> />
-			&nbsp; &nbsp; Role: <select name="role">
+			&nbsp; | &nbsp; 
+			Login: <input name="login" value=<%=editLogin%> />
+			&nbsp; &nbsp; 
+			Role: <select name="role">
 				<%
 				List<String> roles = Role.getAll();
 				out.println("<option>" + editRole + "</option>");

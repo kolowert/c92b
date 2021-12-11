@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import fun.kolowert.c92b.bean.MeasureUnit;
 import fun.kolowert.c92b.bean.Operator;
 
 public class Utils {
@@ -38,7 +39,31 @@ public class Utils {
 		}
 		return null;
 	}
-
+	
+	public static int findMesureUnitId(MeasureUnit measureUnit) {
+		return MeasureUnit.valueOf(measureUnit.toString()).ordinal() + 1;
+	}
+	
+	public static MeasureUnit findMesureUnitValue(int measureUnitId) {
+		MeasureUnit measureUnit = MeasureUnit.values()[0];
+		try {
+			measureUnit = MeasureUnit.values()[measureUnitId - 1];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// TODO
+		}
+		return measureUnit;
+	}
+	
+	public static MeasureUnit findMesureUnitValue(String measureUnitText) {
+		MeasureUnit measureUnit = MeasureUnit.values()[0];
+		try {
+			measureUnit = MeasureUnit.valueOf(measureUnitText);
+		} catch (Exception e) {
+			// TODO
+		}
+		return measureUnit;
+	}
+	
 	/**
 	 * used on Login Servlet
 	 */
