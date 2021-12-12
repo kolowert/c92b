@@ -2,6 +2,10 @@ package fun.kolowert.c92b.utility;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -39,11 +43,11 @@ public class Utils {
 		}
 		return null;
 	}
-	
+
 	public static int findMesureUnitId(MeasureUnit measureUnit) {
 		return MeasureUnit.valueOf(measureUnit.toString()).ordinal() + 1;
 	}
-	
+
 	public static MeasureUnit findMesureUnitValue(int measureUnitId) {
 		MeasureUnit measureUnit = MeasureUnit.values()[0];
 		try {
@@ -53,7 +57,7 @@ public class Utils {
 		}
 		return measureUnit;
 	}
-	
+
 	public static MeasureUnit findMesureUnitValue(String measureUnitText) {
 		MeasureUnit measureUnit = MeasureUnit.values()[0];
 		try {
@@ -63,7 +67,7 @@ public class Utils {
 		}
 		return measureUnit;
 	}
-	
+
 	/**
 	 * used on Login Servlet
 	 */
@@ -96,7 +100,7 @@ public class Utils {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * @return double value or -1.0 if can't parse
 	 */
@@ -113,7 +117,7 @@ public class Utils {
 		}
 		return result;
 	}
-	
+
 	public static String atributeToStringOrStub(Object input, String stub) {
 		if (input != null && input instanceof String) {
 			return input.toString();
@@ -138,32 +142,57 @@ public class Utils {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * normalize double to format "[DDD...]D.PP"
-	 * @param double value
 	 */
 	public static String norm(double d) {
-		if (d <= 0.0049) { return "0.00"; }
+		if (d <= 0.0049) {
+			return "0.00";
+		}
 		int h = (int) (d * 100 + 0.5);
 		int len = ("" + h).length();
-		if (len < 3) len = 3;
+		if (len < 3)
+			len = 3;
 		String r = "" + 1.0 * (h / 100.0) + "000";
 		return r.subSequence(0, len + 1).toString();
 	}
-	
+
 	public static String norm(int n) {
 		int len = ("" + n).length();
 		String zeros = "000".substring(0, 3 - len);
 		return zeros + n;
 	}
 	
+	/**
+	 * @param Unix time in milliseconds
+	 * @return SimpleDateFormat YYYY-MM-dd HH:mm:ss"
+	 */
 	public static String unixTimeToTimeStamp(long t) {
 		java.util.Date datetime = new java.util.Date(t);
 		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		return dateFormat.format(datetime);
 	}
 	
+	/**
+	 * Convert date in format like "20211231" to Unix time
+	 * @param dateInString like "20211231"
+	 * @return milliseconds
+	 */
+	public static long dateInStringToMilliseconds(String dateInString) {
+		try {
+		LocalDate date = LocalDate.parse(dateInString, DateTimeFormatter.BASIC_ISO_DATE);
+		ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
+		long epoch = date.atStartOfDay(zoneId).toEpochSecond();
+		long milliseconds = epoch * 1000;
+		return milliseconds;
+		} catch (DateTimeParseException e) {
+			// TODO
+			e.printStackTrace();
+		}
+		return -1L;
+	}
+
 	public static String reportDayOfWeek() {
 		Calendar c = Calendar.getInstance();
 		c.setTime(c.getTime());

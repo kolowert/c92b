@@ -60,7 +60,7 @@
 		<url-pattern>/receipt</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>itemServ</servlet-name>
 		<servlet-class>fun.kolowert.c92b.servlet.ItemServ</servlet-class>
 	</servlet>
@@ -68,7 +68,16 @@
 		<servlet-name>itemServ</servlet-name>
 		<url-pattern>/item</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet>
+		<servlet-name>reportServ</servlet-name>
+		<servlet-class>fun.kolowert.c92b.servlet.ReportServ</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>reportServ</servlet-name>
+		<url-pattern>/report</url-pattern>
+	</servlet-mapping>
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/_404.jsp</location>

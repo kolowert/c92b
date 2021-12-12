@@ -17,8 +17,81 @@
 	<div class="container-lg p-1">
 		<jsp:include page="_header.jsp"></jsp:include>
 		<br />
-
-		<h3 class="text-info">report page stub</h3>
+		
+		<b style="color: DodgerBlue; font-size: 16px;">Report Master</b>
+		&ensp; &ensp;
+		<input type="button"
+		onclick="location.href='${pageContext.request.contextPath}/report?task=xReport'"
+		value="x-Report" />
+		&ensp; &ensp;
+		<input type="button"
+		onclick="location.href='${pageContext.request.contextPath}/report?task=zReport'"
+		value="z-Report" />
+		
+		<br /> <br /> <br />
+		<h4 style="color: DodgerBlue; font-size: 20px;">Custom Period Report</h4>
+		
+			<form action="${pageContext.request.contextPath}/report" method="POST">
+				<input type="hidden" name="task" value="customReport"> 
+				<b>From:</b> &ensp; &ensp;
+				<select name="fromYear">
+					<option>2021</option>
+					<option>2020</option>
+					<option>2019</option>
+				</select>
+				&ensp; &ensp;
+				<select name="fromMonth">
+					<%
+					for (int i = 1; i <= 12; i++) {
+						out.println("<option>" + i + "</option>");
+					}
+					%>
+				</select>
+				&ensp; &ensp;
+				<select name="fromDay">
+					<%
+					for (int i = 1; i <= 31; i++) {
+						out.println("<option>" + i + "</option>");
+					}
+					%>
+				</select>
+				&ensp; &ensp; &ensp;
+				<b>To:</b> &ensp; &ensp;
+				<select name="toYear">
+					<option>2021</option>
+					<option>2020</option>
+					<option>2019</option>
+				</select>
+				&ensp; &ensp;
+				<select name="toMonth">
+					<%
+					for (int i = 1; i <= 12; i++) {
+						out.println("<option>" + i + "</option>");
+					}
+					%>
+				</select>
+				&ensp; &ensp;
+				<select name="toDay">
+					<%
+					for (int i = 1; i <= 31; i++) {
+						out.println("<option>" + i + "</option>");
+					}
+					%>
+				</select>
+				
+				&ensp; &ensp;
+				<input type="submit" value="Make Report" /> 
+				<br /> <br />
+				
+			</form>
+		
+		<!-- -------------------------------------------------------------------------------------- -->
+		
+		<div class="container p-3 my-3 bg-light border">
+			
+			${reportBody}
+			
+		</div>
 		
 		<jsp:include page="_footer.jsp"></jsp:include>
 	</div>
