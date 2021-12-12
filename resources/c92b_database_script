@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `c92b`.`sold_record` (
 	id INT NOT NULL AUTO_INCREMENT,
 	receipt_id INT NOT NULL,
 	receipt_time BIGINT NULL DEFAULT NULL,
-	item_id INT NOT NULL,
+	item_id INT NULL DEFAULT NULL,
 	price DECIMAL(14, 4),
 	quantity DECIMAL(14, 4),
 	cost DECIMAL(14, 4),	
@@ -98,4 +98,5 @@ CREATE TABLE IF NOT EXISTS `c92b`.`sold_record` (
 	REFERENCES `c92b`.`receipt` (`id`),
 	FOREIGN KEY (`item_id`)
 	REFERENCES `c92b`.`store` (`item_id`)
+	ON DELETE SET DEFAULT
 );

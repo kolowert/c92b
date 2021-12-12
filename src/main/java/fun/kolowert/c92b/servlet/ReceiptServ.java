@@ -1,16 +1,19 @@
 package fun.kolowert.c92b.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fun.kolowert.c92b.bean.Item;
 import fun.kolowert.c92b.bean.Receipt;
 import fun.kolowert.c92b.bean.SoldRecord;
 import fun.kolowert.c92b.dao.DaoReceipt;
 import fun.kolowert.c92b.dao.DaoSold;
+import fun.kolowert.c92b.dao.DaoStore;
 import fun.kolowert.c92b.utility.Utils;
 
 public class ReceiptServ extends HttpServlet {
@@ -21,6 +24,7 @@ public class ReceiptServ extends HttpServlet {
 			throws ServletException, IOException {
 		
 		// prepare common
+		DaoStore daoStore = DaoStore.getInstance();
 		DaoSold daoSold = DaoSold.getInstance();
 		DaoReceipt daoReceipt = DaoReceipt.getInstance();
 		String task = request.getParameter("task");
@@ -29,14 +33,18 @@ public class ReceiptServ extends HttpServlet {
 		// TASK deleteReceipt ____________________________________________________
 		if (task != null && task.equals("deleteReceipt")) {
 			System.out.println("Receipt#doGet >> task.equals \"deleteReceipt\""); // ||||||||||||||||||||||||||||||||||||||
-			// TODO
-			Receipt receipt = daoReceipt.getById(receiptId);
 			
-			// adjust quantity in store
-			// TODO
+			// adjust quantity in store			
+			List<SoldRecord> records = daoSold.getByReceipt(receiptId);
+			for (SoldRecord record : records) {
+				int itemId = record.getItemId();
+				Item item = daoStore.get(itemId);
+				item.setQuantity(item.getQuantity() + record.getSoldQuantity());
+				daoStore.updateQuantity(item);
+			}
+			
 			
 			daoReceipt.delete(receiptId);
-			
 			getServletContext().getRequestDispatcher("/play/receipts.jsp").forward(request, response);
 		}
 
@@ -56,7 +64,10 @@ public class ReceiptServ extends HttpServlet {
 			daoReceipt.update(receipt);
 			
 			// adjust quantity in store
-			// TODO
+			int itemId = removedRecord.getItemId();
+			Item item = daoStore.get(itemId);
+			item.setQuantity(item.getQuantity() + removedRecord.getSoldQuantity());
+			daoStore.updateQuantity(item);
 			
 			// go back to the receipt
 			String forDirection = "/play/receipt.jsp?id=" + receiptId;

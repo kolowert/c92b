@@ -14,7 +14,7 @@
 
 	<servlet>
 		<servlet-name>entryServ</servlet-name>
-		<servlet-class>fun.kolowert.c92b.servlet.Entry</servlet-class>
+		<servlet-class>fun.kolowert.c92b.servlet.EntryServ</servlet-class>
 		<load-on-startup>0</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -24,7 +24,7 @@
 
 	<servlet>
 		<servlet-name>mainServ</servlet-name>
-		<servlet-class>fun.kolowert.c92b.servlet.Main</servlet-class>
+		<servlet-class>fun.kolowert.c92b.servlet.MainServ</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -34,7 +34,7 @@
 	
 	<servlet>
 		<servlet-name>orderServ</servlet-name>
-		<servlet-class>fun.kolowert.c92b.servlet.Order</servlet-class>
+		<servlet-class>fun.kolowert.c92b.servlet.OrderServ</servlet-class>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -44,7 +44,7 @@
 	
 	<servlet>
 		<servlet-name>operServ</servlet-name>
-		<servlet-class>fun.kolowert.c92b.servlet.Oper</servlet-class>
+		<servlet-class>fun.kolowert.c92b.servlet.OperServ</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>operServ</servlet-name>

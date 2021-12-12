@@ -1,5 +1,7 @@
 package fun.kolowert.c92b.bean;
 
+import fun.kolowert.c92b.utility.Utils;
+
 public class Item {
 
 	private int id;
@@ -69,9 +71,7 @@ public class Item {
 	}
 	
 	public String brief() {
-		String idView = "" + id;
-		if (id < 10) idView = "00" + id;
-		if (id < 100) idView = "0" + id;
+		String idView = Utils.norm(id);
 		return idView + " | " + name + "   >> " + price + " / " + unit + " ( " + quantity + " )";
 	}
 	

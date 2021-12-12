@@ -46,7 +46,7 @@
 						<th>Name</th>
 						<th>units</th>
 						<th>quantity</th>
-						<th>price</th>
+						<th style='color: ForestGreen'>price</th>
 						<th class="text-primary">items</th>
 					</tr>
 				</thead>
@@ -62,8 +62,9 @@
 						double price = item.getPrice();
 						String path = request.getContextPath();
 						String editLink = "<a href=\"" + path + "/play/edit-item.jsp?id=" + id + "\">edit</a>";
-						out.println("<tr><td>" + id + "</td><td>" + name + "</td><td>" + unit + "</td><td>" 
-								+ quantity + "</td><td>" + Utils.norm(price) + "</td><td>" + editLink + "</td></tr>");
+						out.println("<tr><td>" + Utils.norm(id) + "</td><td>" + name + "</td><td>" + unit + "</td><td>" 
+								+ quantity + "</td><td><b style='color: ForestGreen'>" + Utils.norm(price) + "</b></td><td>" 
+								+ editLink + "</td></tr>");
 					}
 					%>
 				</tbody>

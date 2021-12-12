@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import fun.kolowert.c92b.bean.Operator;
 import fun.kolowert.c92b.dao.DaoOperator;
 
-public class Entry extends HttpServlet {
+public class EntryServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16381350L;
 

@@ -152,6 +152,12 @@ public class Utils {
 		return r.subSequence(0, len + 1).toString();
 	}
 	
+	public static String norm(int n) {
+		int len = ("" + n).length();
+		String zeros = "000".substring(0, 3 - len);
+		return zeros + n;
+	}
+	
 	public static String unixTimeToTimeStamp(long t) {
 		java.util.Date datetime = new java.util.Date(t);
 		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");

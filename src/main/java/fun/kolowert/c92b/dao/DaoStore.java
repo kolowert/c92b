@@ -120,6 +120,23 @@ public class DaoStore {
 		}
 	}
 	
+	public boolean updateQuantity(Item item) {
+		Connection con = Connector.getInstance().getConnection();
+		String sqlInstruction = "UPDATE store SET quantity = ? WHERE item_id = ?";
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			statement.setDouble(1, item.getQuantity());
+			statement.setInt(2, item.getId());
+			statement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			Connector.getInstance().release(con);
+		}
+	}
+	
 	public boolean delete(int id) {
 		String sqlInstruction = "DELETE FROM store WHERE item_id = " + id;
 		Connection con = Connector.getInstance().getConnection();

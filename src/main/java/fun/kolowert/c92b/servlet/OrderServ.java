@@ -19,7 +19,7 @@ import fun.kolowert.c92b.dao.DaoSold;
 import fun.kolowert.c92b.dao.DaoStore;
 import fun.kolowert.c92b.utility.Utils;
 
-public class Order extends HttpServlet {
+public class OrderServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16387224L;
 
@@ -41,22 +41,19 @@ public class Order extends HttpServlet {
 			currentReceiptId = currentReceipt.getId();
 		}
 
-		// TASK FINISH
+		// TASK FINISH comes from base.jsp
 		if (task != null && task.equals("finish")) {
 			// fill some fields in receipt
 			if (currentReceipt != null) {
 				currentReceipt.setClosetime(System.currentTimeMillis());
 				currentReceipt.setOperatorId(getDutyOperatorId(session));
-			}
-			daoReceipt.update(currentReceipt);
+				daoReceipt.update(currentReceipt);
+			}		
 			baseMessage = "Receipt #" + currentReceiptId + " finished";
 		}
 
-		// TASK CANCEL
+		// TASK CANCEL comes from base.jsp
 		if (task != null && task.equals("cancel")) {
-
-			// return quantity in store
-			// TODO
 
 			// remove canceled receipt
 			daoReceipt.delete(currentReceiptId);
@@ -89,7 +86,8 @@ public class Order extends HttpServlet {
 		System.out.println("formTask: " + formTask); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 		HttpSession session = request.getSession();
-
+		
+		// comes from base.jsp
 		if (formTask.equals("addToReceipt")) {
 			// receive item brief information from form
 			String inputItemBrief = request.getParameter("itemBrief");
@@ -139,8 +137,10 @@ public class Order extends HttpServlet {
 				}
 
 				// adjust quantity in store
-				// TODO
-
+				Double remains = item.getQuantity() - requestQuantity;
+				item.setQuantity(remains);
+				daoStore.updateQuantity(item);
+				
 				// prepare current receipt
 				Receipt currentReceipt = null;
 				Object preCurrentReceipt = session.getAttribute("currentReceipt");

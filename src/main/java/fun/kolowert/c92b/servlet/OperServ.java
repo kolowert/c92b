@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import fun.kolowert.c92b.dao.DaoOperator;
 import fun.kolowert.c92b.utility.Utils;
 
-public class Oper extends HttpServlet {
+public class OperServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16386269L;
 
