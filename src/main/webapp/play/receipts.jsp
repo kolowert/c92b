@@ -39,29 +39,29 @@
 				<tbody>
 					<%
 					DaoOperator daoOperator = DaoOperator.getInstance();
-											DaoReceipt daoReceipt = DaoReceipt.getInstance();
-											List<Receipt> receipts = daoReceipt.getAll();
-											for (Receipt receipt : receipts) {
-												int id = receipt.getId();
-												double sum = receipt.getSum();
-												int operatorId = receipt.getOperatorId();
-												Operator operator = daoOperator.get(operatorId);
-												if (operator == null) {
-													operator = Operator.getNullOperator();
-												}
-												String operatorLogin = operator.getLogin();
-												String operatorRole = operator.getRole();
-												long closetime  = receipt.getClosetime();
-												String path = request.getContextPath();
-												String editLink = "<a href=\"" + path + "/play/receipt.jsp?id=" + id + "\">unfold</a>";
+					DaoReceipt daoReceipt = DaoReceipt.getInstance();
+					List<Receipt> receipts = daoReceipt.getAll();
+					for (Receipt receipt : receipts) {
+						int id = receipt.getId();
+						double sum = receipt.getSum();
+						int operatorId = receipt.getOperatorId();
+						Operator operator = daoOperator.get(operatorId);
+						if (operator == null) {
+							operator = Operator.getNullOperator();
+						}
+						String operatorLogin = operator.getLogin();
+						String operatorRole = operator.getRole();
+						long closetime  = receipt.getClosetime();
+						String path = request.getContextPath();
+						String editLink = "<a href=\"" + path + "/play/receipt.jsp?id=" + id + "\">unfold</a>";
 												
-												out.println("<tr><td>" 
-														+ id + "</td><td class='text-success'><b>" 
-														+ Utils.norm(sum) + "</b></td><td>" 
-														+ operatorLogin + " <small>(" + operatorRole + ")</small></td><td>"
-														+ Utils.unixTimeToTimeStamp(closetime) + "</td><td>"
-														+ editLink + "</td></tr>");
-											}
+						out.println("<tr><td>" 
+								+ id + "</td><td class='text-success'><b>" 
+								+ Utils.norm(sum) + "</b></td><td>" 
+								+ operatorLogin + " <small>(" + operatorRole + ")</small></td><td>"
+								+ Utils.unixTimeToTimeStamp(closetime) + "</td><td>"
+								+ editLink + "</td></tr>");
+					}
 					%>
 				</tbody>
 			</table>

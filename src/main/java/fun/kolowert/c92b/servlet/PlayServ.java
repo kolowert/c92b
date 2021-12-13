@@ -1,5 +1,6 @@
 package fun.kolowert.c92b.servlet;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -17,20 +18,53 @@ public class PlayServ {
 //		System.out.println(timeStamp);
 //		System.out.println("reportDayOfWeek: " + reportDayOfWeek_());
 
-		playData2();
+		playData3();
 
 	}
 
+	public static void playData3() {
+		//Converting milliseconds to Date using java.util.Date
+	    //current time in milliseconds
+	    long currentDateTime = System.currentTimeMillis();
+	     
+	    //creating Date from millisecond
+	    Date currentDate = new Date(currentDateTime);
+	     
+	    //printing value of Date
+	    System.out.println("current Date: " + currentDate);
+	     
+	    DateFormat df1 = new SimpleDateFormat("dd.MM.yy HH:mm:ss");
+	     
+	    //formatted value of current Date
+	    System.out.println("Milliseconds to Date: " + df1.format(currentDate));
+	    
+	    DateFormat df2 = new SimpleDateFormat("YYYYMMdd");
+	    String dateInString = df2.format(currentDate);
+	    System.out.println("Milliseconds to Date: " + dateInString);
+	    
+	    long mills = Utils.txtDateToMilliseconds(dateInString);
+	    System.out.println(mills);
+	    System.out.println(new Date(mills));
+	    
+	    System.out.println("~ ~ ~");
+	    
+	    long now = System.currentTimeMillis();
+	    DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
+	    String txtdate = dateFormat.format(now);
+	    long dayStart = Utils.txtDateToMilliseconds(txtdate);
+	    System.out.println("dayStart: " + dayStart);
+	}
+
 	public static void playData2() {
-		
+
 		String dateInString = "20211213";
 		LocalDate date = LocalDate.parse(dateInString, DateTimeFormatter.BASIC_ISO_DATE);
-		
+
 		ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
 		long epoch = date.atStartOfDay(zoneId).toEpochSecond();
-		
+
 		long milliseconds = epoch * 1000;
-		
+
 		String timeStamp = Utils.unixTimeToTimeStamp(milliseconds);
 
 		System.out.println("milliseconds: " + milliseconds);

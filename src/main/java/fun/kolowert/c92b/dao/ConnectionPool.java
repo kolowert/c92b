@@ -8,6 +8,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 public class ConnectionPool {
+	
 	private DataSource dataSource;
 	private List<Connection> connectionPool;
 	private List<Connection> usedConnections = new ArrayList<>();
@@ -32,6 +33,7 @@ public class ConnectionPool {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("ConnectionPool#create >>> created"); // ||||||||||||||||||||||||||||||||||||||||
 		return new ConnectionPool(dataSource, pool);
 	}
 	
@@ -47,6 +49,7 @@ public class ConnectionPool {
 			Connection connection = connectionPool.remove(connectionPool.size() - 1);
 			if (connection.isValid(MAX_TIMEOUT)) {
 				usedConnections.add(connection);
+				System.out.println("ConnectionPool#getConnection >>> size=" + this.getSize()); // ||||||||||||||||||||||||||||||||||||||||
 				return connection;
 			}
 			if (getSize() >= INITIAL_POOL_SIZE) {
@@ -63,6 +66,7 @@ public class ConnectionPool {
 		}
 		Connection connection = connectionPool.remove(connectionPool.size() - 1);
 		usedConnections.add(connection);
+		System.out.println("ConnectionPool#getConnection >>> size=" + this.getSize()); // ||||||||||||||||||||||||||||||||||||||||
 		return connection;
 	}
 

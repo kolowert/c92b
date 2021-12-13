@@ -33,13 +33,13 @@
 		
 			<form action="${pageContext.request.contextPath}/report" method="POST">
 				<input type="hidden" name="task" value="customReport"> 
-				<b>From:</b> &ensp; &ensp;
+				<b>From</b> &ensp; &ensp; y
 				<select name="fromYear">
 					<option>2021</option>
 					<option>2020</option>
 					<option>2019</option>
 				</select>
-				&ensp; &ensp;
+				&ensp; m
 				<select name="fromMonth">
 					<%
 					for (int i = 1; i <= 12; i++) {
@@ -47,7 +47,7 @@
 					}
 					%>
 				</select>
-				&ensp; &ensp;
+				&ensp; d
 				<select name="fromDay">
 					<%
 					for (int i = 1; i <= 31; i++) {
@@ -56,13 +56,13 @@
 					%>
 				</select>
 				&ensp; &ensp; &ensp;
-				<b>To:</b> &ensp; &ensp;
+				<b>To</b> &ensp; &ensp; y
 				<select name="toYear">
 					<option>2021</option>
 					<option>2020</option>
 					<option>2019</option>
 				</select>
-				&ensp; &ensp;
+				&ensp; m
 				<select name="toMonth">
 					<%
 					for (int i = 1; i <= 12; i++) {
@@ -70,7 +70,7 @@
 					}
 					%>
 				</select>
-				&ensp; &ensp;
+				&ensp; d
 				<select name="toDay">
 					<%
 					for (int i = 1; i <= 31; i++) {

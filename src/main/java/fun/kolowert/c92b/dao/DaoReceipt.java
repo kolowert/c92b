@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import fun.kolowert.c92b.bean.Receipt;
@@ -74,7 +75,8 @@ public class DaoReceipt {
 		return false;
 	}
 
-	public boolean insert(Receipt receipt) { // |||||||||||||||||||||||||||||||||||
+	public boolean insert(Receipt receipt) {
+		System.out.println("DaoReceipt#insert >>> param receipt: " + receipt.toString()); // ||||||||||||||||||||||||||||||||||||||||||||||||||
 		String sqlInstruction = "INSERT INTO receipt (opentime, closetime, operator_id, sum) Values (?, ?, ?, ?)";
 		Connection con = Connector.getInstance().getConnection();
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
@@ -112,7 +114,27 @@ public class DaoReceipt {
 		}
 		return receipt;
 	}
-
+	
+	public List<Receipt> getByPeriod(long fromTime, long toTime) {
+		List<Receipt> receipts = new ArrayList<>();
+		String sqlInstruction = "SELECT * FROM receipt WHERE closetime BETWEEN " + fromTime + " AND " + toTime + ";";
+		Connection con = Connector.getInstance().getConnection();
+		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				Receipt receipt = new Receipt(resultSet.getInt("id"), resultSet.getLong("opentime"),
+						resultSet.getLong("closetime"), resultSet.getInt("operator_id"), resultSet.getDouble("sum"));
+				receipts.add(receipt);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			Connector.getInstance().release(con);
+		}
+		return receipts;
+	}
+	
 	public List<Receipt> getAll() {
 		List<Receipt> receipts = new ArrayList<>();
 		String sqlInstruction = "SELECT * FROM receipt";
@@ -130,6 +152,15 @@ public class DaoReceipt {
 		} finally {
 			Connector.getInstance().release(con);
 		}
+		receipts.sort(new Comparator<Receipt>() {
+			@Override
+			public int compare(Receipt o1, Receipt o2) {
+				long difference = o2.getClosetime() - o1.getClosetime();
+				if (difference > 0) return 1;
+				if (difference < 0) return -1;
+				return 0;
+			}
+		});
 		return receipts;
 	}
 

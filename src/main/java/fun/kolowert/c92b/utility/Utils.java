@@ -179,7 +179,7 @@ public class Utils {
 	 * @param dateInString like "20211231"
 	 * @return milliseconds
 	 */
-	public static long dateInStringToMilliseconds(String dateInString) {
+	public static long txtDateToMilliseconds(String dateInString) {
 		try {
 		LocalDate date = LocalDate.parse(dateInString, DateTimeFormatter.BASIC_ISO_DATE);
 		ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
@@ -191,6 +191,17 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return -1L;
+	}
+	
+	/**
+	 * @param anyTimeInsideDay in milliseconds
+	 * @return milliseconds at 00:00:00 of the day
+	 */
+	public static long dayStart(long anyTimeInsideDay) {
+		DateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
+	    String txtdate = dateFormat.format(anyTimeInsideDay);
+	    long dayStart = Utils.txtDateToMilliseconds(txtdate);
+	    return dayStart;
 	}
 
 	public static String reportDayOfWeek() {

@@ -1,12 +1,18 @@
 package fun.kolowert.c92b.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import fun.kolowert.c92b.bean.Operator;
+import fun.kolowert.c92b.bean.Receipt;
+import fun.kolowert.c92b.dao.DaoReceipt;
+import fun.kolowert.c92b.utility.Report;
 import fun.kolowert.c92b.utility.Utils;
 
 public class ReportServ extends HttpServlet {
@@ -18,15 +24,24 @@ public class ReportServ extends HttpServlet {
 
 		System.out.println("ReportServ#doGet"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+		HttpSession session = request.getSession();
+		Operator dutyOperator = obtainDutyOperator(session);
+
 		String task = request.getParameter("task");
 		String report = "no report yet -- ";
 
+		// X-REPORT ____________________________
 		if (task.equals("xReport")) {
-			report += "xReport";
+			long now = System.currentTimeMillis();
+			long dayStart = Utils.dayStart(now);
+			report = makeReport("x-Report", dayStart, now, dutyOperator).toHTML();
 		}
 
+		// Y-REPORT ____________________________
 		if (task.equals("zReport")) {
-			report += "zReport";
+			long now = System.currentTimeMillis();
+			long dayStart = Utils.dayStart(now);
+			report = makeReport("z-Report", dayStart, now, dutyOperator).toHTML();
 		}
 
 		request.setAttribute("reportBody", report);
@@ -37,6 +52,9 @@ public class ReportServ extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("ReportServ#doPost"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+		HttpSession session = request.getSession();
+		Operator dutyOperator = obtainDutyOperator(session);
 
 		String task = request.getParameter("task");
 		String report = "no report yet -- ";
@@ -54,14 +72,38 @@ public class ReportServ extends HttpServlet {
 			String dateFrom = fromYear + normMonth(fromMonth) + normDay(fromDay, fromMonth, fromYear);
 			String dateTo = toYear + normMonth(toMonth) + normDay(toDay, toMonth, fromYear);
 
-			long fromTime = Utils.dateInStringToMilliseconds(dateFrom);
-			long toTime = Utils.dateInStringToMilliseconds(dateTo);
+			long fromTime = Utils.txtDateToMilliseconds(dateFrom);
+			long toTime = Utils.txtDateToMilliseconds(dateTo);
 
-			report += "customReport :: from: " + dateFrom + " >> " + fromTime + " to: " + dateTo + " >> " + toTime;
+			report = makeReport("Custom Period Report", fromTime, toTime, dutyOperator).toHTML();
 		}
 
 		request.setAttribute("reportBody", report);
 		getServletContext().getRequestDispatcher("/play/report.jsp").forward(request, response);
+	}
+
+	private Operator obtainDutyOperator(HttpSession session) {
+		Object preDutyOperator = session.getAttribute("dutyOperator");
+		Operator dutyOperator = Operator.getNullOperator();
+		if (preDutyOperator instanceof Operator) {
+			dutyOperator = (Operator) preDutyOperator;
+		}
+		return dutyOperator;
+	}
+
+	private Report makeReport(String type, long timeFrom, long timeTo, Operator dutyOperator) {
+
+		DaoReceipt daoReceipt = DaoReceipt.getInstance();
+		List<Receipt> receipts = daoReceipt.getByPeriod(timeFrom, timeTo);
+
+		int receiptQuantity = 0;
+		double totalSum = 0.0;
+		for (Receipt receipt : receipts) {
+			receiptQuantity++;
+			totalSum += receipt.getSum();
+		}
+
+		return new Report(type, timeFrom, timeTo, receiptQuantity, totalSum, dutyOperator);
 	}
 
 	private String normMonth(String month) {
@@ -112,7 +154,7 @@ public class ReportServ extends HttpServlet {
 	private boolean isLeapYear(int year) {
 		if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) {
 			return true;
-		} 
+		}
 		return false;
 	}
 }

@@ -87,6 +87,15 @@ public class OrderServ extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		
+		//check duty Operator
+		int dutyOperatorId = getDutyOperatorId(session);
+		if (dutyOperatorId < 0) {
+			request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
+			request.setAttribute("orderMessage", "The Operator is out of session! Please do Log-Out and Log-In again");
+			getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
+			return;
+		}
+		
 		// comes from base.jsp
 		if (formTask.equals("addToReceipt")) {
 			// receive item brief information from form
@@ -148,7 +157,7 @@ public class OrderServ extends HttpServlet {
 					currentReceipt = (Receipt) preCurrentReceipt;
 				} else {
 					long unixTimeNow = System.currentTimeMillis();
-					Receipt risingReceipt = new Receipt(-1, unixTimeNow, unixTimeNow, getDutyOperatorId(session),
+					Receipt risingReceipt = new Receipt(-1, unixTimeNow, unixTimeNow, dutyOperatorId,
 							0.0);
 					DaoReceipt daoReceipt = DaoReceipt.getInstance();
 					daoReceipt.insert(risingReceipt);
