@@ -37,9 +37,9 @@ public class DataSourceMaster {
 			mysqlDataSourse.setUser(properties.getProperty("USERNAME"));
 			mysqlDataSourse.setPassword(properties.getProperty("PASSWORD"));
 		} catch (IOException e) {
-			logger.fatal("~ DataSource not created ~" + e);
+			logger.error("DataSource not created" + e);
 		}
-		System.out.println("DataSourceMaster >> DataSource created successfully " + mysqlDataSourse.toString());
+		logger.info("DataSource created successfully " + mysqlDataSourse.toString());
 		return mysqlDataSourse;
 	}
 }

@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Operator;
 import fun.kolowert.c92b.utility.PasswordUtils;
 
 public final class DaoOperator {
+	
+	private static final Logger logger = LogManager.getLogger("DaoOperator");
 
 	private static DaoOperator INSTANCE;
 
@@ -20,20 +25,18 @@ public final class DaoOperator {
 
 	public static DaoOperator getInstance() {
 
-		System.out.println("DaoOperator#getInstance >> daoOperator: " + INSTANCE); // |||||||||||||||||||||||||||
+		logger.debug("daoOperator: " + INSTANCE);
 
 		if (INSTANCE == null) {
 			INSTANCE = new DaoOperator();
-			System.out.println("DaoOperator#getInstance >> ~~~ NEW ~~~"); // |||||||||||||||||||||||||||
+			logger.debug("DaoOperator#getInstance >> ~~~ NEW ~~~");
 		}
 		return INSTANCE;
 	}
 
 	public void insert(String login, String role, String password) {
 		String salt = PasswordUtils.generateSalt(16);
-		System.out.println("DaoOperator# >> salt " + salt); // ||||||||||||||||||||||||||||||||||||||
 		String passHash = PasswordUtils.hashTextPassword(password, salt).get();
-		System.out.println("DaoOperator# >> passHass " + passHash); // ||||||||||||||||||||||||||||||||||||||
 
 		String sqlInstruction = "INSERT INTO operator (login, passHash, role, salt) Values (?, ?, ?, ?)";
 		Connection con = Connector.getInstance().getConnection();
@@ -44,11 +47,9 @@ public final class DaoOperator {
 			statement.setString(4, salt);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		Connector.getInstance().release(con);
-		System.out.println("DaoOperator# >> after adding"); // ||||||||||||||||||||||||||||||||||||||
 	}
 
 	public Operator get(int id) {
@@ -62,8 +63,7 @@ public final class DaoOperator {
 						resultSet.getString("passHash"), resultSet.getString("role"), resultSet.getString("salt"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -85,8 +85,7 @@ public final class DaoOperator {
 				statement.executeUpdate();
 				return true;
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("exception" + e);
 				return false;
 			} finally {
 				Connector.getInstance().release(con);
@@ -101,8 +100,7 @@ public final class DaoOperator {
 			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -116,15 +114,13 @@ public final class DaoOperator {
 			statement.setInt(1, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
 	}
 
 	public List<Operator> getAll() {
-		System.out.println("DaoOperator#getOperators >>"); // |||||||||||||||||||||||||||||||||||||||||||
 		List<Operator> operators = new ArrayList<>();
 		String sqlInstruction = "SELECT * FROM operator";
 		Connection con = Connector.getInstance().getConnection();
@@ -136,8 +132,7 @@ public final class DaoOperator {
 				operators.add(operator);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}

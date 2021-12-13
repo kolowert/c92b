@@ -5,7 +5,12 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class PathFinder {
+	
+	private static final Logger logger = LogManager.getLogger("PathFinder");
 	
 	public String getAbsolutePath(String fileName) {
 		File file = null;
@@ -14,8 +19,7 @@ public class PathFinder {
 			file = Paths.get(res.toURI()).toFile();
 			return file.getAbsolutePath();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		return fileName;
 	}

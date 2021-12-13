@@ -1,50 +1,30 @@
 package fun.kolowert.c92b.bean;
 
 public class Operator {
+	
+	private static String DEFAULT_SALT = "tjuk5i8454i38u3noehi6534494r6rb6tj";
+	private static String DEFAULT_PASSHASH = "oehi6534494r6rb6tjuk5i8454i38u3nt87ilu467y";
+	
 	private int id;
 	private String login;
 	private String passHash;
 	private String role;
-	private String salt = "abcdefgh";
+	private String salt;
 
 	public Operator() {
 		id = -1;
 		login = "undefined";
 		role = "cashier";
-		passHash = "ouefhlih6854364v4r9646r464r6b46rtyjyu6kl54i68m435k4uio3l87um3gn4t68k7ui6l8ui4m687myu";
+		passHash = DEFAULT_PASSHASH;
+		salt = DEFAULT_SALT;
 	}
 
-	public Operator(int id, String login) {
-		this.id = id;
-		this.login = login;
-		role = "cashier";
-	}
-	
 	public Operator(int id, String login, String role) {
 		this.id = id;
 		this.login = login;
 		this.role = role;
 	}
 
-	// TODO debugging part of code
-	public Operator(int id, String login, String passHash, String role) {
-		this.id = id;
-		this.login = login;
-		this.role = role;
-		this.passHash = passHash;
-	}
-
-	public Operator(String login, String passHash, String role, String salt) {
-		// TODO
-		java.util.Random rnd = new java.util.Random();
-		this.id = rnd.nextInt(899) + 100;
-		this.login = login;
-		this.role = role;
-		this.passHash = passHash;
-		this.salt = salt;
-	}
-	
-	// TODO debugging part of code
 	public Operator(int id, String login, String passHash, String role, String salt) {
 		this.id = id;
 		this.login = login;
@@ -52,15 +32,15 @@ public class Operator {
 		this.passHash = passHash;
 		this.salt = salt;
 	}
-	
+
 	public static Operator getNullOperator() {
 		return new Operator();
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Operator [id:" + id + ", login:" + login + ", passHash:" + passHash + ", role:" + role 
-				+ ", salt:" + salt + "]";
+		return "Operator [id:" + id + ", login:" + login + ", passHash:" + passHash + ", role:" + role + ", salt:"
+				+ salt + "]";
 	}
 
 	public String briefInfo() {
@@ -94,15 +74,15 @@ public class Operator {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getLogin() {
 		return login;
 	}
-	
+
 	public void setLogin(String login) {
 		this.login = login;
 	}

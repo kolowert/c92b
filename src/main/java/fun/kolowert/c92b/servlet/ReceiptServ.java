@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Item;
 import fun.kolowert.c92b.bean.Receipt;
 import fun.kolowert.c92b.bean.SoldRecord;
@@ -19,6 +22,8 @@ import fun.kolowert.c92b.utility.Utils;
 public class ReceiptServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16388804L;
+	
+	private static final Logger logger = LogManager.getLogger("ReceiptServ");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,7 +37,7 @@ public class ReceiptServ extends HttpServlet {
 
 		// TASK deleteReceipt ____________________________________________________
 		if (task != null && task.equals("deleteReceipt")) {
-			System.out.println("Receipt#doGet >> task.equals \"deleteReceipt\""); // ||||||||||||||||||||||||||||||||||||||
+			logger.debug("Receipt#doGet >> task.equals \"deleteReceipt\"");
 			
 			// adjust quantity in store			
 			List<SoldRecord> records = daoSold.getByReceipt(receiptId);
@@ -50,7 +55,7 @@ public class ReceiptServ extends HttpServlet {
 
 		// TASK cancelRecord ______________________________________________________
 		if (task != null && task.equals("cancelRecord")) {
-			System.out.println("Receipt#doGet >> task.equals \"cancelRecord\""); // ||||||||||||||||||||||||||||||||||||||
+			logger.debug("Receipt#doGet >> task.equals \"cancelRecord\"");
 			
 			// get record removing it from database
 			int recordId = Utils.parseIntIdFromObject(request.getParameter("recordId"));

@@ -9,10 +9,15 @@ import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.MeasureUnit;
 import fun.kolowert.c92b.bean.Operator;
 
 public class Utils {
+	
+	private static final Logger logger = LogManager.getLogger("Utils");
 
 	/**
 	 * used on login.jsp
@@ -53,7 +58,7 @@ public class Utils {
 		try {
 			measureUnit = MeasureUnit.values()[measureUnitId - 1];
 		} catch (ArrayIndexOutOfBoundsException e) {
-			// TODO
+			logger.error("exception" + e);
 		}
 		return measureUnit;
 	}
@@ -63,7 +68,7 @@ public class Utils {
 		try {
 			measureUnit = MeasureUnit.valueOf(measureUnitText);
 		} catch (Exception e) {
-			// TODO
+			logger.error("exception" + e);
 		}
 		return measureUnit;
 	}
@@ -74,16 +79,12 @@ public class Utils {
 	public static int parseOperatorToId(String input) {
 		int result = -1;
 		String[] parts = input.split(" ");
-//		for (String part : parts) {    // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//			System.out.println(part);  // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-//		}                              // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 		try {
 			result = Integer.parseInt(parts[1]);
 		} catch (NumberFormatException e) {
-			// TODO log here
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
-		System.out.println("Utils#parseOperatorToId >> returns: " + result);
+		logger.debug("Utils#parseOperatorToId >> returns: " + result);
 		return result;
 	}
 
@@ -95,8 +96,7 @@ public class Utils {
 		try {
 			result = Integer.parseInt(s);
 		} catch (NumberFormatException e) {
-			// TODO log here
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		return result;
 	}
@@ -112,8 +112,7 @@ public class Utils {
 		try {
 			result = Double.parseDouble(s);
 		} catch (NumberFormatException e) {
-			// TODO log here
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		return result;
 	}
@@ -137,7 +136,7 @@ public class Utils {
 			try {
 				result = Integer.parseInt((String) input);
 			} catch (NumberFormatException e) {
-				// TODO log mismatch
+				logger.error("exception" + e);
 			}
 		}
 		return result;
@@ -187,8 +186,7 @@ public class Utils {
 		long milliseconds = epoch * 1000;
 		return milliseconds;
 		} catch (DateTimeParseException e) {
-			// TODO
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		return -1L;
 	}

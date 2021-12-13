@@ -10,7 +10,12 @@ import java.util.Optional;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class PasswordUtils {
+	
+	private static final Logger logger = LogManager.getLogger("PasswordUtils");
 
 	public static final int ITERATIONS = 1000;
 	public static final int KEY_LENGTH = 128;
@@ -29,12 +34,11 @@ public class PasswordUtils {
 			byte[] securePassword = fac.generateSecret(spec).getEncoded();
 			result = Optional.of(Base64.getEncoder().encodeToString(securePassword));
 			return result;
-		} catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-			// TODO Handle the exception
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			logger.error("exception" + e);
 			return Optional.empty();
 		} finally {
 			spec.clearPassword();
-			System.out.println("PasswordUtils#hashTextPassword >> finally hash: " + result + " salt: " + salt); // |||||||||||||||||
 		}
 	}
 

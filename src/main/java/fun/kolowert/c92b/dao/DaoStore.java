@@ -8,11 +8,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Item;
 import fun.kolowert.c92b.bean.MeasureUnit;
 import fun.kolowert.c92b.utility.Utils;
 
 public class DaoStore {
+	
+	private static final Logger logger = LogManager.getLogger("DaoStore");
 
 	private static DaoStore INSTANCE;
 
@@ -38,8 +43,7 @@ public class DaoStore {
 			statement.setDouble(4, item.getPrice());
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return false;
 		} finally {
 			Connector.getInstance().release(con);
@@ -62,8 +66,7 @@ public class DaoStore {
 						resultSet.getDouble("price"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -86,8 +89,7 @@ public class DaoStore {
 				items.add(item);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -112,8 +114,7 @@ public class DaoStore {
 			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return false;
 		} finally {
 			Connector.getInstance().release(con);
@@ -129,8 +130,7 @@ public class DaoStore {
 			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return false;
 		} finally {
 			Connector.getInstance().release(con);
@@ -143,8 +143,7 @@ public class DaoStore {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}

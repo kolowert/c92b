@@ -7,28 +7,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.dao.DaoOperator;
 import fun.kolowert.c92b.utility.Utils;
 
 public class OperServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16386269L;
+	
+	private static final Logger logger = LogManager.getLogger("OperServ");
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("Oper#doPost"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("Oper#doPost");
 
 		// check what task is it
 		String formTask = request.getParameter("task");
-		System.out.println("formTask: " + formTask); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("formTask: " + formTask);
 
 		if (formTask.equals("inputNew")) {
 			// receive from form
 			String inputName = request.getParameter("login");
 			String inputRole = request.getParameter("role");
 			String inputPassword = request.getParameter("password");
-
 			// insert new operator in database
 			DaoOperator daoOperator = DaoOperator.getInstance();
 			daoOperator.insert(inputName, inputRole, inputPassword);
@@ -36,7 +40,7 @@ public class OperServ extends HttpServlet {
 		}
 		
 		if (formTask.equals("editOper")) {
-			System.out.println("Oper#doPost >> editOper"); // ||||||||||||||||||||||||||||||||
+			logger.debug("Oper#doPost >> editOper");
 			int	id = Utils.parseIntIdFromObject(request.getParameter("id"));
 			String inputLogin = request.getParameter("login");
 			String inputRole = request.getParameter("role");
@@ -47,7 +51,7 @@ public class OperServ extends HttpServlet {
 		}
 		
 		if (formTask.equals("deleteOper")) {
-			System.out.println("Oper#doPost >> DELETE OPER"); // ||||||||||||||||||||||||||||||||
+			logger.debug("Oper#doPost >> DELETE OPER");
 			int	id = Utils.parseIntIdFromObject(request.getParameter("id"));
 			DaoOperator daoOperator = DaoOperator.getInstance();
 			daoOperator.delete(id);

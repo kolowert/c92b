@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Operator;
 import fun.kolowert.c92b.dao.DaoOperator;
 import fun.kolowert.c92b.utility.PasswordUtils;
@@ -16,11 +19,13 @@ import fun.kolowert.c92b.utility.Utils;
 public class MainServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16381358L;
+	
+	private static final Logger logger = LogManager.getLogger("MainServ");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("Main#doGet"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("Main#doGet");
 
 		String dir = request.getParameter("dir");
 
@@ -34,7 +39,7 @@ public class MainServ extends HttpServlet {
 		String role = (String) preRole;
 		
 		if (dir.equals("base")) {
-			System.out.println("Main#doGet >> dir.equals(\"base\")");
+			logger.debug("Main#doGet >> dir.equals(\"base\")");
 			getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 			return;
 		}
@@ -59,7 +64,7 @@ public class MainServ extends HttpServlet {
 			return;
 		}
 		
-		System.out.println("Main#doGet -- not match any IF"); // |||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("Main#doGet -- not match any 'dir'");
 		getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 
 	}
@@ -68,13 +73,11 @@ public class MainServ extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("Main#doPost"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("Main#doPost");
 
 		String operatorLabel = request.getParameter("operator");
 		String passwordInput = request.getParameter("password");
 		
-		System.out.println("Main#doPost >> request.getParameter(\"operator\"): " + operatorLabel); // ||||||||||||||||||
-		System.out.println("Main#doPost >> request.getParameter(\"password\"): " + passwordInput); // ||||||||||||||||||
 		
 		// parse operator to id
 		int operatorId = Utils.parseOperatorToId(operatorLabel);
@@ -84,22 +87,19 @@ public class MainServ extends HttpServlet {
 		Operator operator = daoOperator.get(operatorId);
 
 		if (operator == null) {
-			// TODO something with it
-			System.out.println("Main#doPost >> operator == null !!!"); // |||||||||||||||||||||||||||||||||||||||||||||||
+			logger.warn("Main#doPost >> operator == null !!!");
 			request.setAttribute("failMessage", "Cash Register Operator has been not found");
 			getServletContext().getRequestDispatcher("/play/login-fail.jsp").forward(request, response);
 			return;
 		}
 
-		// TODO check password hash
+		// check password hash
 		if (PasswordUtils.verifyPassword(passwordInput, operator.getPassHash(), operator.getSalt())) {
 			passwordInput = "erased";
-			// TODO fill session attribute -> (dutyOperator)
 			HttpSession session = request.getSession();
 			session.setAttribute("dutyOperator", operator);
 			session.setAttribute("dutyRole", operator.getRole());
 			session.setAttribute("briefInfo", operator.briefInfo());
-			// TODO launch base page
 			getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 			return;
 		}

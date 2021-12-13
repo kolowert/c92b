@@ -7,9 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.SoldRecord;
 
 public class DaoSold {
+
+	private static final Logger logger = LogManager.getLogger("DaoSold");
 
 	private static DaoSold INSTANCE;
 
@@ -36,8 +41,7 @@ public class DaoSold {
 			statement.setDouble(6, record.getSoldCost());
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return false;
 		} finally {
 			Connector.getInstance().release(con);
@@ -52,20 +56,13 @@ public class DaoSold {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				SoldRecord record = new SoldRecord(
-						resultSet.getInt("id"), 
-						resultSet.getInt("receipt_id"),
-						resultSet.getLong("receipt_time"),
-						resultSet.getInt("item_id"),
-						resultSet.getDouble("price"),
-						resultSet.getDouble("quantity"),
-						resultSet.getDouble("cost")
-						);
+				SoldRecord record = new SoldRecord(resultSet.getInt("id"), resultSet.getInt("receipt_id"),
+						resultSet.getLong("receipt_time"), resultSet.getInt("item_id"), resultSet.getDouble("price"),
+						resultSet.getDouble("quantity"), resultSet.getDouble("cost"));
 				soldRecords.add(record);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -79,26 +76,19 @@ public class DaoSold {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				SoldRecord record = new SoldRecord(
-						resultSet.getInt("id"), 
-						resultSet.getInt("receipt_id"),
-						resultSet.getLong("receipt_time"),
-						resultSet.getInt("item_id"),
-						resultSet.getDouble("price"),
-						resultSet.getDouble("quantity"),
-						resultSet.getDouble("cost")
-						);
+				SoldRecord record = new SoldRecord(resultSet.getInt("id"), resultSet.getInt("receipt_id"),
+						resultSet.getLong("receipt_time"), resultSet.getInt("item_id"), resultSet.getDouble("price"),
+						resultSet.getDouble("quantity"), resultSet.getDouble("cost"));
 				records.add(record);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
 		return records;
 	}
-	
+
 	public SoldRecord getById(int id) {
 		SoldRecord record = null;
 		String sqlInstruction = "SELECT * FROM sold_record WHERE id = " + id;
@@ -106,36 +96,17 @@ public class DaoSold {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
-				record = new SoldRecord(
-						resultSet.getInt("id"), 
-						resultSet.getInt("receipt_id"),
-						resultSet.getLong("receipt_time"),
-						resultSet.getInt("item_id"),
-						resultSet.getDouble("price"),
-						resultSet.getDouble("quantity"),
-						resultSet.getDouble("cost")
-						);
+				record = new SoldRecord(resultSet.getInt("id"), resultSet.getInt("receipt_id"),
+						resultSet.getLong("receipt_time"), resultSet.getInt("item_id"), resultSet.getDouble("price"),
+						resultSet.getDouble("quantity"), resultSet.getDouble("cost"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
 		return record;
 	}
-
-//	public List<SoldRecord> getSoldRecords(long timeFrom, long timeUntil) {
-//		// TODO this stub
-//		List<SoldRecord> result = new ArrayList<>();
-//		for (SoldRecord s : soldRecords) {
-//			long receiptTime = s.getReceiptTime();
-//			if (receiptTime >= timeFrom || receiptTime < timeUntil) {
-//				result.add(s);
-//			}
-//		}
-//		return result;
-//	}
 
 	/**
 	 * @param recordId
@@ -148,8 +119,7 @@ public class DaoSold {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -162,11 +132,10 @@ public class DaoSold {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
 	}
-	
+
 }

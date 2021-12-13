@@ -5,10 +5,15 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * This singleton uses once created connection pool
  */
 public class Connector {
+	
+	private static final Logger logger = LogManager.getLogger("Connector");
 	
 	private static Connector INSTANCE;
 	
@@ -21,11 +26,11 @@ public class Connector {
 	
 	public static Connector getInstance() {
 
-		System.out.println("Connector#getInstance >> Connector: " + INSTANCE); // ||||||||||||||||||||||
+		logger.debug("Connector: " + INSTANCE);
 
 		if (INSTANCE == null) {
 			INSTANCE = new Connector();
-			System.out.println("Connector#getInstance >> ~~~ NEW ~~~"); // |||||||||||||||||||||||||||
+			logger.debug("Connector#getInstance >> ~~~ NEW ~~~");
 		}
 		return INSTANCE;
 	}
@@ -38,20 +43,17 @@ public class Connector {
 		try {
 			return connectionPool.getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("First try to connect" + e);
 		}
 		try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		try {
 			return connectionPool.getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Second try to connect" + e);
 		}
 		return null;
 	}

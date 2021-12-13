@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Item;
 import fun.kolowert.c92b.bean.MeasureUnit;
 import fun.kolowert.c92b.bean.Operator;
@@ -22,6 +25,8 @@ import fun.kolowert.c92b.utility.Utils;
 public class OrderServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16387224L;
+	
+	private static final Logger logger = LogManager.getLogger("OrderServ");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -79,11 +84,11 @@ public class OrderServ extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("Order#doPost"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("Order#doPost");
 
 		// check what task is it
 		String formTask = request.getParameter("task");
-		System.out.println("formTask: " + formTask); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("formTask: " + formTask);
 
 		HttpSession session = request.getSession();
 		
@@ -102,9 +107,9 @@ public class OrderServ extends HttpServlet {
 			String inputItemBrief = request.getParameter("itemBrief");
 			String inputQuantity = request.getParameter("quantity");
 			double requestQuantity = Utils.parseStringToDouble(inputQuantity);
-			System.out.println("Order#doPost >> inputItem:" + inputItemBrief + " inputQuantity:" + inputQuantity); // ||||||||
+			logger.debug("Order#doPost >> inputItem:" + inputItemBrief + " inputQuantity:" + inputQuantity);
 			int itemId = parseIdFromBrief(inputItemBrief);
-			System.out.println("Order#doPost >> itemId:" + itemId); // ||||||||
+			logger.debug("Order#doPost >> itemId:" + itemId);
 			// check input
 			if (itemId < 0) {
 				request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
@@ -140,7 +145,7 @@ public class OrderServ extends HttpServlet {
 				if (item.getQuantity() < requestQuantity) {
 					request.setAttribute("messageType", "fail"); // should be type "good" or "fail"
 					request.setAttribute("orderMessage", "Rejected! There are not enough " + item.getName()
-							+ " in store! Asked for " + requestQuantity + "but there are " + item.getQuantity());
+							+ " in store! Asked for " + requestQuantity + " but there are " + item.getQuantity());
 					getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 					return;
 				}
@@ -188,7 +193,7 @@ public class OrderServ extends HttpServlet {
 			}
 		}
 
-		System.out.println("Order#doPost >> exit to /play/base.jsp"); // |||||||||||||||||||||||||||||||||||||||
+		logger.debug("Order#doPost >> exit to /play/base.jsp");
 		getServletContext().getRequestDispatcher("/play/base.jsp").forward(request, response);
 	}
 
@@ -210,8 +215,7 @@ public class OrderServ extends HttpServlet {
 		try {
 			result = Integer.parseInt(parts[0]);
 		} catch (NumberFormatException e) {
-			// TODO log here
-			e.printStackTrace();
+			logger.error("exception" + e);
 		}
 		return result;
 	}

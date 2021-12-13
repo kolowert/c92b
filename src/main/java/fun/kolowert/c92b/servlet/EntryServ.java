@@ -9,17 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Operator;
 import fun.kolowert.c92b.dao.DaoOperator;
 
 public class EntryServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16381350L;
+	
+	private static final Logger logger = LogManager.getLogger("EntryServ");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		System.out.println("Entry#doGet"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 		HttpSession session = request.getSession();
 		Object dutyOperator = session.getAttribute("dutyOperator");
@@ -28,7 +31,7 @@ public class EntryServ extends HttpServlet {
 
 		// zeroing operator if is
 		if (dutyOperator != null) {
-			System.out.println("Entry#doGet -- zeroing operator"); // ||||||||||||||||||||||||||||||||||||||||||||||||||
+			logger.debug("Entry#doGet -- zeroing operator");
 			session.setAttribute("dutyOperator", null);
 			session.setAttribute("dutyRole", null);
 			session.setAttribute("briefInfo", null);

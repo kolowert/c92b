@@ -8,9 +8,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Receipt;
 
 public class DaoReceipt {
+	
+	private static final Logger logger = LogManager.getLogger("DaoReceipt");
 
 	private static DaoReceipt INSTANCE;
 
@@ -35,8 +40,7 @@ public class DaoReceipt {
 						resultSet.getLong("closetime"), resultSet.getInt("operator_id"), resultSet.getDouble("sum"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -53,8 +57,7 @@ public class DaoReceipt {
 			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return false;
 		} finally {
 			Connector.getInstance().release(con);
@@ -67,8 +70,7 @@ public class DaoReceipt {
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -76,7 +78,7 @@ public class DaoReceipt {
 	}
 
 	public boolean insert(Receipt receipt) {
-		System.out.println("DaoReceipt#insert >>> param receipt: " + receipt.toString()); // ||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("param receipt: " + receipt.toString());
 		String sqlInstruction = "INSERT INTO receipt (opentime, closetime, operator_id, sum) Values (?, ?, ?, ?)";
 		Connection con = Connector.getInstance().getConnection();
 		try (PreparedStatement statement = con.prepareStatement(sqlInstruction)) {
@@ -86,13 +88,11 @@ public class DaoReceipt {
 			statement.setDouble(4, receipt.getSum());
 			statement.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return false;
 		} finally {
 			Connector.getInstance().release(con);
 		}
-		System.out.println("DaoOperator# >> after adding"); // ||||||||||||||||||||||||||||||||||||||
 		return true;
 	}
 
@@ -107,8 +107,7 @@ public class DaoReceipt {
 						resultSet.getLong("closetime"), resultSet.getInt("operator_id"), resultSet.getDouble("sum"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -127,8 +126,7 @@ public class DaoReceipt {
 				receipts.add(receipt);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}
@@ -147,8 +145,7 @@ public class DaoReceipt {
 				receipts.add(receipt);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("exception" + e);
 		} finally {
 			Connector.getInstance().release(con);
 		}

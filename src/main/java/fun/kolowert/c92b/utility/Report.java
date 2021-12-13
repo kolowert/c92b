@@ -62,12 +62,12 @@ public class Report {
 		lines[9] = "~ ~ ~";
 		
 		
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		for (String line : lines) {
-			result += line;
+			result.append(line);
 		}
 		
-		return result;
+		return result.toString();
 	}
 
 }

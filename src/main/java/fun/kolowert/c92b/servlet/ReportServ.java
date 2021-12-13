@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Operator;
 import fun.kolowert.c92b.bean.Receipt;
 import fun.kolowert.c92b.dao.DaoReceipt;
@@ -18,11 +21,13 @@ import fun.kolowert.c92b.utility.Utils;
 public class ReportServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16393365L;
+	
+	private static final Logger logger = LogManager.getLogger("ReportServ");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("ReportServ#doGet"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("ReportServ#doGet");
 
 		HttpSession session = request.getSession();
 		Operator dutyOperator = obtainDutyOperator(session);
@@ -51,7 +56,7 @@ public class ReportServ extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("ReportServ#doPost"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("ReportServ#doPost");
 
 		HttpSession session = request.getSession();
 		Operator dutyOperator = obtainDutyOperator(session);
@@ -111,8 +116,8 @@ public class ReportServ extends HttpServlet {
 		try {
 			n = Integer.parseInt(month);
 		} catch (NumberFormatException e) {
-			// TODO
-			e.printStackTrace();
+			logger.error("exception" + e);
+			return "" + n;
 		}
 		if (n < 10) {
 			return "0" + n;
@@ -129,8 +134,7 @@ public class ReportServ extends HttpServlet {
 			m = Integer.parseInt(month);
 			y = Integer.parseInt(year);
 		} catch (NumberFormatException e) {
-			// TODO
-			e.printStackTrace();
+			logger.error("exception" + e);
 			return "00";
 		}
 		if (d > 30 && (m == 4 || m == 6 || m == 9 || m == 11)) {

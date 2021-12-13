@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import fun.kolowert.c92b.bean.Item;
 import fun.kolowert.c92b.dao.DaoStore;
 import fun.kolowert.c92b.utility.Utils;
@@ -14,15 +17,17 @@ import fun.kolowert.c92b.utility.Utils;
 public class ItemServ extends HttpServlet {
 
 	private static final long serialVersionUID = 16392397L;
+	
+	private static final Logger logger = LogManager.getLogger("ItemServ");
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("ItemServ#doPost"); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("ItemServ#doPost");
 
 		// check what task is it
 		String formTask = request.getParameter("task");
-		System.out.println("formTask: " + formTask); // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+		logger.debug("formTask: " + formTask);
 		
 		if (formTask.equals("inputNew")) {
 			// receive from form
@@ -41,7 +46,7 @@ public class ItemServ extends HttpServlet {
 		}
 		
 		if (formTask.equals("editItem")) {
-			System.out.println("ItemServ#doPost >> editItem"); // ||||||||||||||||||||||||||||||||
+			logger.debug("ItemServ#doPost >> editItem");
 			
 			int	id = Utils.parseIntIdFromObject(request.getParameter("id"));
 			
@@ -58,13 +63,13 @@ public class ItemServ extends HttpServlet {
 			
 			daoStore.update(item);
 			
-			System.out.println("ItemServ#doPost >> item#Brief " + item.brief()); // ||||||||||||||||||||||||||||||||
+			logger.debug("ItemServ#doPost >> item#Brief " + item.brief());
 		}
 		
 		if (formTask.equals("deleteItem")) {
-			System.out.println("Oper#doPost >> DELETE ITEM"); // ||||||||||||||||||||||||||||||||
+			logger.debug("Oper#doPost >> DELETE ITEM");
 			int	id = Utils.parseIntIdFromObject(request.getParameter("id"));
-			System.out.println("Oper#doPost >> DELETE ITEM >> id=" + id); // ||||||||||||||||||||||||||||||||
+			logger.debug("Oper#doPost >> DELETE ITEM >> id=" + id);
 			DaoStore daoStore = DaoStore.getInstance();
 			daoStore.delete(id);
 		}

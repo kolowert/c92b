@@ -7,7 +7,12 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ConnectionPool {
+	
+	private static final Logger logger = LogManager.getLogger("ConnectionPool");
 	
 	private DataSource dataSource;
 	private List<Connection> connectionPool;
@@ -29,11 +34,10 @@ public class ConnectionPool {
 				nextConnection = dataSource.getConnection();
 				pool.add(nextConnection);
 			} catch (SQLException e) {
-				// TODO
-				e.printStackTrace();
+				logger.error("exception" + e);
 			}
 		}
-		System.out.println("ConnectionPool#create >>> created"); // ||||||||||||||||||||||||||||||||||||||||
+		logger.debug("ConnectionPool#create >>> created");
 		return new ConnectionPool(dataSource, pool);
 	}
 	
@@ -49,7 +53,7 @@ public class ConnectionPool {
 			Connection connection = connectionPool.remove(connectionPool.size() - 1);
 			if (connection.isValid(MAX_TIMEOUT)) {
 				usedConnections.add(connection);
-				System.out.println("ConnectionPool#getConnection >>> size=" + this.getSize()); // ||||||||||||||||||||||||||||||||||||||||
+				logger.debug("ConnectionPool#getConnection >>> size=" + this.getSize());
 				return connection;
 			}
 			if (getSize() >= INITIAL_POOL_SIZE) {
@@ -61,12 +65,12 @@ public class ConnectionPool {
 		if (usedConnections.size() < MAX_POOL_SIZE) {
 			connectionPool.add(dataSource.getConnection());
 		} else {
-			// TODO rewrite
+			logger.error("RuntimeException: Maximum pool size reached, no available connections!");
 			throw new RuntimeException("Maximum pool size reached, no available connections!");
 		}
 		Connection connection = connectionPool.remove(connectionPool.size() - 1);
 		usedConnections.add(connection);
-		System.out.println("ConnectionPool#getConnection >>> size=" + this.getSize()); // ||||||||||||||||||||||||||||||||||||||||
+		logger.debug("ConnectionPool#getConnection >>> size=" + this.getSize());
 		return connection;
 	}
 
